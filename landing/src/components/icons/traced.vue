@@ -1,0 +1,44 @@
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+/**
+ * Vue component definition.
+ * @returns {Object} The component options.
+ */
+export default defineComponent({
+    /**
+     * Component props.
+     * @type {Object}
+     */
+    props: {
+        /**
+         * Width of the component.
+         * @type {String}
+         */
+        width: String,
+
+        /**
+         * Height of the component.
+         * @type {String}
+         */
+        height: String,
+    },
+});
+</script>
+<template>
+    <!-- SVG container for scalable vector graphics -->
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        :width="width"
+        :height="height"
+        viewBox="0 0 202.629 90.806"
+    >
+        <path
+            id="Trazado_319"
+            data-name="Trazado 319"
+            d="M210.785,8.014A314.558,314.558,0,0,0,177.8,11.458c-32.23,5.26-57.355,25.106-63.654,33.165-24.247,26.7-34.78,43.123-44.9,50.14a20.349,20.349,0,0,1-12.061,3.966H35.22A27.055,27.055,0,0,1,8.156,71.684v-36.7A27.059,27.059,0,0,1,35.22,7.923H209.925S210.265,7.941,210.785,8.014Z"
+        />
+    </svg>
+</template>
+
+<!-- FILE DOCUMENTED -->

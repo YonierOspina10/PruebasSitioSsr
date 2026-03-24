@@ -1,0 +1,26 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "compilerOptions": {
+    "strict": false, // Desactiva todas las comprobaciones estrictas
+    "suppressImplicitAnyIndexErrors": true, // Suprime los errores de índice implícito `any`
+    "skipLibCheck": true, // Omite la comprobación de los archivos de declaración de tipo
+    "noImplicitThis": false, // Permite `this` con tipo implícito `any`
+    "strictNullChecks": false, // Permite valores `null` y `undefined`
+    "strictPropertyInitialization": false, // No requiere inicialización estricta de propiedades
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "noImplicitAny": false,
+    "allowJs": true,
+    "sourceMap": true,
+    "outDir": "./dist"
+  },
+
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
+    }
+  ]
+}

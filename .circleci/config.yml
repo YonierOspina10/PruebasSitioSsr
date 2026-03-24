@@ -1,0 +1,559 @@
+version: 2.1
+
+
+executors:
+  default:
+    docker:
+      - image: circleci/python:3.8
+    working_directory: ~/repo
+
+jobs:
+  build-and-deploy:
+    executor: default
+    steps:
+      - checkout
+
+
+
+      - run:
+          name: Creating timestamped
+          command: |
+            echo "Creating timestamped "
+            timestamp=$(date +%s%N)
+            echo "timestamp=$timestamp" >> $BASH_ENV
+
+      - run:
+          name: Set environment variable
+          command: echo "VITE_ASSETS_PATH=ass_${timestamp}/" >> $BASH_ENV
+
+      - run:
+          name: Create .env file
+          command: |
+            echo "VITE_ASSETS_PATH=ass_${timestamp}/" >> .env
+
+      - run:
+          name: Print .env file
+          command: cat .env
+
+      - run:
+          name: Get the current branch name
+          command: |
+            BRANCH_NAME_COMPLETE=$(echo ${CIRCLE_BRANCH})
+            echo "BRANCH_NAME_COMPLETE=$BRANCH_NAME_COMPLETE" >> $BASH_ENV
+
+      - run:
+          name: Get the formatted branch name
+          command: |
+            BRANCH_NAME=$(echo ${CIRCLE_BRANCH})
+            FORMATTED_BRANCH=$(echo $BRANCH_NAME | sed -E 's#.*/(VSFT|GEP|STI|GEBD|GEC|GEPC|GEPD|GER)-([0-9]+)-[^-]*#/\1-\2#' | sed 's|^/||')
+            echo "BRANCH_NAME=$FORMATTED_BRANCH" >> $BASH_ENV
+
+      - run:
+          name: Checkout a la rama específica
+          command: |
+            git fetch origin  # Asegúrate de tener la información más reciente
+            git checkout $BRANCH_NAME_COMPLETE || { echo "La rama $BRANCH_NAME_COMPLETE no existe."; exit 1; }
+
+      - run:
+          name: Checkout Base Repository
+          command: |
+            git clone https://x-access-token:${PERSONAL_ACCESS_TOKEN}@github.com/VirtualsoftSS/frontendbuild.git SitioUsuarioOnline
+            cd SitioUsuarioOnline
+
+
+      - run:
+          name: Check if Branch Exists
+          command: |
+            cd SitioUsuarioOnline
+            # Cambia a la rama si existe, o créala si no existe
+            git switch ${BRANCH_NAME_COMPLETE} || git switch -c ${BRANCH_NAME_COMPLETE}
+
+      - run:
+          name: Set up Node.js
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
+          name: Pre-Install Dependencies
+          command: |
+            rm -rf node_modules package-lock.json
+            npm cache clean --force
+
+      - run:
+          name: View Node Version
+          command: node -v
+
+      - run:
+          name: Install Dependencies
+          command: npm install
+
+      - run:
+          name: Build Angular Project
+          command: npm run build
+
+
+      - run:
+          name: Copy Build Files
+          command: |
+            echo "Copying build files..."
+            cd dist
+            find . -type f ! -name 'manifest.webmanifest' ! -name '.htaccess' -exec cp --parents {} ../SitioUsuarioOnline/SitioUsuarioOnline/ \;
+            cd ..
+            echo "Creating TMP backup of include-in-all-index.php..."
+            cp SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+            cp SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index_${timestamp}.php
+
+      - run:
+          name: List directories and files before copying
+          command: ls -R
+
+      - run:
+          name: Get timestamp
+          command: |
+            echo "${timestamp}"
+      - run:
+          name: Verify Index File Exists
+          command: |
+            if [ -f SitioUsuarioOnline/SitioUsuarioOnline/index.html ]; then
+              echo "index.html exists"
+            else
+              echo "index.html does not exist"
+              exit 1
+            fi
+
+      - run:
+          name: Print index.html content
+          command: cat SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Extracting script and link tags print
+          command: |
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Extracting script and link tags
+          command: |
+            set -e
+            echo "Extracting script and link tags..."
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   SitioUsuarioOnline/SitioUsuarioOnline/index.html > SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+
+      - run:
+          name: Remove index.html
+          command: |
+            echo "Removing index.html..."
+            rm -rf SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: List directories and files after copying
+          command: ls -R SitioUsuarioOnline/SitioUsuarioOnline/
+
+
+
+      - run:
+          name: Commit and Push Changes
+          command: |
+            cd SitioUsuarioOnline
+            git config --global user.name "deploy-auto"
+            git config --global user.email "tecnologiageneral@virtualsoft.tech"
+            git add .
+            git commit -m "Deploy build SitioUsuarioOnline"
+            git pull origin ${BRANCH_NAME_COMPLETE} --allow-unrelated-histories -s ours
+            git push origin HEAD:${BRANCH_NAME_COMPLETE}
+          environment:
+            PERSONAL_ACCESS_TOKEN: ${PERSONAL_ACCESS_TOKEN}
+
+      - run:
+          name: Wait for a specific time
+          command: |
+            echo "Sleeping for 60 seconds..."
+            sleep 60
+
+      - run:
+          name: Rename file in Main Version
+          command: |
+            mv SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php
+            echo "Renamed include-in-all-index-tmp.php to include-in-all-index.php in Main Version"
+
+      - run:
+          name: Commit and Push Changes Again
+          command: |
+            cd SitioUsuarioOnline
+            git config --global user.name "deploy-auto"
+            git config --global user.email "tecnologiageneral@virtualsoft.tech"
+            git add .
+            git commit -m "Deploy build SitioUsuarioOnline"
+            git config pull.ff only
+            git pull origin ${BRANCH_NAME_COMPLETE} --allow-unrelated-histories
+            git push origin HEAD:${BRANCH_NAME_COMPLETE}
+          environment:
+            PERSONAL_ACCESS_TOKEN: ${PERSONAL_ACCESS_TOKEN}
+  build-and-deploy-enviromentdev:
+    executor: default
+    environment:
+      ENVIRONMENT_BRANCH: "enviromentdev"  # Definir variable de entorno aquí
+    steps:
+      - checkout
+      - run:
+          name: Use secret token
+          command: echo $PERSONAL_ACCESS_TOKEN
+      - run:
+          name: Check disk space
+          command: df -h
+
+
+      - run:
+          name: Clean up temporary files
+          command: |
+            sudo apt-get clean
+            sudo rm -rf /tmp/*
+            sudo rm -rf /var/tmp/*
+
+
+      - run:
+          name: Creating timestamped
+          command: |
+            echo "Creating timestamped "
+            timestamp=$(date +%s%N)
+            echo "timestamp=$timestamp" >> $BASH_ENV
+
+      - run:
+          name: Set environment variable
+          command: echo "VITE_ASSETS_PATH=ass_${timestamp}/" >> $BASH_ENV
+
+      - run:
+          name: Create .env file
+          command: |
+            echo "VITE_ASSETS_PATH=ass_${timestamp}/" >> .env
+
+      - run:
+          name: Print .env file
+          command: cat .env
+
+      - run:
+          name: Set up Node.js
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
+          name: Install Dependencies
+          command: |
+            npm cache clean --force
+            npm install
+
+      - run:
+          name: View Node Version
+          command: node -v
+
+      - run:
+          name: Build Project
+          command: npm run build
+
+      - run:
+          name: Imprimir contenido de index.html
+          command: cat dist/index.html
+
+      - run:
+          name: Extracting script and link tags print
+          command: |
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   dist/index.html
+
+      - run:
+          name: Checkout Compiled Output Repository
+          command: |
+            git clone -b enviromentdev https://VirtualsoftSS:${PERSONAL_ACCESS_TOKEN}@github.com/VirtualsoftSS/frontendbuild SitioUsuarioOnline
+            cd SitioUsuarioOnline
+            git checkout $ENVIRONMENT_BRANCH
+
+      - run:
+          name: Checkout a la rama específica
+          command: |
+            git fetch origin  # Asegúrate de tener la información más reciente
+            git checkout enviromentdev
+
+      - run:
+          name: List directories and files before copying
+          command: ls -R
+
+      - run:
+          name: Copy Build Files
+          command: |
+            echo "Copying build files..."
+            cd dist
+            find . -type f ! -name 'manifest.webmanifest' ! -name '.htaccess' -exec cp --parents {} ../SitioUsuarioOnline/SitioUsuarioOnline/ \;
+            cd ..
+            echo "Creating TMP backup of include-in-all-index.php..."
+            cp SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+            cp SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index_${timestamp}.php
+
+      - run:
+          name: List directories and files before copying
+          command: ls -R
+
+      - run:
+          name: Get timestamp
+          command: |
+            echo "${timestamp}"
+
+      - run:
+          name: Verify Index File Exists
+          command: |
+            if [ -f SitioUsuarioOnline/SitioUsuarioOnline/index.html ]; then
+              echo "index.html exists"
+            else
+              echo "index.html does not exist"
+              exit 1
+            fi
+
+      - run:
+          name: Imprimir contenido de index.html
+          command: cat SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Extracting script and link tags print
+          command: |
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Extracting script and link tags
+          command: |
+            set -e
+            echo "Extracting script and link tags..."
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   SitioUsuarioOnline/SitioUsuarioOnline/index.html > SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+
+
+      - run:
+          name: Imprimir contenido de include-in-all-index-tmp.php
+          command: cat SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+
+      - run:
+          name: Remove index.html
+          command: |
+            echo "Removing index.html..."
+            rm -rf SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: List directories and files after copying
+          command: ls -R SitioUsuarioOnline/SitioUsuarioOnline/
+
+      - run:
+          name: Commit and Push Changes
+          command: |
+            cd SitioUsuarioOnline
+            git config --global user.name "deploy-auto"
+            git config --global user.email "tecnologiageneral@virtualsoft.tech"
+            git add .
+            git commit -m "Deploy build SitioUsuarioOnline"
+            git pull origin $ENVIRONMENT_BRANCH --allow-unrelated-histories -s ours
+            git push origin HEAD:$ENVIRONMENT_BRANCH
+          environment:
+            PERSONAL_ACCESS_TOKEN: $PERSONAL_ACCESS_TOKEN
+
+      - run:
+          name: Wait for a specific time
+          command: |
+            echo "Sleeping for 60 seconds..."
+            sleep 60
+
+      - run:
+          name: Imprimir contenido de include-in-all-index-tmp.php
+          command: cat SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+
+      - run:
+          name: Rename file
+          command: |
+            old_file="SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php"
+            new_file="SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php"
+            mv "$old_file" "$new_file"
+            echo "Renamed $old_file to $new_file"
+
+      - run:
+          name: Commit and Push Changes
+          command: |
+            cd SitioUsuarioOnline
+            git config --global user.name "deploy-auto"
+            git config --global user.email "tecnologiageneral@x.tech"
+            git add .
+            git commit -m "Deploy build SitioUsuarioOnline"
+            git config pull.ff only  # Configurar para usar solo fast-forward
+            git pull origin $ENVIRONMENT_BRANCH --allow-unrelated-histories
+            git push origin HEAD:$ENVIRONMENT_BRANCH
+          environment:
+            PERSONAL_ACCESS_TOKEN: $PERSONAL_ACCESS_TOKEN
+
+  build-and-deploy-main:
+    executor: default
+    environment:
+      ENVIRONMENT_BRANCH: "main"  # Definir variable de entorno aquí
+    steps:
+      - checkout
+      - run:
+          name: Use secret token
+          command: echo $PERSONAL_ACCESS_TOKEN
+      - run:
+          name: Check disk space
+          command: df -h
+
+      - run:
+          name: Clean up temporary files
+          command: |
+            sudo apt-get clean
+            sudo rm -rf /tmp/*
+            sudo rm -rf /var/tmp/*
+
+
+      - run:
+          name: Creating timestamped
+          command: |
+            echo "Creating timestamped "
+            timestamp=$(date +%s%N)
+            echo "timestamp=$timestamp" >> $BASH_ENV
+
+      - run:
+          name: Set environment variable
+          command: echo "VITE_ASSETS_PATH=ass_${timestamp}/" >> $BASH_ENV
+
+
+      - run:
+          name: Create .env file
+          command: |
+            echo "VITE_ASSETS_PATH=ass_${timestamp}/" >> .env
+
+      - run:
+          name: Print .env file
+          command: cat .env
+
+      - run:
+          name: Set up Node.js
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+      - run:
+          name: Pre-Install Dependencies
+          command: |
+            rm -rf node_modules package-lock.json
+            npm cache clean --force
+
+
+      - run:
+          name: Install Dependencies
+          command: |
+            npm install
+
+      - run:
+          name: Build Project
+          command: npm run build
+
+      - run:
+          name: Checkout Compiled Output Repository
+          command: |
+            git clone https://VirtualsoftSS:${PERSONAL_ACCESS_TOKEN}@github.com/VirtualsoftSS/frontendbuild SitioUsuarioOnline
+            cd SitioUsuarioOnline
+            git checkout $ENVIRONMENT_BRANCH
+
+      - run:
+          name: Checkout a la rama específica
+          command: |
+            git fetch origin  # Asegúrate de tener la información más reciente
+            git checkout $ENVIRONMENT_BRANCH
+
+      - run:
+          name: List directories and files before copying
+          command: ls -R
+
+      - run:
+          name: Copy Build Files
+          command: |
+            echo "Copying build files..."
+            cd dist
+            find . -type f ! -name 'manifest.webmanifest' ! -name '.htaccess' -exec cp --parents {} ../SitioUsuarioOnline/SitioUsuarioOnline/ \;
+            cd ..
+            echo "Creating TMP backup of include-in-all-index.php..."
+            cp SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+            cp SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index.php SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index_${timestamp}.php
+
+
+      - run:
+          name: List directories and files before copying
+          command: ls -R
+
+      - run:
+          name: Get timestamp
+          command: |
+            echo "${timestamp}"
+
+      - run:
+          name: Verify Index File Exists
+          command: |
+            if [ -f SitioUsuarioOnline/SitioUsuarioOnline/index.html ]; then
+              echo "index.html exists"
+            else
+              echo "index.html does not exist"
+              exit 1
+            fi
+
+      - run:
+          name: Imprimir contenido de index.html
+          command: cat SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Extracting script and link tags print
+          command: |
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Extracting script and link tags
+          command: |
+            set -e
+            echo "Extracting script and link tags..."
+            grep -P -e '<script type="module" crossorigin src="/ass_'${timestamp}'/index.[[:alnum:]_-]+\.js"></script>|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/single-spa.[[:alnum:]_-]+\.js">|<link rel="modulepreload" crossorigin href="/ass_'${timestamp}'/path-to-regexp.[[:alnum:]_-]+\.js">|<link rel="stylesheet" crossorigin href="/ass_'${timestamp}'/index.[[:alnum:]]+\.css">'   SitioUsuarioOnline/SitioUsuarioOnline/index.html > SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+
+
+      - run:
+          name: Imprimir contenido de include-in-all-index-tmp.php
+          command: cat SitioUsuarioOnline/SitioUsuarioOnline/include-in-all-index-tmp.php
+
+      - run:
+          name: Remove index.html
+          command: |
+            echo "Removing index.html..."
+            rm -rf SitioUsuarioOnline/SitioUsuarioOnline/index.html
+
+      - run:
+          name: Commit and Push Changes
+          command: |
+            cd SitioUsuarioOnline
+            git config --global user.name "deploy-auto"
+            git config --global user.email "tecnologiageneral@virtualsoft.tech"
+            git add .
+            git commit -m "Deploy build SitioUsuarioOnline"
+            git pull origin $ENVIRONMENT_BRANCH --allow-unrelated-histories -s ours
+            git push origin HEAD:$ENVIRONMENT_BRANCH
+          environment:
+            PERSONAL_ACCESS_TOKEN: $PERSONAL_ACCESS_TOKEN
+
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - build-and-deploy:
+          filters:
+            branches:
+              only:
+                -  /^bugfix\/.*/
+                -  /^feature\/.*/
+
+      - build-and-deploy-enviromentdev:
+          filters:
+            branches:
+              only:
+                -  enviromentdev
+
+      - build-and-deploy-main:
+          filters:
+            branches:
+              only:
+                -  main

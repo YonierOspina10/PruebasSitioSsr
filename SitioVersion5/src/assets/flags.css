@@ -1,0 +1,1785 @@
+/* 
+ * Styles for country flags using a single sprite image.
+ * Each class corresponds to a specific country code and sets the background image 
+ * to display the appropriate flag from the sprite.
+ */
+
+.country-flags.ad {
+	/* Andorra */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -2px; /* Position of the Andorra flag in the sprite */
+}
+
+.country-flags.ae {
+	/* United Arab Emirates */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -2px; /* Position of the UAE flag in the sprite */
+}
+
+.country-flags.af {
+	/* Afghanistan */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -2px; /* Position of the Afghanistan flag in the sprite */
+}
+
+.country-flags.ag {
+	/* Antigua and Barbuda */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -2px; /* Position of the Antigua and Barbuda flag in the sprite */
+}
+
+.country-flags.ai {
+	/* Anguilla */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -2px; /* Position of the Anguilla flag in the sprite */
+}
+
+.country-flags.al {
+	/* Albania */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -2px; /* Position of the Albania flag in the sprite */
+}
+
+.country-flags.am {
+	/* Armenia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -2px; /* Position of the Armenia flag in the sprite */
+}
+/* 
+ * CSS class definitions for country flags.
+ * Each class corresponds to a specific country, using a background image sprite.
+ */
+
+/* 
+ * Flag for Andorra (an).
+ * Background image is positioned to show the Andorra flag from the sprite.
+ */
+.country-flags.an {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -2px;
+}
+
+/* 
+ * Flag for Angola (ao).
+ * Background image is positioned to show the Angola flag from the sprite.
+ */
+.country-flags.ao {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -2px;
+}
+
+/* 
+ * Flag for Argentina (ar).
+ * Background image is positioned to show the Argentina flag from the sprite.
+ */
+.country-flags.ar {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -2px;
+}
+
+/* 
+ * Flag for American Samoa (as).
+ * Background image is positioned to show the American Samoa flag from the sprite.
+ */
+.country-flags.as {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -17px;
+}
+
+/* 
+ * Flag for Austria (at).
+ * Background image is positioned to show the Austria flag from the sprite.
+ */
+.country-flags.at {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -17px;
+}
+
+/* 
+ * Flag for Australia (au).
+ * Background image is positioned to show the Australia flag from the sprite.
+ */
+.country-flags.au {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -17px;
+}
+
+/* 
+ * Flag for Aruba (aw).
+ * Background image is positioned to show the Aruba flag from the sprite.
+ */
+.country-flags.aw {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -17px;
+}
+/* 
+ * CSS class for country flags with specific background images 
+ * sourced from a single sprite image.
+ */
+
+/* Flag for country code 'ax' (Åland Islands) */
+.country-flags.ax {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -82px -17px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country code 'az' (Azerbaijan) */
+.country-flags.az {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -17px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country code 'ba' (Bosnia and Herzegovina) */
+.country-flags.ba {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -17px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country code 'bb' (Barbados) */
+.country-flags.bb {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -17px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country code 'bd' (Bangladesh) */
+.country-flags.bd {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -17px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country code 'be' (Belgium) */
+.country-flags.be {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -17px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country code 'bf' (Burkina Faso) */
+.country-flags.bf {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -32px; /* Positioning of the flag within the sprite */
+}
+/* 
+ * CSS class for country flags with specific background images.
+ * Each class corresponds to a different country, using a single sprite image.
+ */
+
+/* Flag for Bulgaria */
+.country-flags.bg {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -22px -32px; /* Positioning of the Bulgaria flag in the sprite */
+}
+
+/* Flag for Bahrain */
+.country-flags.bh {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -42px -32px; /* Positioning of the Bahrain flag in the sprite */
+}
+
+/* Flag for Burundi */
+.country-flags.bi {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -62px -32px; /* Positioning of the Burundi flag in the sprite */
+}
+
+/* Flag for Benin */
+.country-flags.bj {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -82px -32px; /* Positioning of the Benin flag in the sprite */
+}
+
+/* Flag for Bermuda */
+.country-flags.bm {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -102px -32px; /* Positioning of the Bermuda flag in the sprite */
+}
+
+/* Flag for Brunei */
+.country-flags.bn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -122px -32px; /* Positioning of the Brunei flag in the sprite */
+}
+
+/* Flag for Bolivia */
+.country-flags.bo {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -142px -32px; /* Positioning of the Bolivia flag in the sprite */
+}
+/* 
+ * CSS class for Brazilian flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.br {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -32px;
+}
+
+/* 
+ * CSS class for Bahamian flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.bs {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -32px;
+}
+
+/* 
+ * CSS class for Bhutanese flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.bt {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -47px;
+}
+
+/* 
+ * CSS class for Bouvet Island flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.bv {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -47px;
+}
+
+/* 
+ * CSS class for Botswana flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.bw {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -47px;
+}
+
+/* 
+ * CSS class for Belarusian flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.by {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -47px;
+}
+
+/* 
+ * CSS class for Belizean flag background.
+ * Uses a specific portion of a sprite image for the flag.
+ */
+.country-flags.bz {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -47px;
+}
+/* 
+ * CSS class definitions for country flags using a single background image sprite.
+ * Each class corresponds to a specific country or region, with background positioning 
+ * adjusted to display the correct flag from the sprite.
+ */
+
+.country-flags.ca {
+	/* Canada */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -47px; /* Position of the Canada flag in the sprite */
+}
+
+.country-flags.catalonia {
+	/* Catalonia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -47px; /* Position of the Catalonia flag in the sprite */
+}
+
+.country-flags.cc {
+	/* Cocos (Keeling) Islands */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -47px; /* Position of the Cocos (Keeling) Islands flag in the sprite */
+}
+
+.country-flags.cd {
+	/* Democratic Republic of the Congo */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -47px; /* Position of the Democratic Republic of the Congo flag in the sprite */
+}
+
+.country-flags.cf {
+	/* Central African Republic */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -47px; /* Position of the Central African Republic flag in the sprite */
+}
+
+.country-flags.cg {
+	/* Republic of the Congo */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -62px; /* Position of the Republic of the Congo flag in the sprite */
+}
+
+.country-flags.ch {
+	/* Switzerland */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -62px; /* Position of the Switzerland flag in the sprite */
+}
+/* 
+ * CSS class definitions for country flags using a single sprite image.
+ * Each class corresponds to a specific country code and sets the background 
+ * image to display the appropriate flag from the sprite.
+ */
+
+.country-flags.ci {
+	/* Background image for Côte d'Ivoire (Ivory Coast) flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -62px;
+}
+
+.country-flags.ck {
+	/* Background image for Cook Islands flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -62px;
+}
+
+.country-flags.cl {
+	/* Background image for Chile flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -62px;
+}
+
+.country-flags.cm {
+	/* Background image for Cameroon flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -62px;
+}
+
+.country-flags.cn {
+	/* Background image for China flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -62px;
+}
+
+.country-flags.co {
+	/* Background image for Colombia flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -62px;
+}
+
+.country-flags.cr {
+	/* Background image for Costa Rica flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -62px;
+}
+/* 
+ * CSS class definitions for country flags.
+ * Each class sets a background image for a specific country's flag 
+ * using a single sprite image with specific coordinates for each flag.
+ */
+
+.country-flags.cs {
+	/* Background image for the flag of Serbia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -62px;
+}
+
+.country-flags.cu {
+	/* Background image for the flag of Cuba */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -77px;
+}
+
+.country-flags.cv {
+	/* Background image for the flag of Cape Verde */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -77px;
+}
+
+.country-flags.cx {
+	/* Background image for the flag of Christmas Island */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -77px;
+}
+
+.country-flags.cy {
+	/* Background image for the flag of Cyprus */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -77px;
+}
+
+.country-flags.cz {
+	/* Background image for the flag of the Czech Republic */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -77px;
+}
+
+.country-flags.de {
+	/* Background image for the flag of Germany */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -77px;
+}
+/* 
+ * Styles for country flags using a single background image.
+ * Each class corresponds to a specific country code and sets the 
+ * background position to display the correct flag from the sprite.
+ */
+
+.country-flags.dj {
+	/* Djibouti */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -77px; /* Position for Djibouti flag */
+}
+
+.country-flags.dk {
+	/* Denmark */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -77px; /* Position for Denmark flag */
+}
+
+.country-flags.dm {
+	/* Dominica */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -77px; /* Position for Dominica flag */
+}
+
+.country-flags.do {
+	/* Dominican Republic */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -77px; /* Position for Dominican Republic flag */
+}
+
+.country-flags.dz {
+	/* Algeria */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -92px; /* Position for Algeria flag */
+}
+
+.country-flags.ec {
+	/* Ecuador */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -92px; /* Position for Ecuador flag */
+}
+
+.country-flags.ee {
+	/* Estonia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -92px; /* Position for Estonia flag */
+}
+/* 
+ * CSS class definitions for country flags used in the application.
+ * Each class sets a background image for a specific country's flag 
+ * from a sprite image located at the specified URL.
+ */
+
+.country-flags.eg {
+	/* Egypt flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -92px; /* Positioning for the Egypt flag */
+}
+
+.country-flags.eh {
+	/* Western Sahara flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -92px; /* Positioning for the Western Sahara flag */
+}
+
+.country-flags.england {
+	/* England flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -92px; /* Positioning for the England flag */
+}
+
+.country-flags.er {
+	/* Eritrea flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -92px; /* Positioning for the Eritrea flag */
+}
+
+.country-flags.es {
+	/* Spain flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -92px; /* Positioning for the Spain flag */
+}
+
+.country-flags.et {
+	/* Ethiopia flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -92px; /* Positioning for the Ethiopia flag */
+}
+
+.country-flags.europeanunion {
+	/* European Union flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -92px; /* Positioning for the European Union flag */
+}
+/* 
+ * CSS class definitions for country flags using a single sprite image.
+ * Each class corresponds to a specific country code and sets the background 
+ * image to display the appropriate flag from the sprite.
+ */
+
+.country-flags.fam {
+	/* Background image for the flag of the country with code 'fam' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -107px;
+}
+
+.country-flags.fi {
+	/* Background image for the flag of the country with code 'fi' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -107px;
+}
+
+.country-flags.fj {
+	/* Background image for the flag of the country with code 'fj' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -107px;
+}
+
+.country-flags.fk {
+	/* Background image for the flag of the country with code 'fk' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -107px;
+}
+
+.country-flags.fm {
+	/* Background image for the flag of the country with code 'fm' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -107px;
+}
+
+.country-flags.fo {
+	/* Background image for the flag of the country with code 'fo' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -107px;
+}
+
+.country-flags.fr {
+	/* Background image for the flag of the country with code 'fr' */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -107px;
+}
+/* Styles for country flags using a single background image with specific positions */
+
+/* Flag for France (Quebec) */
+.country-flags.fr_qc {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -142px -362px; /* Position of the flag in the sprite */
+}
+
+/* Flag for Gabon */
+.country-flags.ga {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -142px -107px; /* Position of the flag in the sprite */
+}
+
+/* Flag for Great Britain */
+.country-flags.gb {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -162px -107px; /* Position of the flag in the sprite */
+}
+
+/* Flag for Grenada */
+.country-flags.gd {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -182px -107px; /* Position of the flag in the sprite */
+}
+
+/* Flag for Georgia */
+.country-flags.ge {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -2px -122px; /* Position of the flag in the sprite */
+}
+
+/* Flag for French Guiana */
+.country-flags.gf {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -22px -122px; /* Position of the flag in the sprite */
+}
+
+/* Flag for Ghana */
+.country-flags.gh {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -42px -122px; /* Position of the flag in the sprite */
+}
+/* 
+ * Styles for country flags using a single background image.
+ * Each class corresponds to a specific country flag, 
+ * positioned using negative background offsets.
+ */
+
+.country-flags.gi {
+	/* Flag for Gibraltar */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -122px; /* Positioning for Gibraltar flag */
+}
+
+.country-flags.gl {
+	/* Flag for Greenland */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -122px; /* Positioning for Greenland flag */
+}
+
+.country-flags.gm {
+	/* Flag for Gambia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -122px; /* Positioning for Gambia flag */
+}
+
+.country-flags.gn {
+	/* Flag for Guinea */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -122px; /* Positioning for Guinea flag */
+}
+
+.country-flags.gp {
+	/* Flag for Guadeloupe */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -122px; /* Positioning for Guadeloupe flag */
+}
+
+.country-flags.gq {
+	/* Flag for Equatorial Guinea */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -122px; /* Positioning for Equatorial Guinea flag */
+}
+
+.country-flags.gr {
+	/* Flag for Greece */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -122px; /* Positioning for Greece flag */
+}
+/* 
+ * CSS class for country flags. Each class applies a background image 
+ * from a single sprite sheet, positioning it to display the correct flag.
+ */
+
+/* 
+ * Class for the flag of 'gs' (South Georgia and the South Sandwich Islands).
+ * Background image is positioned at -2px horizontally and -137px vertically.
+ */
+.country-flags.gs {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -137px;
+}
+
+/* 
+ * Class for the flag of 'gt' (Guatemala).
+ * Background image is positioned at -22px horizontally and -137px vertically.
+ */
+.country-flags.gt {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -137px;
+}
+
+/* 
+ * Class for the flag of 'gu' (Guam).
+ * Background image is positioned at -42px horizontally and -137px vertically.
+ */
+.country-flags.gu {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -137px;
+}
+
+/* 
+ * Class for the flag of 'gw' (Guinea-Bissau).
+ * Background image is positioned at -62px horizontally and -137px vertically.
+ */
+.country-flags.gw {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -137px;
+}
+
+/* 
+ * Class for the flag of 'gy' (Guyana).
+ * Background image is positioned at -82px horizontally and -137px vertically.
+ */
+.country-flags.gy {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -137px;
+}
+
+/* 
+ * Class for the flag of 'hk' (Hong Kong).
+ * Background image is positioned at -102px horizontally and -137px vertically.
+ */
+.country-flags.hk {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -137px;
+}
+
+/* 
+ * Class for the flag of 'hm' (Heard Island and McDonald Islands).
+ * Background image is positioned at -122px horizontally and -137px vertically.
+ */
+.country-flags.hm {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -137px;
+}
+/* 
+ * CSS class definitions for country flags.
+ * Each class applies a background image of flags from a single sprite image.
+ */
+
+/* Honduras flag */
+.country-flags.hn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -142px -137px; /* Positioning of the Honduras flag within the sprite */
+}
+
+/* Croatia flag */
+.country-flags.hr {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -162px -137px; /* Positioning of the Croatia flag within the sprite */
+}
+
+/* Haiti flag */
+.country-flags.ht {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -182px -137px; /* Positioning of the Haiti flag within the sprite */
+}
+
+/* Hungary flag */
+.country-flags.hu {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -2px -152px; /* Positioning of the Hungary flag within the sprite */
+}
+
+/* Indonesia flag */
+.country-flags.id {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -22px -152px; /* Positioning of the Indonesia flag within the sprite */
+}
+
+/* Ireland flag */
+.country-flags.ie {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -42px -152px; /* Positioning of the Ireland flag within the sprite */
+}
+
+/* Israel flag */
+.country-flags.il {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the flag sprite */ no-repeat -62px -152px; /* Positioning of the Israel flag within the sprite */
+}
+/* 
+ * Styles for country flags using a single background image.
+ * Each class corresponds to a specific country code and sets the background position 
+ * to display the appropriate flag from the sprite image.
+ */
+
+.country-flags.in {
+	/* India */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -152px; /* Position for India's flag */
+}
+
+.country-flags.io {
+	/* Indian Ocean Territory */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -152px; /* Position for Indian Ocean Territory's flag */
+}
+
+.country-flags.iq {
+	/* Iraq */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -152px; /* Position for Iraq's flag */
+}
+
+.country-flags.ir {
+	/* Iran */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -152px; /* Position for Iran's flag */
+}
+
+.country-flags.is {
+	/* Iceland */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -152px; /* Position for Iceland's flag */
+}
+
+.country-flags.it {
+	/* Italy */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -152px; /* Position for Italy's flag */
+}
+
+.country-flags.jm {
+	/* Jamaica */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -167px; /* Position for Jamaica's flag */
+}
+/* 
+ * CSS class definitions for country flags using a single sprite image.
+ * Each class corresponds to a specific country, setting the background 
+ * image and positioning it to display the correct flag.
+ */
+
+.country-flags.jo {
+	/* Jordan */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -167px; /* Positioning for Jordan flag */
+}
+
+.country-flags.jp {
+	/* Japan */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -167px; /* Positioning for Japan flag */
+}
+
+.country-flags.ke {
+	/* Kenya */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -167px; /* Positioning for Kenya flag */
+}
+
+.country-flags.kg {
+	/* Kyrgyzstan */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -167px; /* Positioning for Kyrgyzstan flag */
+}
+
+.country-flags.kh {
+	/* Cambodia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -167px; /* Positioning for Cambodia flag */
+}
+
+.country-flags.ki {
+	/* Kiribati */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -167px; /* Positioning for Kiribati flag */
+}
+
+.country-flags.km {
+	/* Comoros */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -167px; /* Positioning for Comoros flag */
+}
+/* 
+ * CSS class for country flags with specific background images.
+ * Each class corresponds to a different country, using a single sprite image.
+ */
+
+/* 
+ * Flag for Kosovo (KN) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.kn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -167px;
+}
+
+/* 
+ * Flag for North Korea (KP) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.kp {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -167px;
+}
+
+/* 
+ * Flag for South Korea (KR) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.kr {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -182px;
+}
+
+/* 
+ * Flag for Kuwait (KW) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.kw {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -182px;
+}
+
+/* 
+ * Flag for Cayman Islands (KY) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.ky {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -182px;
+}
+
+/* 
+ * Flag for Kazakhstan (KZ) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.kz {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -182px;
+}
+
+/* 
+ * Flag for Laos (LA) 
+ * Background image is set to a specific position in the sprite.
+ */
+.country-flags.la {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -182px;
+}
+/* 
+ * CSS class for country flags with specific background images 
+ * sourced from a single sprite image. Each class corresponds 
+ * to a different country code and sets the appropriate background 
+ * position to display the correct flag.
+ */
+
+.country-flags.lb {
+	/* Liberia flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -182px; /* Position for Liberia flag */
+}
+
+.country-flags.lc {
+	/* Saint Lucia flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -182px; /* Position for Saint Lucia flag */
+}
+
+.country-flags.li {
+	/* Liechtenstein flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -182px; /* Position for Liechtenstein flag */
+}
+
+.country-flags.lk {
+	/* Sri Lanka flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -182px; /* Position for Sri Lanka flag */
+}
+
+.country-flags.lr {
+	/* Liberia flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -182px; /* Position for Liberia flag */
+}
+
+.country-flags.ls {
+	/* Lesotho flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -197px; /* Position for Lesotho flag */
+}
+
+.country-flags.lt {
+	/* Lithuania flag */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -197px; /* Position for Lithuania flag */
+}
+/* 
+ * CSS class for Luxembourg flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.lu {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -197px;
+}
+
+/* 
+ * CSS class for Latvia flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.lv {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -197px;
+}
+
+/* 
+ * CSS class for Libya flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.ly {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -197px;
+}
+
+/* 
+ * CSS class for Morocco flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.ma {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -197px;
+}
+
+/* 
+ * CSS class for Monaco flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.mc {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -197px;
+}
+
+/* 
+ * CSS class for Moldova flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.md {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -197px;
+}
+
+/* 
+ * CSS class for Montenegro flag.
+ * Sets the background image and positions it using negative offsets.
+ */
+.country-flags.me {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -197px;
+}
+/* Styles for country flags with specific country codes */
+
+/* Flag for Madagascar (mg) */
+.country-flags.mg {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -182px -197px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Marshall Islands (mh) */
+.country-flags.mh {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -2px -212px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for North Macedonia (mk) */
+.country-flags.mk {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -22px -212px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Mali (ml) */
+.country-flags.ml {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -42px -212px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Myanmar (mm) */
+.country-flags.mm {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -62px -212px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Mongolia (mn) */
+.country-flags.mn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -82px -212px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Morocco (mo) */
+.country-flags.mo {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -102px -212px; /* Positioning of the flag within the sprite */
+}
+/* 
+ * CSS class definitions for country flags with specific background images.
+ * Each class corresponds to a different country flag, using a single image sprite.
+ */
+
+.country-flags.mp {
+	/* Background image for the flag of MP (Northern Mariana Islands) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -212px; /* Positioning of the flag within the sprite */
+}
+
+.country-flags.mq {
+	/* Background image for the flag of MQ (Martinique) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -212px; /* Positioning of the flag within the sprite */
+}
+
+.country-flags.mr {
+	/* Background image for the flag of MR (Mauritania) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -212px; /* Positioning of the flag within the sprite */
+}
+
+.country-flags.ms {
+	/* Background image for the flag of MS (Montserrat) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -212px; /* Positioning of the flag within the sprite */
+}
+
+.country-flags.mt {
+	/* Background image for the flag of MT (Malta) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -227px; /* Positioning of the flag within the sprite */
+}
+
+.country-flags.mu {
+	/* Background image for the flag of MU (Mauritius) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -227px; /* Positioning of the flag within the sprite */
+}
+
+.country-flags.mv {
+	/* Background image for the flag of MV (Maldives) */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -227px; /* Positioning of the flag within the sprite */
+}
+/* Styles for country flags using a single background image with specific offsets */
+
+/* Flag for country MW (Malawi) */
+.country-flags.mw {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -227px; /* Background position for MW flag */
+}
+
+/* Flag for country MX (Mexico) */
+.country-flags.mx {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -227px; /* Background position for MX flag */
+}
+
+/* Flag for country MY (Malaysia) */
+.country-flags.my {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -227px; /* Background position for MY flag */
+}
+
+/* Flag for country MZ (Mozambique) */
+.country-flags.mz {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -227px; /* Background position for MZ flag */
+}
+
+/* Flag for country NA (Namibia) */
+.country-flags.na {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -227px; /* Background position for NA flag */
+}
+
+/* Flag for country NC (New Caledonia) */
+.country-flags.nc {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -227px; /* Background position for NC flag */
+}
+
+/* Flag for country NE (Niger) */
+.country-flags.ne {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -227px; /* Background position for NE flag */
+}
+/* 
+ * CSS class for country flags with specific background images.
+ * Each class corresponds to a different country, using a single sprite image.
+ */
+
+/* Flag for country: nf (Norfolk Island) */
+.country-flags.nf {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* URL of the sprite image */ no-repeat -2px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country: ng (Nigeria) */
+.country-flags.ng {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country: ni (Nicaragua) */
+.country-flags.ni {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country: nl (Netherlands) */
+.country-flags.nl {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country: no (Norway) */
+.country-flags.no {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country: np (Nepal) */
+.country-flags.np {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for country: nr (Nauru) */
+.country-flags.nr {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -242px; /* Positioning of the flag within the sprite */
+}
+/* Styles for country flags using a single background image */
+
+/* Flag for Nu (Niue) */
+.country-flags.nu {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -142px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Nz (New Zealand) */
+.country-flags.nz {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -162px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Om (Oman) */
+.country-flags.om {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -182px -242px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Pa (Panama) */
+.country-flags.pa {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -2px -257px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Pe (Peru) */
+.country-flags.pe {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -22px -257px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Pf (French Polynesia) */
+.country-flags.pf {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -42px -257px; /* Positioning of the flag within the sprite */
+}
+
+/* Flag for Pg (Papua New Guinea) */
+.country-flags.pg {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -62px -257px; /* Positioning of the flag within the sprite */
+}
+/* 
+ * CSS class definitions for country flags.
+ * Each class applies a background image of flags from a single sprite image.
+ */
+
+/* 
+ * Flag for the Philippines (PH).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.ph {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -257px;
+}
+
+/* 
+ * Flag for Pakistan (PK).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.pk {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -257px;
+}
+
+/* 
+ * Flag for Poland (PL).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.pl {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -257px;
+}
+
+/* 
+ * Flag for Saint Pierre and Miquelon (PM).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.pm {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -257px;
+}
+
+/* 
+ * Flag for Pitcairn Islands (PN).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.pn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -257px;
+}
+
+/* 
+ * Flag for Puerto Rico (PR).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.pr {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -257px;
+}
+
+/* 
+ * Flag for Palestine (PS).
+ * Background image is positioned to show the specific flag from the sprite.
+ */
+.country-flags.ps {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -272px;
+}
+/* 
+ * CSS class for country flags with specific background images.
+ * Each class corresponds to a different country code and sets the 
+ * background image position to display the correct flag.
+ */
+
+.country-flags.pt {
+	/* Portugal */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -272px; /* Position of Portugal flag */
+}
+
+.country-flags.pw {
+	/* Palau */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -272px; /* Position of Palau flag */
+}
+
+.country-flags.py {
+	/* Paraguay */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -272px; /* Position of Paraguay flag */
+}
+
+.country-flags.qa {
+	/* Qatar */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -272px; /* Position of Qatar flag */
+}
+
+.country-flags.re {
+	/* Réunion */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -272px; /* Position of Réunion flag */
+}
+
+.country-flags.ro {
+	/* Romania */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -272px; /* Position of Romania flag */
+}
+
+.country-flags.rs {
+	/* Serbia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -272px; /* Position of Serbia flag */
+}
+/* Styles for country flags using a single background image */
+
+/* Russian flag */
+.country-flags.ru {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -162px -272px; /* Positioning of the flag within the sprite */
+}
+
+/* Rwandan flag */
+.country-flags.rw {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -182px -272px; /* Positioning of the flag within the sprite */
+}
+
+/* Saudi Arabian flag */
+.country-flags.sa {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -2px -287px; /* Positioning of the flag within the sprite */
+}
+
+/* Solomon Islands flag */
+.country-flags.sb {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -22px -287px; /* Positioning of the flag within the sprite */
+}
+
+/* Seychelles flag */
+.country-flags.sc {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -42px -287px; /* Positioning of the flag within the sprite */
+}
+
+/* Scotland flag */
+.country-flags.scotland {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -62px -287px; /* Positioning of the flag within the sprite */
+}
+
+/* Sudanese flag */
+.country-flags.sd {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -82px -287px; /* Positioning of the flag within the sprite */
+}
+/* 
+ * CSS class definitions for country flags.
+ * Each class corresponds to a specific country and sets the background image 
+ * to display the respective flag from a sprite image.
+ */
+
+.country-flags.se {
+	/* Sweden */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -287px; /* Position of the Sweden flag in the sprite */
+}
+
+.country-flags.sg {
+	/* Singapore */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -287px; /* Position of the Singapore flag in the sprite */
+}
+
+.country-flags.sh {
+	/* Saint Helena */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -287px; /* Position of the Saint Helena flag in the sprite */
+}
+
+.country-flags.si {
+	/* Slovenia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -287px; /* Position of the Slovenia flag in the sprite */
+}
+
+.country-flags.sj {
+	/* Svalbard and Jan Mayen */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -287px; /* Position of the Svalbard and Jan Mayen flag in the sprite */
+}
+
+.country-flags.sk {
+	/* Slovakia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -302px; /* Position of the Slovakia flag in the sprite */
+}
+
+.country-flags.sl {
+	/* Sierra Leone */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -302px; /* Position of the Sierra Leone flag in the sprite */
+}
+/* 
+ * CSS class for country flags with specific sizes.
+ * The flags are displayed as background images from a single sprite image.
+ */
+
+/* 
+ * Flag for country with code 'sm' (presumably Samoa).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.sm {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -302px;
+}
+
+/* 
+ * Flag for country with code 'sn' (presumably Senegal).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.sn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -302px;
+}
+
+/* 
+ * Flag for country with code 'so' (presumably Somalia).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.so {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -302px;
+}
+
+/* 
+ * Flag for country with code 'sr' (presumably Suriname).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.sr {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -302px;
+}
+
+/* 
+ * Flag for country with code 'st' (presumably São Tomé and Príncipe).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.st {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -302px;
+}
+
+/* 
+ * Flag for country with code 'sv' (presumably El Salvador).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.sv {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -302px;
+}
+
+/* 
+ * Flag for country with code 'sy' (presumably Syria).
+ * Background image is set with specific offsets to display the correct flag.
+ */
+.country-flags.sy {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -302px;
+}
+/* 
+ * CSS class for country flags with specific background images.
+ * Each class corresponds to a different country, using a single sprite image.
+ */
+
+/* 
+ * Flag for São Tomé and Príncipe (sz) 
+ * Background image is positioned at -182px (x) and -302px (y) in the sprite.
+ */
+.country-flags.sz {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -302px;
+}
+
+/* 
+ * Flag for Turks and Caicos Islands (tc) 
+ * Background image is positioned at -2px (x) and -317px (y) in the sprite.
+ */
+.country-flags.tc {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -317px;
+}
+
+/* 
+ * Flag for Chad (td) 
+ * Background image is positioned at -22px (x) and -317px (y) in the sprite.
+ */
+.country-flags.td {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -317px;
+}
+
+/* 
+ * Flag for French Southern Territories (tf) 
+ * Background image is positioned at -42px (x) and -317px (y) in the sprite.
+ */
+.country-flags.tf {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -317px;
+}
+
+/* 
+ * Flag for Togo (tg) 
+ * Background image is positioned at -62px (x) and -317px (y) in the sprite.
+ */
+.country-flags.tg {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -317px;
+}
+
+/* 
+ * Flag for Thailand (th) 
+ * Background image is positioned at -82px (x) and -317px (y) in the sprite.
+ */
+.country-flags.th {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -317px;
+}
+
+/* 
+ * Flag for Tajikistan (tj) 
+ * Background image is positioned at -102px (x) and -317px (y) in the sprite.
+ */
+.country-flags.tj {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -317px;
+}
+/* 
+ * CSS class definitions for country flags using a single background image.
+ * Each class corresponds to a specific country code and sets the background 
+ * position to display the appropriate flag from the sprite image.
+ */
+
+.country-flags.tk {
+	/* Flag for Tokelau */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -317px; /* Background position for Tokelau flag */
+}
+
+.country-flags.tl {
+	/* Flag for Timor-Leste */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -317px; /* Background position for Timor-Leste flag */
+}
+
+.country-flags.tm {
+	/* Flag for Turkmenistan */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -317px; /* Background position for Turkmenistan flag */
+}
+
+.country-flags.tn {
+	/* Flag for Tunisia */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -317px; /* Background position for Tunisia flag */
+}
+
+.country-flags.to {
+	/* Flag for Tonga */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -2px -332px; /* Background position for Tonga flag */
+}
+
+.country-flags.tr {
+	/* Flag for Turkey */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -22px -332px; /* Background position for Turkey flag */
+}
+
+.country-flags.tt {
+	/* Flag for Trinidad and Tobago */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -42px -332px; /* Background position for Trinidad and Tobago flag */
+}
+/* 
+ * Styles for country flags using a single sprite image.
+ * Each class corresponds to a specific country code and sets the background image 
+ * to display the appropriate flag from the sprite.
+ */
+
+.country-flags.tv {
+	/* Flag for Tuvalu */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -62px -332px; /* Positioning for Tuvalu flag */
+}
+
+.country-flags.tw {
+	/* Flag for Taiwan */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -332px; /* Positioning for Taiwan flag */
+}
+
+.country-flags.tz {
+	/* Flag for Tanzania */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -332px; /* Positioning for Tanzania flag */
+}
+
+.country-flags.ua {
+	/* Flag for Ukraine */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -332px; /* Positioning for Ukraine flag */
+}
+
+.country-flags.ug {
+	/* Flag for Uganda */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -142px -332px; /* Positioning for Uganda flag */
+}
+
+.country-flags.um {
+	/* Flag for United States Minor Outlying Islands */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -162px -332px; /* Positioning for United States Minor Outlying Islands flag */
+}
+
+.country-flags.us {
+	/* Flag for United States */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -182px -332px; /* Positioning for United States flag */
+}
+/* Styles for country flags using a single background image */
+
+/* Uruguay flag */
+.country-flags.uy {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -2px -347px; /* Positioning of the Uruguay flag within the sprite */
+}
+
+/* Uzbekistan flag */
+.country-flags.uz {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -22px -347px; /* Positioning of the Uzbekistan flag within the sprite */
+}
+
+/* Vatican City flag */
+.country-flags.va {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -42px -347px; /* Positioning of the Vatican City flag within the sprite */
+}
+
+/* Saint Vincent and the Grenadines flag */
+.country-flags.vc {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -62px -347px; /* Positioning of the Saint Vincent and the Grenadines flag within the sprite */
+}
+
+/* Venezuela flag */
+.country-flags.ve {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -82px -347px; /* Positioning of the Venezuela flag within the sprite */
+}
+
+/* British Virgin Islands flag */
+.country-flags.vg {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -102px -347px; /* Positioning of the British Virgin Islands flag within the sprite */
+}
+
+/* U.S. Virgin Islands flag */
+.country-flags.vi {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image source */ no-repeat -122px -347px; /* Positioning of the U.S. Virgin Islands flag within the sprite */
+}
+/* Styles for country flags using a single background image */
+
+/* Vietnam flag */
+.country-flags.vn {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -142px -347px; /* Positioning of the Vietnam flag in the sprite */
+}
+
+/* Vanuatu flag */
+.country-flags.vu {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -162px -347px; /* Positioning of the Vanuatu flag in the sprite */
+}
+
+/* Wales flag */
+.country-flags.wales {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -182px -347px; /* Positioning of the Wales flag in the sprite */
+}
+
+/* Wallis and Futuna flag */
+.country-flags.wf {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -2px -362px; /* Positioning of the Wallis and Futuna flag in the sprite */
+}
+
+/* Samoa flag */
+.country-flags.ws {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -22px -362px; /* Positioning of the Samoa flag in the sprite */
+}
+
+/* Yemen flag */
+.country-flags.ye {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -42px -362px; /* Positioning of the Yemen flag in the sprite */
+}
+
+/* Mayotte flag */
+.country-flags.yt {
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		/* Background image URL */ no-repeat -62px -362px; /* Positioning of the Mayotte flag in the sprite */
+}
+/* Styles for South Africa flag */
+.country-flags.za {
+	/* Sets the background image for the South Africa flag with specific positioning */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -82px -362px;
+}
+
+/* Styles for Zambia flag */
+.country-flags.zm {
+	/* Sets the background image for the Zambia flag with specific positioning */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -102px -362px;
+}
+
+/* Styles for Zimbabwe flag */
+.country-flags.zw {
+	/* Sets the background image for the Zimbabwe flag with specific positioning */
+	background: url('https://images.virtualsoft.tech/site/doradobet/Webp/Home/flags.webp')
+		no-repeat -122px -362px;
+}
+
+/* FILE DOCUMENTED */

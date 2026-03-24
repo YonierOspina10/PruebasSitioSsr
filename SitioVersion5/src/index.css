@@ -1,0 +1,3949 @@
+/* Importing the Roboto font from Google Fonts with various weights */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+/* Tailwind CSS directives for base styles, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Setting the background color of the HTML document to black */
+html {
+	background-color: black !important; /* !important ensures this style takes precedence */
+}
+
+/* Setting the body width to 100% and defining its stacking context */
+body {
+	width: 100%; /* Full width of the viewport */
+	z-index: 1; /* Establishes stacking order */
+}
+
+/* Styles for the loading content animation */
+.conten-loading {
+	/* Creating a linear gradient background for loading effect */
+	background: linear-gradient(
+			100deg,
+			rgba(255, 255, 255, 0) 45%,
+			/* Transparent at 45% */ rgba(255, 255, 255, 0.1) 70%,
+			/* Slightly visible at 70% */ rgba(255, 255, 255, 0) 80%
+				/* Transparent again at 80% */
+		)
+		hsl(var(--s)); /* Using a CSS variable for color */
+	background-size: 200% 100%; /* Double the width for animation effect */
+	background-position-x: 180%; /* Initial position for the background */
+	animation: 1s loading ease-in-out infinite; /* Infinite loading animation */
+}
+
+/* Styles for the container loading animation */
+.container-loading {
+	/* Creating a linear gradient background for container loading effect */
+	background: linear-gradient(
+			100deg,
+			rgba(255, 255, 255, 0) 45%,
+			/* Transparent at 45% */ rgba(255, 255, 255, 0.1) 70%,
+			/* Slightly visible at 70% */ rgba(255, 255, 255, 0) 80%
+				/* Transparent again at 80% */
+		)
+		hsl(var(--sf)); /* Using a different CSS variable for color */
+	background-size: 200% 100%; /* Double the width for animation effect */
+	background-position-x: 180%; /* Initial position for the background */
+	animation:
+		1s loading ease-in-out infinite,
+		/* Infinite loading animation */ 2s pulse1 ease-in-out infinite; /* Additional pulsing animation */
+	border-radius: 20px; /* Rounded corners for the container */
+	box-shadow: 0px 5px 30px hsl(var(--bc) / 70%); /* Shadow effect for depth */
+	border: solid 1px hsl(var(--bc) / 50%); /* Border with a semi-transparent color */
+}
+/* 
+ * Defines the loading animation keyframes.
+ * The background position shifts to create a loading effect.
+ */
+@keyframes loading {
+	to {
+		background-position-x: -20%; /* Final position of the background */
+	}
+}
+
+/* 
+ * Defines the pulse animation keyframes.
+ * Creates a scaling effect for elements to simulate a pulsing animation.
+ */
+@keyframes pulse1 {
+	0% {
+		transform: scale(0.95); /* Initial scale */
+	}
+	70% {
+		transform: scale(1); /* Scale to normal size */
+	}
+	100% {
+		transform: scale(0.95); /* Return to initial scale */
+	}
+}
+
+/* 
+ * Applies touch action to the body element.
+ * Allows vertical panning while preventing horizontal panning.
+ */
+body {
+	touch-action: pan-y !important; /* Ensures touch interactions are limited to vertical scrolling */
+}
+
+/* 
+ * Changes the cursor to pointer on hover for anchor elements.
+ * Indicates that the link is interactive.
+ */
+a:hover {
+	cursor: pointer; /* Cursor changes to pointer on hover */
+}
+
+/* 
+ * Applies box-sizing model to all elements and pseudo-elements.
+ * Ensures padding and border are included in the element's total width and height.
+ */
+*,
+*:before,
+*:after {
+	box-sizing: border-box; /* Sets box-sizing to border-box for all elements */
+}
+/* Title styling for history section */
+.history-title {
+	color: #fff; /* Text color set to white */
+	font-style: normal; /* Normal font style */
+	font-weight: 800; /* Bold font weight */
+	line-height: 113.9%; /* Line height for spacing */
+}
+
+/* Strong text within history title */
+
+
+/* Styling for pagination bullets in swiper component */
+.swiper-pagination-bullett {
+	display: flex; /* Use flexbox for layout */
+	width: 40px; /* Fixed width for bullets */
+	height: 12px; /* Fixed height for bullets */
+	display: inline-block; /* Inline-block display */
+	border-radius: 999px; /* Fully rounded corners */
+	background: var(
+		--swiper-pagination-bullet-inactive-color,
+		#d5d5d5
+	); /* Background color with fallback */
+	opacity: var(
+		--swiper-pagination-bullet-inactive-opacity,
+		0.2
+	); /* Opacity with fallback */
+}
+
+/* Active state for pagination bullets */
+.swiper-pagination-bullett-active {
+	opacity: var(
+		--swiper-pagination-bullet-opacity,
+		1
+	); /* Full opacity for active bullet */
+	background: #d59c00; /* Background color for active bullet */
+}
+
+/* Animation class for elements that appear */
+.in {
+	animation: appear-scale 0.3s 0s 1 cubic-bezier(0.175, 0.885, 0.32, 1.575)
+		normal forwards; /* Animation properties */
+}
+/**
+ * @keyframes appear-scale
+ * Defines an animation that scales an element from 0 to its full size.
+ */
+@keyframes appear-scale {
+	from {
+		transform: scale(0); /* Initial scale of the element */
+	}
+	to {
+		transform: scale(1); /* Final scale of the element */
+	}
+}
+
+/**
+ * .btn-pyramid
+ * Styles a button with a pyramid shape using clip-path and rounded corners.
+ */
+.btn-pyramid {
+	clip-path: polygon(
+		0 0,
+		100% 0,
+		97% 100%,
+		3% 100%
+	); /* Defines the pyramid shape */
+	border: none; /* Removes default border */
+	border-top-left-radius: 15px; /* Rounds the top-left corner */
+	border-top-right-radius: 15px; /* Rounds the top-right corner */
+	border-bottom-right-radius: 20px; /* Rounds the bottom-right corner */
+	border-bottom-left-radius: 20px; /* Rounds the bottom-left corner */
+}
+
+/**
+ * .drawer-toggle ~ .drawer-content
+ * Resets the transform property of the drawer content when the drawer toggle is active.
+ */
+.drawer-toggle ~ .drawer-content {
+	transform: none !important; /* Ensures no transformation is applied */
+}
+
+/**
+ * .drawer-toggle ~ .drawer-side > .drawer-overlay + *
+ * Sets the z-index for elements following the drawer overlay to ensure they are on top.
+ */
+.drawer-toggle ~ .drawer-side > .drawer-overlay + * {
+	z-index: 9999; /* High z-index to ensure visibility above other elements */
+}
+
+/**
+ * li.category-list.Bingos polygon
+ * Styles the polygon within the Bingo category list items.
+ */
+li.category-list.Bingos polygon {
+	fill: white !important; /* Forces the fill color to white */
+}
+/** 
+ * Defines a keyframe animation named 'moveLeft3' 
+ * that moves an element from its original position to the left by 100%.
+ */
+@keyframes moveLeft3 {
+	0% {
+		-webkit-transform: translateX(0); /* Initial position */
+		transform: translateX(0); /* Initial position */
+	}
+	100% {
+		-webkit-transform: translateX(-100%); /* Final position, moved left */
+		transform: translateX(-100%); /* Final position, moved left */
+	}
+}
+
+/** 
+ * Styles for table elements.
+ * Ensures that borders are collapsed and there is no spacing between cells.
+ */
+table {
+	border-collapse: collapse; /* Collapses table borders */
+	border-spacing: 0; /* Removes spacing between table cells */
+}
+
+/** 
+ * Styles for SVG elements that are not the root element.
+ * Prevents overflow and disables pointer events.
+ */
+svg:not(:root) {
+	overflow: hidden; /* Hides overflow content */
+	pointer-events: none; /* Disables pointer events for interaction */
+}
+
+/** 
+ * General styles for SVG elements.
+ * Disables pointer events and user selection.
+ */
+svg {
+	pointer-events: none; /* Disables pointer events for interaction */
+	user-select: none; /* Prevents user selection of SVG content */
+}
+
+/** 
+ * Styles for all child elements within SVG.
+ * Disables pointer events and user selection for all SVG children.
+ */
+svg * {
+	pointer-events: none; /* Disables pointer events for interaction */
+	user-select: none; /* Prevents user selection of SVG child elements */
+}
+/* 
+ * Styles for horizontal rule (hr) element.
+ * Sets box-sizing to content-box and height to 0.
+ */
+hr {
+	-moz-box-sizing: content-box; /* Firefox specific box-sizing */
+	box-sizing: content-box; /* Standard box-sizing */
+	height: 0; /* No height for the horizontal rule */
+}
+
+/* 
+ * Styles for button and select elements.
+ * Ensures text is not transformed and overflow is visible.
+ */
+button,
+select {
+	text-transform: none; /* Prevents text transformation */
+	overflow: visible; /* Allows overflow content to be visible */
+}
+
+/* 
+ * Styles for number input spin buttons in WebKit browsers.
+ * Sets height to auto for inner and outer spin buttons.
+ */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	height: auto; /* Allows spin button height to adjust automatically */
+}
+
+/* 
+ * Framework class styles for various pages in the Live Casino and Terms & Conditions sections.
+ * These classes are used to apply consistent styling across multiple page types.
+ */
+.Page-LiveCasino-Index .Framework,
+.Page-TermsConditions-Index .Framework,
+.Page-TermsConditions-Content .Framework,
+.Page-AboutUs-Index .Framework,
+.Page-ContactUs-Index .Framework,
+.Page-Help-Index .Framework,
+.Page-ResponsibleGaming-Index .Framework,
+.Page-Help-Content .Framework,
+.Page-Winners-Index .Framework,
+.Page-FPP-Rates .Framework,
+.Page-Info-BonusContribution .Framework {
+	/* Styles for the Framework class can be added here */
+}
+.Page-Info-Index .Framework {
+	/* Sets the background color and gradient for elements with the class 'Framework' inside '.Page-Info-Index' */
+	background: #25232e;
+	/* Mozilla-specific linear gradient */
+	background: -moz-linear-gradient(
+		top,
+		#25232e 0%,
+		#25232e 25%,
+		#0c1319 100%
+	);
+	/* WebKit-specific linear gradient */
+	background: -webkit-linear-gradient(
+		top,
+		#25232e 0%,
+		#25232e 25%,
+		#0c1319 100%
+	);
+	/* Standard linear gradient */
+	background: linear-gradient(
+		to bottom,
+		#25232e 0%,
+		#25232e 25%,
+		#0c1319 100%
+	);
+}
+html,
+body {
+	/* Sets the text color to white for the entire document */
+	color: white;
+	/* Sets the base font size */
+	font-size: 14px;
+	/* Sets the line height for better readability */
+	line-height: 1.5em;
+	/* Ensures text size is not adjusted in IE */
+	-ms-text-size-adjust: 100%;
+	/* Ensures text size is not adjusted in Safari */
+	-webkit-text-size-adjust: 100%;
+	/* Resets default margin */
+	margin: 0;
+	/* Resets default padding */
+	padding: 0;
+	/* Applies box-sizing model to include padding and border in element's total width and height */
+	box-sizing: border-box;
+}
+/* 
+ * Styles for the header section.
+ */
+.header {
+	position: relative !important; /* Ensures the header is positioned relative to its normal position */
+}
+
+/* 
+ * Styles for tables within the 'reglas' class, including table cells and headers.
+ */
+.reglas table,
+.reglas td,
+.reglas th {
+	border: 1px solid hsl(var(--n)); /* Sets a solid black border for tables, table cells, and headers */
+	color: hsl(var(--n)); /* Sets the text color to black */
+	background: transparent; /* Sets a transparent background */
+}
+
+
+/* Date input: reserve space for the icon on the right */
+input[type='date'] {
+  padding-right: 2rem; /* avoid text overlapping the icon */
+}
+
+/* WebKit/Blink: color the native calendar button using CSS mask + currentColor */
+input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 1;                 /* ensure it's visible and clickable */
+  background: none;           /* remove default artwork */
+  width: 1.25rem;             /* size of the clickable icon */
+  height: 1.25rem;
+  cursor: pointer;
+  color: hsl(var(--n));       /* <-- icon color via CSS variable */
+  background-color: currentColor; /* paint with current color */
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 1 1 2 0v1zm12 6H5v10h14V8zm-9 3h2v2H10v-2zm4 0h2v2h-2v-2zM10 15h2v2H10v-2zm4 0h2v2h-2v-2z'/></svg>");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: 100% 100%;
+}
+
+/* Optional: focus/hover states tied to your palette */
+input[type='date']:focus::-webkit-calendar-picker-indicator,
+input[type='date']:hover::-webkit-calendar-picker-indicator {
+  color: hsl(var(--n)); /* keep same or change to another token if desired */
+}
+
+
+/* 
+ * Styles for the button with the ID 'menuRight'.
+ */
+button#menuRight {
+	width: 25px; /* Sets the width of the button */
+	padding: 45px 0; /* Sets vertical padding for the button */
+	background: #262a3a; /* Sets a solid background color for the button */
+	color: rgba(
+		255,
+		255,
+		255,
+		0.8705882352941177
+	); /* Sets the text color with transparency */
+	position: absolute; /* Positions the button absolutely within its containing element */
+	right: 0; /* Aligns the button to the right */
+	display: block; /* Displays the button as a block element */
+	z-index: 10; /* Sets the stacking order of the button */
+	height: 100%; /* Sets the height of the button to 100% of its containing element */
+	margin-top: -5px; /* Adjusts the top margin of the button */
+	vertical-align: middle; /* Aligns the button vertically in the middle */
+	background: -webkit-linear-gradient(
+		/* Applies a linear gradient background for WebKit browsers */ 90deg,
+		/* Sets the direction of the gradient */ rgb(20, 21, 24) 1%,
+		/* Start color of the gradient */ rgb(42, 45, 58) 48%,
+		/* Middle color of the gradient */ rgb(17, 18, 23) 100%
+			/* End color of the gradient */
+	) !important; /* Ensures this background style takes precedence */
+	cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+}
+/* Button with ID 'menuLeft' styles */
+button#menuLeft {
+	/* Aligns the button to the left */
+	float: left;
+	/* Sets the width of the button */
+	width: 25px;
+	/* Adds vertical padding */
+	padding: 45px 0;
+	/* Sets the background color */
+	background: #262a3a;
+	/* Sets the text color with some transparency */
+	color: rgba(255, 255, 255, 0.8705882352941177);
+	/* Positions the button absolutely */
+	position: absolute;
+	/* Aligns the button to the left edge */
+	left: 0;
+	/* Displays the button as a block element */
+	display: block;
+	/* Sets the stacking order */
+	z-index: 1;
+	/* Adjusts the top margin */
+	margin-top: -5px;
+	/* Sets the height to fill the parent */
+	height: 100%;
+	/* Applies a linear gradient background */
+	background: -webkit-linear-gradient(
+		90deg,
+		rgb(20, 21, 24) 1%,
+		rgb(42, 45, 58) 48%,
+		rgb(17, 18, 23) 100%
+	) !important; /* Ensures this style takes precedence */
+	/* Changes the cursor to pointer on hover */
+	cursor: pointer;
+}
+
+/* Styles for elements with class 'outstanding' and child 'circle' */
+.outstanding .circle {
+	/* Sets the border width */
+	border-width: 2px !important; /* Ensures this style takes precedence */
+}
+
+/* Styles for links within the home slider version 1 */
+.home-slider.version1 > div .container-slide a {
+	/* Centers the text within the link */
+	text-align: center;
+	/* Displays the link as an inline-block element */
+	display: inline-block;
+	/* Sets the maximum width of the link */
+	max-width: 130px;
+}
+.home-slider.version1 > div .container-slide a .circle {
+	/** 
+	 * Sets padding for the circle element within the link.
+	 * Creates space inside the circle.
+	 */
+	padding: 8px;
+	border-radius: 50%; /** Makes the element circular. */
+}
+
+.home-slider.version1 > div .container-slide a > span {
+	/** 
+	 * Centers the text within the span element.
+	 * Sets the width to 100% and adds a top margin for spacing.
+	 */
+	text-align: center;
+	width: 100%;
+	margin-top: 17px; /** Adds space above the span. */
+	display: block; /** Ensures the span behaves as a block element. */
+}
+
+.home-slider.version1 > div .container-slide a .circle > div {
+	/** 
+	 * Styles the inner div of the circle.
+	 * Ensures it is circular and sets fixed dimensions.
+	 */
+	border-radius: 50%; /** Makes the inner div circular. */
+	height: 110px; /** Sets a fixed height. */
+	width: 110px; /** Sets a fixed width. */
+	max-height: 110px; /** Prevents height from exceeding 110px. */
+	max-width: 110px; /** Prevents width from exceeding 110px. */
+	overflow: hidden; /** Hides any overflow content. */
+}
+
+.home-slider.version1 > div .container-slide a .circle > div img {
+	/** 
+	 * Styles the image within the circular div.
+	 * Ensures the image covers the entire area of the div.
+	 */
+	width: 100%; /** Sets the image width to fill the container. */
+	height: 100%; /** Sets the image height to fill the container. */
+	object-fit: contain; /** Maintains aspect ratio while fitting the image. */
+}
+
+.home-slider.version1 > div {
+	/** 
+	 * Centers the content within the div.
+	 * Adds padding at the bottom for spacing.
+	 */
+	text-align: center; /** Centers text and inline elements. */
+	padding-bottom: 20px; /** Adds space below the div. */
+}
+/* Styles for the home slider version 2 */
+.home-slider.version2 > div .home-icons {
+	cursor: pointer; /* Changes cursor to pointer for clickable icons */
+}
+
+/* Styles for anchor tags within home icons */
+.home-slider.version2 > div .home-icons a {
+	text-align: center; /* Centers text within the anchor */
+	width: 100%; /* Sets width to 100% of the parent */
+	margin-top: 17px; /* Adds top margin for spacing */
+	display: block; /* Displays anchor as a block element */
+	color: white; /* Sets text color to white */
+}
+
+/* Styles for button text in outstanding section */
+.outstanding .ButtonText {
+	color: white !important; /* Forces text color to white, overriding other styles */
+}
+
+/* Styles for the pet banner container */
+.contenedor-banner-pet {
+	top: auto !important; /* Resets top positioning */
+	bottom: 0 !important; /* Positions the container at the bottom */
+	right: 0 !important; /* Positions the container to the right */
+	height: 550px !important; /* Sets fixed height */
+	width: 449px !important; /* Sets fixed width */
+	background: #0000008c !important; /* Sets semi-transparent black background */
+	padding: 10px !important; /* Adds padding inside the container */
+	border-radius: 10px !important; /* Rounds the corners of the container */
+}
+
+/* Styles for alert container in close and expand states */
+.alert-container.close,
+.alert-container.expand {
+	float: right; /* Floats the alert container to the right */
+	font-size: 1.5rem; /* Sets font size */
+	font-weight: 700; /* Sets font weight to bold */
+	line-height: 1; /* Sets line height */
+	color: #fff; /* Sets text color to white */
+	text-shadow: 0 1px 0 #fff; /* Adds white text shadow for better visibility */
+	opacity: 1; /* Sets full opacity */
+	cursor: pointer !important; /* Changes cursor to pointer for clickable alerts */
+	padding-bottom: 5px; /* Adds bottom padding for spacing */
+}
+/* 
+ * Styles for alert container when expanded.
+ */
+.alert-container.expand {
+	float: left; /* Aligns the alert container to the left when expanded */
+}
+
+/* 
+ * Styles for the 'NEW' label in the betgames menu item.
+ */
+h1.menu-item_Center.betgames:before {
+	content: 'NEW'; /* Displays 'NEW' before the menu item */
+	display: inline-block; /* Allows the label to be treated as an inline block */
+	color: #fff; /* Sets the text color to white */
+	background: #ff0000; /* Sets the background color to red */
+	position: absolute; /* Positions the label absolutely within the parent */
+	height: 10px; /* Sets the height of the label */
+	font: /* Defines the font properties for the label */
+		8px/11px Arial,
+		Helvetica,
+		sans-serif;
+	padding: 0 2px; /* Adds horizontal padding to the label */
+	border-radius: 3px 0; /* Rounds the top-left and bottom-left corners */
+	right: auto; /* Resets the right positioning */
+	top: 5px; /* Positions the label 5px from the top */
+	margin-left: 87px; /* Adds left margin to position the label */
+	box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
+/* 
+ * Styles for the 'NEW' label in the Side Button Text for betgames.
+ */
+h1.ButtonText.SideBTNText.betgames:before {
+	content: 'NEW'; /* Displays 'NEW' before the button text */
+	display: inline-block; /* Allows the label to be treated as an inline block */
+	color: #fff; /* Sets the text color to white */
+	background: #ff0000; /* Sets the background color to red */
+	position: absolute; /* Positions the label absolutely within the parent */
+	height: 10px; /* Sets the height of the label */
+	font: /* Defines the font properties for the label */
+		8px/11px Arial,
+		Helvetica,
+		sans-serif;
+	padding: 0 2px; /* Adds horizontal padding to the label */
+	border-radius: 3px 0; /* Rounds the top-left and bottom-left corners */
+	right: auto; /* Resets the right positioning */
+	top: 12px; /* Positions the label 12px from the top */
+	margin-left: 114px; /* Adds left margin to position the label */
+	box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+.casino-down .dropdown-casino {
+	/* Enables pointer events for dropdown elements within the casino-down class */
+	pointer-events: all;
+}
+
+div#casino-content {
+	/* Sets the height of the casino content to fill the entire viewport height */
+	height: 100vh;
+}
+
+#verification-mobile-code {
+	/* Styles for the mobile verification code input field */
+	display: block; /* Displays the element as a block */
+	max-width: 300px !important; /* Sets a maximum width with high priority */
+	letter-spacing: 16px; /* Adds spacing between letters */
+	text-align: center; /* Centers the text within the element */
+	font-weight: bold; /* Makes the font bold */
+	padding: 0px 5px 0 20px; /* Adds padding around the element */
+	margin-bottom: 15px; /* Adds space below the element */
+}
+
+#verification-mobile-code::placeholder {
+	/* Styles for the placeholder text in the mobile verification code input */
+	font-size: 13px; /* Sets the font size of the placeholder */
+	letter-spacing: 0px; /* Resets letter spacing for the placeholder */
+	font-weight: 400; /* Sets the font weight to normal for the placeholder */
+	text-align: left; /* Aligns the placeholder text to the left */
+}
+
+[data-notify='container'] {
+	/* Styles for the notification container */
+	position: absolute; /* Positions the container absolutely */
+	left: auto; /* Resets left positioning */
+	max-width: 250px; /* Sets a maximum width for the container */
+	height: 250px; /* Sets a fixed height for the container */
+	top: auto !important; /* Resets top positioning with high priority */
+	right: -19px !important; /* Positions the container 19px off the right edge with high priority */
+}
+/* Style for the close button within the notification container */
+[data-notify='container'] button.close {
+	right: 40px !important; /* Positions the close button 40px from the right */
+}
+
+/* Style for the notification message */
+[data-notify='message'] {
+	display: flex; /* Enables flexbox layout for the message */
+	bottom: 178px; /* Positions the message 178px from the bottom */
+	right: 161px; /* Positions the message 161px from the right */
+	width: 100%; /* Sets the width of the message to 100% */
+	background: white; /* Sets the background color to white */
+	color: black; /* Sets the text color to black */
+	padding: 9px 15px; /* Adds padding of 9px top/bottom and 15px left/right */
+	border-radius: 8px; /* Rounds the corners of the message box */
+	font-size: 12px; /* Sets the font size to 12px */
+	line-height: 15px; /* Sets the line height to 15px */
+}
+
+/* Style for the dismiss button within the notification */
+[data-notify='dismiss'] {
+	color: white; /* Sets the text color to white */
+	opacity: 1; /* Sets the opacity to fully opaque */
+}
+
+/* Style for the pet message notification */
+.pet-menssage {
+	bottom: 162px; /* Positions the pet message 162px from the bottom */
+	position: absolute; /* Positions the element absolutely within its parent */
+	right: 220px; /* Positions the pet message 220px from the right */
+	width: 95% !important; /* Sets the width to 95%, overriding other styles */
+	left: auto !important; /* Disables left positioning, overriding other styles */
+	top: 52px !important; /* Positions the pet message 52px from the top, overriding other styles */
+}
+[data-notify='title'] {
+	/* Sets the position of the title element relative to its normal position */
+	position: relative;
+	/* Makes the font bold */
+	font-weight: bold;
+	/* Sets the font size to 14 pixels */
+	font-size: 14px;
+	/* Floats the element to the left */
+	float: left;
+	/* Sets the background color to a gray shade */
+	background: #7d7d7d;
+	/* Sets the text color to white */
+	color: white;
+	/* Adds padding around the text */
+	padding: 5px 15px 20px;
+	/* Rounds the corners of the element */
+	border-radius: 7px;
+	/* Sets the stacking order of the element */
+	z-index: -1;
+	/* Sets a negative margin at the bottom */
+	margin-bottom: -12px;
+	/* Sets the width to fill the container minus 30 pixels */
+	width: calc(100% - 30px);
+}
+
+h1.ButtonText.SideBTNText {
+	/* Sets the font weight to normal */
+	font-weight: 400;
+}
+
+h1.menu-item_Center,
+h1.nav-label {
+	/* Makes the font bold */
+	font-weight: bold;
+	/* Sets the line height to 15 pixels */
+	line-height: 15px;
+}
+
+i.wallet {
+	/* Floats the wallet icon to the right */
+	float: right;
+}
+
+i.wallet svg {
+	/* Sets the width of the wallet SVG icon to 18 pixels */
+	width: 18px;
+}
+/* Change background color on hover for collection items within saldo */
+.saldo .collection .collection-item:hover {
+	background-color: rgb(141, 141, 141);
+}
+
+/* Style for emoji elements */
+.emoji {
+	width: 1.5em; /* Set width of emoji */
+	height: 1.5em; /* Set height of emoji */
+	display: inline-block; /* Display as inline-block */
+	margin-bottom: -0.25em; /* Adjust bottom margin */
+	background-size: contain; /* Ensure background image is contained */
+}
+
+/* Outer span for emoji, ensuring inline display */
+span.emoji-outer {
+	display: -moz-inline-box !important; /* For Firefox compatibility */
+	display: inline-block !important; /* Force inline-block display */
+}
+
+/* Align text to the left for logged-in users in the ticker box */
+body.logueado .ticker .viewport .box {
+	text-align: left !important; /* Override text alignment */
+}
+
+/* Add padding to the top of the box for logged-in users */
+body.logueado .ticker .viewport .box {
+	padding-top: 4px; /* Set top padding */
+}
+
+/* Remove left padding for the viewport in logged-in state */
+body.logueado .ticker .viewport {
+	padding-left: 0 !important; /* Remove left padding */
+}
+
+/* Ticker styling */
+.ticker {
+	width: 100%; /* Full width of the container */
+	padding-top: 8px !important; /* Set top padding */
+	padding: 0 1em; /* Set horizontal padding */
+	height: 20px; /* Fixed height for the ticker */
+	overflow: hidden; /* Hide overflow content */
+	position: relative; /* Positioning context for child elements */
+}
+/* Styles for the ticker component's viewport */
+.ticker .viewport {
+	/* Padding on the left side */
+	padding-left: 150px;
+	/* Full width of the parent container */
+	width: 100%;
+	/* Positioned absolutely within the parent */
+	position: absolute;
+	/* Fixed height for the viewport */
+	height: 10px;
+	/* Prevents text from wrapping to the next line */
+	white-space: nowrap;
+	/* Transforms text to uppercase */
+	text-transform: uppercase;
+	/* Displays the element as a block */
+	display: block;
+}
+
+/* Animation class for moving the viewport */
+.ticker .viewport.moving {
+	/* Applies a left-moving animation with specified duration and timing function */
+	-webkit-animation: moveLeft 1 1s linear; /* For Safari */
+	animation: moveLeft 1 1s linear; /* Standard syntax */
+}
+
+/* Styles for the box within the viewport */
+.ticker .viewport .box {
+	/* Displays the box inline with other elements */
+	display: inline-block;
+	/* Full width and height of the parent box */
+	width: 100%;
+	height: 100%;
+	/* Margin for spacing between boxes */
+	margin: 0 5px;
+	/* Centers text within the box */
+	text-align: center;
+}
+
+/* Styles for eGaming section */
+.egaming > div {
+	/* Centers the div within its parent */
+	margin: 0 auto;
+}
+
+/* Styles for the first list item in the #redes list */
+#redes li:first-child {
+	/* Sets width based on the total width minus a fixed value */
+	width: calc(100% - 190px);
+}
+/* Styles for span elements on hover within ticker and mobile ticker */
+.ticker .viewport .box span:hover,
+.ticker-mobile .viewport .box span:hover {
+	/* Change text color on hover */
+	color: #e9c100;
+	/* Change cursor to pointer to indicate interactivity */
+	cursor: pointer;
+	/* Smooth transition for all properties over 0.333 seconds */
+	transition: all 0.333s ease-in-out;
+}
+
+/* Styles specific to the mobile ticker */
+.ticker-mobile {
+	/* Set width to auto for responsive design */
+	width: auto;
+	/* Add padding at the top and sides */
+	padding-top: 5px !important;
+	padding: 0 5px;
+	/* Set fixed height */
+	height: 28px;
+	/* Hide overflow content */
+	overflow: hidden;
+	/* Position relative for absolute positioning of child elements */
+	position: relative;
+}
+
+/* Set height for the viewport within the mobile ticker */
+.ticker-mobile .viewport {
+	/* Fixed height for the viewport */
+	height: 10px;
+}
+
+/* Animation styles for ticker with class ticker3 */
+.ticker3 {
+	/* Apply left movement animation */
+	-webkit-animation: moveLeft3 1 3s linear;
+	animation: moveLeft3 1 3s linear;
+}
+
+/* Keyframes for the left movement animation */
+@-webkit-keyframes moveLeft {
+	0% {
+		/* Initial state: no translation */
+		-webkit-transform: translateX(0);
+		transform: translateX(0);
+	}
+	100% {
+		/* Final state: translate to the left by a calculated amount */
+		-webkit-transform: translateX(calc(-100% + 150px));
+		transform: translateX(calc(-100% + 150px));
+	}
+}
+/* Container for the message, centered and responsive */
+.message-contain {
+	width: calc(90% - 20px); /* Width calculation for responsiveness */
+	display: block; /* Display as a block element */
+	height: auto; /* Automatic height based on content */
+	position: unset; /* Default positioning */
+	text-align: center; /* Center text alignment */
+	max-width: 450px; /* Maximum width constraint */
+	margin: 0 auto; /* Center horizontally */
+	margin-top: calc(50vh - 220px); /* Vertical centering with offset */
+}
+
+/* Alert container within the message container */
+.contenedor-banner .message-contain .alert-container {
+	width: 100%; /* Full width of the parent */
+	height: auto; /* Automatic height based on content */
+	padding-bottom: 12px; /* Bottom padding for spacing */
+}
+
+/* Link styles within the alert container */
+.contenedor-banner .message-contain .alert-container a {
+	display: block; /* Display as a block element */
+	height: auto !important; /* Override height to auto */
+	position: unset !important; /* Override positioning */
+	background: white; /* Background color */
+	border-radius: 8px; /* Rounded corners */
+	overflow: hidden; /* Hide overflow content */
+	box-shadow: 0px 0px 23px -4px rgba(0, 0, 0, 1); /* Shadow effect */
+}
+
+/* Title styling within the alert container */
+.contenedor-banner .message-contain .alert-container [data-notify='title'] {
+	width: 100%; /* Full width for the title */
+}
+/* Styles for the message container within the banner */
+.contenedor-banner .message-contain .alert-container [data-notify='message'] {
+	width: 100%; /* Set width to 100% of the parent container */
+	display: inline-block; /* Display as inline-block for layout purposes */
+	margin-top: 0 !important; /* Override any margin-top to ensure no space above */
+	padding: 0; /* Remove padding for a clean look */
+}
+
+/* Styles for the action button in the banner on hover */
+button.action-banner:hover {
+	background: #b98800; /* Change background color on hover */
+	color: #ffbc00 !important; /* Change text color on hover, overriding other styles */
+}
+
+/* Styles for the dismiss button within the message container */
+.contenedor-banner .message-contain [data-notify='dismiss'] {
+	width: 100%; /* Set width to 100% for full alignment */
+	text-align: right; /* Align text to the right */
+	font-size: 41px; /* Set font size for visibility */
+	color: #ffffff; /* Set text color to white */
+	position: unset !important; /* Remove any positioning to default */
+}
+
+/* Styles for the full background banner container */
+.contenedor-banner-pet.full-background {
+	height: 100% !important; /* Set height to 100% of the viewport */
+	width: 100% !important; /* Set width to 100% of the viewport */
+}
+
+/* Styles for the content iframe within the full background banner */
+.contenedor-banner-pet.full-background .content-iframe {
+	float: right; /* Float the iframe to the right */
+	position: absolute; /* Position absolutely within the parent container */
+}
+/**
+ * Defines a keyframe animation named 'light' that creates a glowing text effect.
+ */
+@keyframes light {
+	/**
+	 * The final state of the animation.
+	 */
+	to {
+		text-shadow:
+			#fff 0px 0px 5px,
+			/* White glow at 5px */ #fff 0px 0px 10px,
+			/* White glow at 10px */ #fff 0px 0px 15px,
+			/* White glow at 15px */ #ff2d9500 0px 0px 20px,
+			/* Faded color at 20px */ #ff2d9500 0px 0px 30px,
+			/* Faded color at 30px */ #ff2d9500 0px 0px 40px,
+			/* Faded color at 40px */ #ff2d9500 0px 0px 50px,
+			/* Faded color at 50px */ #ff2d95 0px 0px 75px; /* Stronger glow at 75px */
+	}
+}
+
+/**
+ * Styles for buttons with the class 'action-banner'.
+ */
+button.action-banner {
+	padding: 13px 40px; /* Padding around the button */
+	background: #ffbc00; /* Background color of the button */
+	color: black; /* Text color of the button */
+	font-weight: bold; /* Bold text */
+	border-radius: 2px; /* Slightly rounded corners */
+}
+
+/**
+ * Media query for responsive design, applies styles when the viewport width is 1025px or less.
+ */
+@media (max-width: 1025px) {
+	/**
+	 * Styles for the message container within the alert container.
+	 */
+	.contenedor-banner
+		.message-contain
+		.alert-container
+		[data-notify='message'] {
+		margin-top: 8%; /* Adds top margin to the message */
+	}
+
+	/**
+	 * Styles for hidden pet banner container.
+	 */
+	.contenedor-banner-pet.hidde {
+		height: 210px !important; /* Forces height to 210px */
+	}
+
+	/**
+	 * Styles for visible pet banner container.
+	 */
+	.contenedor-banner-pet {
+		height: 445px !important; /* Forces height to 445px */
+		width: calc(
+			100vw - 60px
+		) !important; /* Sets width to viewport width minus 60px */
+	}
+
+	/**
+	 * Styles for the notification icon.
+	 */
+	[data-notify='icon'] {
+		max-width: 164px; /* Sets maximum width for the icon */
+	}
+
+	/**
+	 * Styles for the notification container.
+	 */
+	[data-notify='container'] {
+		right: -70px !important; /* Positions the container off-screen to the right */
+		max-height: 197px; /* Sets maximum height for the container */
+		max-width: 223px; /* Sets maximum width for the container */
+	}
+
+	/**
+	 * Styles for the notification message.
+	 */
+	[data-notify='message'] {
+		font-size: 10px; /* Sets font size for the message */
+		line-height: 13px; /* Sets line height for the message */
+	}
+
+	/**
+	 * Styles for pet message positioning.
+	 */
+	.pet-menssage {
+		right: 185px; /* Positions the pet message */
+		width: calc(
+			100vw - 195px
+		) !important; /* Sets width to viewport width minus 195px */
+	}
+}
+/* Styles for the SideLink in the Sports Lobby Section on hover */
+a.SideLink.Link-SportsLobbySection:hover > div {
+	border: 1px solid #c69840a3; /* Adds a border with a specific color on hover */
+}
+
+/* Sets the minimum width of the column to auto, overriding any other styles */
+#u_column_1 {
+	min-width: auto !important; /* !important ensures this style takes precedence */
+}
+
+/* Styles for YouTube video iframes */
+.video-youtube iframe {
+	max-width: 500px; /* Limits the maximum width of the iframe to 500px */
+}
+
+/* Styles for menu item headers */
+a.menu-item h1.menu-item_Center {
+	padding: 0 5px; /* Adds horizontal padding to the menu item header */
+	display: block; /* Ensures the header is displayed as a block element */
+}
+
+
+/* 
+  Styles for the menu items in the header. 
+  The width of the menu items is calculated based on the number of items present.
+*/
+
+/* 
+  Set width for the first child and subsequent siblings when there are 12 items.
+  Width is calculated to occupy 1/11th of the total width.
+*/
+.header .menu .menu-list div ol > li:first-child:nth-last-child(12),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(12) ~ li {
+	width: calc((100% / 11) - 0px) !important;
+}
+
+/* 
+  Set width for the first child and subsequent siblings when there are 11 items.
+  Width is calculated to occupy 1/10th of the total width.
+*/
+.header .menu .menu-list div ol > li:first-child:nth-last-child(11),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(11) ~ li {
+	width: calc((100% / 10) - 0px) !important;
+}
+
+/* 
+  Set width for the first child and subsequent siblings when there are 10 items.
+  Width is calculated to occupy 1/9th of the total width.
+*/
+.header .menu .menu-list div ol > li:first-child:nth-last-child(10),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(10) ~ li {
+	width: calc((100% / 9) - 0px) !important;
+}
+
+/* 
+  Set width for the first child and subsequent siblings when there are 9 items.
+  Width is calculated to occupy 1/8th of the total width.
+*/
+.header .menu .menu-list div ol > li:first-child:nth-last-child(9),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(9) ~ li {
+	width: calc((100% / 8) - 0px) !important;
+}
+
+/* 
+  Set width for the first child and subsequent siblings when there are 8 items.
+  Width is calculated to occupy 1/7th of the total width.
+*/
+.header .menu .menu-list div ol > li:first-child:nth-last-child(8),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(8) ~ li {
+	width: calc((100% / 7) - 0px) !important;
+}
+
+/* 
+  Set width for the first child and subsequent siblings when there are 7 items.
+  Width is calculated to occupy 1/6th of the total width.
+*/
+.header .menu .menu-list div ol > li:first-child:nth-last-child(7),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(7) ~ li {
+	width: calc((100% / 6) - 0px) !important;
+}
+
+/* 
+  The code fragment ends here, additional styles may follow.
+*/
+/* Styles for the menu items in the header */
+
+/* Selects all list items after the first child and the sixth last child, setting their width */
+.header .menu .menu-list div ol > li:first-child:nth-last-child(6) ~ li {
+	width: calc(
+		(100% / 5) - 0px
+	) !important; /* Sets width to 20% of the container */
+}
+
+/* Selects the fifth last child and all subsequent list items, adjusting their width */
+.header .menu .menu-list div ol > li:first-child:nth-last-child(5),
+.header .menu .menu-list div ol > li:first-child:nth-last-child(5) ~ li {
+	width: calc(
+		(100% / 4) - 0px
+	) !important; /* Sets width to 25% of the container */
+}
+
+/* Applies padding to the first child list item */
+.header .menu div > li:nth-child(1) {
+	padding-left: 20px !important; /* Adds left padding to the first menu item */
+}
+
+/* Styles for the login list item in the menu */
+.header .menu .menu-list div div li.login {
+	padding-right: 40px; /* Adds right padding to the login item */
+	clip-path: polygon(
+		0% 0%,
+		80% 0%,
+		100% 100%,
+		20% 100%
+	); /* Creates a custom shape for the login item */
+	padding-left: 33px; /* Adds left padding to the login item */
+	background: linear-gradient(
+		to right,
+		#b1b1b7 0%,
+		#444444 100%
+	); /* Applies a gradient background */
+}
+
+/* Resets margin for the menu list */
+.header .menu .menu-list {
+	margin: 0; /* Removes default margin */
+}
+
+/* Styles for each list item in the menu list */
+.header .menu .menu-list div ol > li {
+	height: 40px; /* Sets the height of each menu item */
+	line-height: 15px; /* Sets the line height for text within the menu item */
+	font-size: 14px; /* Sets the font size for the menu item text */
+	font-weight: bold; /* Makes the menu item text bold */
+	display: inline-table; /* Displays the menu items inline */
+	z-index: 2; /* Sets the stacking order of the menu items */
+	text-transform: uppercase; /* Transforms text to uppercase */
+	padding: 0 15px; /* Adds horizontal padding to the menu items */
+}
+.header .menu .menu-list > div > div > li.main-item {
+	/** 
+	 * Limits the number of lines displayed to 2 for main menu items.
+	 * Applies vertical box orientation for line clamping.
+	 */
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	width: 100%; /** Sets the width to 100% of the parent container. */
+}
+
+.header .menu .menu-list div div li a#accion_casinoenvivo {
+	/** 
+	 * Sets a minimum width for the casino live action link.
+	 */
+	min-width: 60px;
+}
+
+li.main-item.menu-login {
+	/** 
+	 * Sets a minimum width for the login menu item.
+	 */
+	min-width: 138px;
+}
+
+li.register.main-item {
+	/** 
+	 * Sets a minimum width for the registration menu item.
+	 */
+	min-width: 120px;
+}
+
+.menu .menu-list > div > div > li > a {
+	/** 
+	 * Displays menu links as table cells with specific height and no padding.
+	 */
+	display: table-cell;
+	height: 40px;
+	padding: 0;
+}
+
+.casino-down .dropdown-casino a {
+	/** 
+	 * Forces the color of dropdown casino links to black, overriding other styles.
+	 */
+	color: black !important;
+}
+
+div#contenedor-main {
+	/** 
+	 * Positions the main container absolutely with a high z-index.
+	 * Sets its dimensions and text alignment.
+	 */
+	position: absolute;
+	z-index: 200;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	top: auto;
+	height: 44px;
+	text-align: left;
+	font-family: 'Beaufort-Bold';
+	font-size: 16px;
+}
+/* Set font size for elements with the class 'fa-2x' */
+.fa-2x {
+	font-size: 1.5em; /* Increases font size to 1.5 times the normal size */
+}
+
+/* Media query for screens with a maximum width of 600px */
+@media screen and (max-width: 600px) {
+	/* Style for indicator items within a slider */
+	.slider .indicators .indicator-item {
+		width: 10px; /* Set width of indicator items */
+		height: 10px; /* Set height of indicator items */
+	}
+
+	/* Style for the header logo */
+	#header-logo {
+		width: 150px; /* Set width of the header logo */
+	}
+
+	/* Style for the header */
+	#header {
+		height: 150px; /* Set height of the header */
+	}
+
+	/* Style for list items in the main footer */
+	#main-footer li {
+		font-size: 10px; /* Set font size for footer list items */
+	}
+
+	/* Style for the 'siguenos-footer' div */
+	div#siguenos-footer {
+		margin-top: 0; /* Remove top margin */
+	}
+}
+
+/* Media query for screens with a width between 810px and 1200px */
+@media screen and (min-width: 810px) and (max-width: 1200px) {
+	/* Style for menu item headers */
+	a.menu-item h1.menu-item_Center {
+		padding: 0; /* Remove padding */
+		display: block; /* Set display to block */
+	}
+}
+/* Media query for screens between 601px and 992px */
+@media screen and (min-width: 601px) and (max-width: 992px) {
+	/* Centering the h1 element within menu items */
+	a.menu-item h1.menu-item_Center {
+		padding: 0; /* Removes padding */
+		display: block; /* Displays as a block element */
+	}
+}
+
+/* Media query for screens with a maximum width of 820px */
+@media screen and (max-width: 820px) {
+	/* Displays menu list items inline-block */
+	.menu .menu-list li {
+		display: inline-block; /* Allows items to sit next to each other */
+	}
+}
+
+/* Media query for screens with a maximum width of 720px */
+@media screen and (max-width: 720px) {
+	/* Removes padding from the last child of the menu list */
+	.menu .menu-list li:last-child {
+		padding-left: 0; /* Removes left padding */
+		padding-right: 0; /* Removes right padding */
+	}
+	/* Removes right padding from the first child of the menu div */
+	.menu div > li:nth-child(1) {
+		padding-right: 0; /* Removes right padding */
+	}
+}
+
+/* Styles for input elements within the sexo class in form-row-1 */
+.form-row-1 .sexo .div-input > div input {
+	width: 25px; /* Sets width of input to 25px */
+	display: block; /* Displays as a block element */
+	margin: 4px auto !important; /* Centers input with vertical margin */
+}
+/* Styles for the first row of the form, specifically for the 'sexo' class */
+.form-row-1 .sexo .div-input > div {
+	width: 48% !important; /* Sets the width of the div to 48% with high specificity */
+	text-align: center; /* Centers the text within the div */
+}
+
+/* Styles for the dropdown menu within the 'menu-serv' class */
+.menu-serv ul.dropdown-menu {
+	background: #707070; /* Sets the background color of the dropdown menu */
+	border: 0; /* Removes the border */
+	color: white; /* Sets the text color to white */
+	border-radius: 0; /* Removes border radius for sharp corners */
+}
+
+/* Styles for the submenu when hovered within the 'menu-serv' class */
+.menu-serv .dropdown-submenu:hover > .dropdown-menu {
+	background: #545454; /* Changes background color on hover */
+	color: white; /* Maintains white text color on hover */
+	font-weight: 300; /* Sets font weight to light */
+	border-radius: 0; /* Removes border radius for sharp corners */
+	border: 0; /* Removes the border */
+	margin: 0; /* Resets margin to zero */
+	text-transform: capitalize; /* Capitalizes the first letter of each word */
+	left: -180px; /* Positions the submenu to the left */
+	width: 180px; /* Sets the width of the submenu */
+}
+
+/* Styles for links within the 'menu-serv' class */
+.menu-serv li a {
+	vertical-align: middle; /* Vertically aligns the link text */
+	padding: 12px 10px; /* Adds padding around the link */
+	font-size: 13px; /* Sets the font size */
+	width: 100%; /* Makes the link take the full width of its container */
+	display: block !important; /* Forces the link to be a block element */
+}
+/* Styles for the dropdown menu within the menu-serv class */
+.menu-serv ul.dropdown-menu {
+	padding: 0; /* Removes default padding from the dropdown menu */
+}
+
+/* Styles for dropdown toggle links within the menu-serv class */
+.menu-serv li > a.dropdown-toggle {
+	color: #e2e2e2; /* Sets the text color for dropdown toggle links */
+}
+
+/* Styles for the main item with class menu-home and deposit */
+li.main-item.menu-home.deposit {
+	clip-path: polygon(
+		0% 0%,
+		80% 0%,
+		100% 100%,
+		20% 100%
+	); /* Defines a custom shape for the element */
+	background: #1ca51c; /* Sets the background color */
+	min-width: 139px; /* Sets the minimum width of the element */
+}
+
+/* Styles for the main item with class menu-home and register */
+li.main-item.menu-home.register {
+	background: #1ca51c; /* Sets the background color */
+	clip-path: polygon(
+		0% 0%,
+		80% 0%,
+		100% 100%,
+		20% 100%
+	); /* Defines a custom shape for the element */
+}
+
+/* Styles for the container with class Box and width-middle for register */
+.Container.Box.width-middle.register {
+	width: 200px !important; /* Sets a fixed width for the element, overriding other styles */
+}
+
+/* Styles for the container with class Box and width-middle */
+.Container.Box.width-middle {
+	width: calc(
+		49% - 100px
+	); /* Sets the width to a calculated value based on the parent container */
+}
+
+/* Styles for the menu login item when the user is not logged in */
+body.nologueado .menu-list.version1 li.menu-login:last-child {
+	padding-right: 40px; /* Adds right padding to the last menu login item */
+	clip-path: polygon(
+		0% 0%,
+		100% 0%,
+		100% 100%,
+		20% 100%
+	); /* Defines a custom shape for the element */
+	padding-left: 33px; /* Adds left padding to the last menu login item */
+	background: linear-gradient(
+		to right,
+		#b1b1b7 0%,
+		#444444 100%
+	); /* Sets a gradient background */
+}
+/* Styles for menu items when the user is not logged in */
+body.nologueado .menu-list.version1 li {
+	padding: 0 15px; /* Adds horizontal padding to menu items */
+}
+
+/* Styles for the last menu item on hover when the user is logged in */
+body.logueado .menu-list.version1 div > li:nth-last-child(1):hover {
+	background: transparent !important; /* Ensures background remains transparent on hover */
+}
+
+/* Styles for the last menu item when the user is logged in */
+body.logueado .menu-list.version1 > li:last-child {
+	background: transparent !important; /* Ensures background remains transparent */
+	clip-path: none !important; /* Removes any clipping path effects */
+}
+
+/* Keyframes for moving an element to the left */
+@-webkit-keyframes moveLeft {
+	0% {
+		-webkit-transform: translateX(0); /* Initial position */
+		transform: translateX(0); /* Initial position */
+	}
+	100% {
+		-webkit-transform: translateX(-100%); /* Final position moved left */
+		transform: translateX(-100%); /* Final position moved left */
+	}
+}
+
+/* Styles for the header logo when the user is logged in */
+body.logueado .header-logo {
+	height: 22px; /* Sets the height of the header logo */
+}
+
+/* Media query for responsive design on smaller screens */
+@media (max-width: 600px) {
+	body.logueado .header-logo {
+		display: block; /* Ensures the header logo is displayed as a block element */
+	}
+}
+/* Media query for screens wider than 601px */
+@media (min-width: 601px) {
+	/* Display the header logo when the user is logged in */
+	body.logueado .header-logo {
+		display: block; /* Show the logo */
+	}
+}
+
+/* Default state for logged-in users: hide the header logo */
+body.logueado .header-logo {
+	display: none; /* Hide the logo */
+}
+
+/* State for logged-out users: show the header logo */
+body.nologueado .header-logo {
+	display: block; /* Show the logo */
+	height: 20px; /* Set the height of the logo */
+}
+
+/* Styling for the container with specific class names */
+.Container.Box.width-middle {
+	padding: 5px 20px !important; /* Set padding with high specificity */
+}
+
+/* General body styling */
+body {
+	background-size: cover !important; /* Ensure background covers the entire area */
+	background-position: center !important; /* Center the background image */
+}
+
+/* Hover effect for side links in the sports lobby section */
+a.SideLink.Link-SportsLobbySection:hover {
+	transform: scale(1.1); /* Scale up the link on hover */
+}
+
+/* Media query for screens narrower than 500px */
+@media screen and (max-width: 500px) {
+	/* Hide the online ticket consultation for logged-in users on mobile */
+	body.logueado #dropdownservicios-mobile .consulta_tickets_online {
+		display: none; /* Hide the element */
+	}
+
+	/* Ensure the recibo-content table takes full width on mobile */
+	.recibo-content table {
+		width: 100% !important; /* Set table width to 100% with high specificity */
+	}
+}
+
+.loader-dbt {
+	position: absolute; /* Positions the loader relative to its nearest positioned ancestor. */
+	width: 100%; /* Full width of the parent element. */
+	height: 100%; /* Full height of the parent element. */
+	top: 0px; /* Aligns the loader to the top of the parent. */
+	left: 0px; /* Aligns the loader to the left of the parent. */
+	display: inline-block; /* Allows the loader to be treated as an inline element. */
+	background: #000000b5; /* Semi-transparent black background. */
+	float: none; /* Prevents floating behavior. */
+	z-index: 1000; /* Ensures the loader appears above other elements. */
+	text-align: center; /* Centers text within the loader. */
+	display: none; /* Initially hides the loader. */
+}
+
+.loader-dbt img {
+	display: inline-block; /* Allows the image to be treated as an inline element. */
+	max-width: 200px; /* Limits the image width to 200 pixels. */
+	margin-top: 30%; /* Adds top margin to center the image vertically. */
+	animation: auto; /* Sets the animation property to auto (default). */
+	-webkit-animation: firelight 2s ease infinite; /* Applies the firelight animation for WebKit browsers. */
+	animation: firelight 2s ease infinite; /* Applies the firelight animation for other browsers. */
+	transition: all linear 0.5s; /* Smooth transition for all properties over 0.5 seconds. */
+}
+
+#formWithdrawAmount.Anular {
+	background: white; /* Sets the background color to white. */
+	padding: 20px 30px; /* Adds padding around the content. */
+	border-radius: 10px; /* Rounds the corners of the form. */
+	padding-right: 0; /* Removes right padding. */
+	height: 85px; /* Sets a fixed height for the form. */
+	overflow: hidden; /* Hides any overflow content. */
+	margin-bottom: 20px; /* Adds space below the form. */
+}
+
+/* Styles for the withdrawal amount form */
+div#formWithdrawAmount.Retirar {
+	background: white; /* Sets the background color to white */
+	padding: 15px 25px; /* Adds padding around the form */
+}
+
+/* Styles for the currency label within the withdrawal form */
+div#formWithdrawAmount.Retirar label.page-moneda {
+	background: #ececec; /* Sets a light gray background for the label */
+	height: auto; /* Allows the height to adjust based on content */
+	padding: 12.5px; /* Adds padding inside the label */
+}
+
+/* Utility class to span full width in a grid layout */
+.col-span-full {
+	grid-column: 1/-1; /* Spans all columns from the first to the last */
+}
+
+/* Utility class to span 16 columns in a grid layout */
+.col-\[16_\/_span_16\] {
+	grid-column: 16 / span 16; /* Spans 16 columns starting from column 16 */
+}
+
+/* Utility class to span 1 column in a grid layout */
+.col-span-1 {
+	grid-column: span 1 / span 1; /* Spans 1 column */
+}
+
+/* Utility class to span 2 columns in a grid layout */
+.col-span-2 {
+	grid-column: span 2 / span 2; /* Spans 2 columns */
+}
+
+/* Utility class to span 3 columns in a grid layout */
+.col-span-3 {
+	grid-column: span 3 / span 3; /* Spans 3 columns */
+}
+
+/* Utility class to span 4 columns in a grid layout */
+.col-span-4 {
+	grid-column: span 4 / span 4; /* Spans 4 columns */
+}
+/* Defines a grid column that spans 5 columns */
+.col-span-5 {
+	grid-column: span 5 / span 5;
+}
+
+/* Defines a grid column that spans 6 columns */
+.col-span-6 {
+	grid-column: span 6 / span 6;
+}
+
+/* Defines a grid column that spans 7 columns */
+.col-span-7 {
+	grid-column: span 7 / span 7;
+}
+
+/* Sets the starting point of a grid column at the first column */
+.col-start-1 {
+	grid-column-start: 1;
+}
+
+/* Sets the starting point of a grid column at the second column */
+.col-start-2 {
+	grid-column-start: 2;
+}
+
+/* Sets the starting point of a grid column at the third column */
+.col-start-3 {
+	grid-column-start: 3;
+}
+
+/* Sets the starting point of a grid column at the sixth column */
+.col-start-6 {
+	grid-column-start: 6;
+}
+
+/* Sets the starting point of a grid column at the first column using an escaped character */
+.col-start-\[1\] {
+	grid-column-start: 1;
+}
+
+/* Sets the starting point of a grid column at the second column using an escaped character */
+.col-start-\[2\] {
+	grid-column-start: 2;
+}
+/* 
+ * CSS class for setting the starting column of a grid layout.
+ * The number in brackets indicates the column number where the grid item will start.
+ */
+.col-start-\[3\] {
+	grid-column-start: 3; /* Starts at column 3 */
+}
+.col-start-\[4\] {
+	grid-column-start: 4; /* Starts at column 4 */
+}
+.col-start-\[5\] {
+	grid-column-start: 5; /* Starts at column 5 */
+}
+.col-start-\[6\] {
+	grid-column-start: 6; /* Starts at column 6 */
+}
+.col-start-\[73\] {
+	grid-column-start: 73; /* Starts at column 73 */
+}
+.col-start-\[7\] {
+	grid-column-start: 7; /* Starts at column 7 */
+}
+.col-start-\[8\] {
+	grid-column-start: 8; /* Starts at column 8 */
+}
+
+/* 
+ * CSS class for setting the ending column of a grid layout.
+ * The number indicates the column number where the grid item will end.
+ */
+.col-end-1 {
+	grid-column-end: 1; /* Ends at column 1 */
+}
+.col-end-3 {
+	grid-column-end: 3; /* Ends at column 3 */
+}
+/* Defines the end position of a grid column at the 4th line */
+.col-end-4 {
+	grid-column-end: 4;
+}
+
+/* Defines the end position of a grid column at the 7th line */
+.col-end-7 {
+	grid-column-end: 7;
+}
+
+/* Defines a grid row that spans 16 rows */
+.row-\[span_16_\/_span_16\] {
+	grid-row: span 16 / span 16;
+}
+
+/* Defines a grid row that spans 2 rows */
+.row-span-2 {
+	grid-row: span 2 / span 2;
+}
+
+/* Defines a grid row that spans 3 rows */
+.row-span-3 {
+	grid-row: span 3 / span 3;
+}
+
+/* Defines a grid row that spans 4 rows */
+.row-span-4 {
+	grid-row: span 4 / span 4;
+}
+
+/* Defines the starting position of a grid row at the 1st line */
+.row-start-1 {
+	grid-row-start: 1;
+}
+
+/* Defines the starting position of a grid row at the 2nd line */
+.row-start-2 {
+	grid-row-start: 2;
+}
+
+/* Defines the starting position of a grid row at the 3rd line */
+.row-start-3 {
+	grid-row-start: 3;
+}
+/* 
+ * CSS class definitions for grid row starting positions.
+ * Each class sets the starting row of a grid item in a CSS Grid layout.
+ */
+
+.row-start-\[10\] {
+	/* Sets the grid row start position to 10 */
+	grid-row-start: 10;
+}
+
+.row-start-\[11\] {
+	/* Sets the grid row start position to 11 */
+	grid-row-start: 11;
+}
+
+.row-start-\[12\] {
+	/* Sets the grid row start position to 12 */
+	grid-row-start: 12;
+}
+
+.row-start-\[13\] {
+	/* Sets the grid row start position to 13 */
+	grid-row-start: 13;
+}
+
+.row-start-\[14\] {
+	/* Sets the grid row start position to 14 */
+	grid-row-start: 14;
+}
+
+.row-start-\[15\] {
+	/* Sets the grid row start position to 15 */
+	grid-row-start: 15;
+}
+
+.row-start-\[16\] {
+	/* Sets the grid row start position to 16 */
+	grid-row-start: 16;
+}
+
+.row-start-\[17\] {
+	/* Sets the grid row start position to 17 */
+	grid-row-start: 17;
+}
+
+.row-start-\[1\] {
+	/* Sets the grid row start position to 1 */
+	grid-row-start: 1;
+}
+/* 
+ * CSS class for setting the starting row of a grid layout.
+ * The number in the class name corresponds to the row number.
+ */
+.row-start-\[2\] {
+	grid-row-start: 2; /* Sets the starting row to 2 */
+}
+.row-start-\[3\] {
+	grid-row-start: 3; /* Sets the starting row to 3 */
+}
+.row-start-\[4\] {
+	grid-row-start: 4; /* Sets the starting row to 4 */
+}
+.row-start-\[5\] {
+	grid-row-start: 5; /* Sets the starting row to 5 */
+}
+.row-start-\[6\] {
+	grid-row-start: 6; /* Sets the starting row to 6 */
+}
+.row-start-\[7\] {
+	grid-row-start: 7; /* Sets the starting row to 7 */
+}
+.row-start-\[8\] {
+	grid-row-start: 8; /* Sets the starting row to 8 */
+}
+.row-start-\[9\] {
+	grid-row-start: 9; /* Sets the starting row to 9 */
+}
+
+/* 
+ * CSS class for setting the ending row of a grid layout.
+ * This class sets the grid row to end at row 1.
+ */
+.row-end-1 {
+	grid-row-end: 1; /* Sets the ending row to 1 */
+}
+/* 
+ * CSS class to set the end of the grid row to 2 for elements with this class.
+ */
+.row-end-2 {
+	grid-row-end: 2;
+}
+
+/* 
+ * CSS class to set the end of the grid row to 3 for elements with this class.
+ */
+.row-end-3 {
+	grid-row-end: 3;
+}
+
+/* 
+ * CSS class to set the end of the grid row to 4 for elements with this class.
+ */
+.row-end-4 {
+	grid-row-end: 4;
+}
+
+/* 
+ * Animation class for elements within the ticker that are moving.
+ * Applies a leftward movement animation over 1 second.
+ */
+.ticker .viewport.moving {
+	-webkit-animation: moveLeft 1 1s linear; /* For Safari */
+	animation: moveLeft 1 1s linear; /* Standard syntax */
+}
+
+/* 
+ * Styles for the withdrawal amount form when in the 'Retirar' state.
+ * Aligns inline-block elements vertically to the middle.
+ */
+div#formWithdrawAmount.Retirar .div-inline-block {
+	vertical-align: middle;
+}
+
+/* 
+ * Styles for the withdrawal information section within the withdrawal form.
+ * Sets background color, padding, font size, and border radius.
+ */
+div#formWithdrawAmount.Retirar .retiro-info {
+	background: #eaeaea; /* Light gray background */
+	padding: 10px 15px; /* Padding around the content */
+	font-size: 13px; /* Font size for the text */
+	border-radius: 5px; /* Rounded corners */
+}
+
+/* 
+ * Styles for span elements within the withdrawal info section.
+ * Sets the text color to a muted gray.
+ */
+div#formWithdrawAmount.Retirar .retiro-info span {
+	color: #6b6b6b; /* Dark gray text color */
+}
+/* Styles for the withdraw amount form */
+div#formWithdrawAmount.Retirar .AmountBox.filtro-nota {
+	float: right; /* Aligns the amount box to the right */
+}
+
+/* Custom scrollbar styling for webkit browsers */
+body ::-webkit-scrollbar-thumb {
+	background: #a5a5a5 !important; /* Sets the scrollbar thumb color */
+}
+
+/* Styles for the amount box when it has the 'anular' class */
+.AmountBox.filtro-nota.anular {
+	float: right; /* Aligns the amount box to the right */
+	padding: 5px 0; /* Adds vertical padding */
+}
+
+/* Background styling for the conversion bonus container */
+.convertion-bono .convertion-contain {
+	background: #f9f9f9; /* Sets a light gray background */
+}
+
+/* Styles for spans within the conversion container */
+.convertion-bono .convertion-contain > span {
+	padding: 0 15px; /* Adds horizontal padding */
+	display: inherit; /* Inherits the display property from the parent */
+	line-height: 18px; /* Sets the line height */
+}
+
+/* Styles for visibility elements */
+.visibility > div {
+	padding: 7px 13px; /* Adds padding around the div */
+	background: #e4e4e4; /* Sets a light gray background */
+	color: #cecece; /* Sets the text color */
+	display: inline-block; /* Displays the div as an inline block */
+	width: calc(
+		100% / 2 - 28px
+	); /* Sets the width to half of the parent minus 28px */
+	border-radius: 2px; /* Rounds the corners of the div */
+	font-weight: bold; /* Makes the text bold */
+	text-align: center; /* Centers the text */
+}
+/* Styles for elements with the class 'vip' inside a parent with the class 'visibility' */
+.visibility > div.vip {
+	background: #b48303; /* Background color for VIP elements */
+	color: white; /* Text color for VIP elements */
+}
+
+/* Styles for the conversion bonus container and its currency elements */
+.convertion-bono .convertion-contain .moneda {
+	border: 2px solid black; /* Solid black border */
+	border-radius: 0 0 5px 5px; /* Rounded corners at the bottom */
+	font-weight: bold; /* Bold text */
+	border-top: 0; /* No border on the top */
+	display: inline-block; /* Inline-block display for alignment */
+	padding: 3px 10px; /* Padding for spacing */
+	position: relative; /* Relative positioning for potential absolute children */
+	color: black; /* Text color */
+	top: 0; /* No vertical offset */
+	margin-right: -2px; /* Negative margin to adjust spacing */
+	cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Styles for bold text within span elements inside the conversion container */
+.convertion-bono .convertion-contain > span > span {
+	font-weight: bold; /* Bold text */
+}
+
+/* Styles for the close button in promotion item text */
+span.promotion-item-text .close {
+	margin: 9px; /* Margin around the close button */
+	cursor: pointer; /* Pointer cursor on hover */
+	right: 7px; /* Positioning from the right */
+}
+/* Change the text color to black when hovering over the close button in promotion items */
+span.promotion-item-text .close:hover {
+	color: black;
+}
+
+/* Set the height to auto and remove background image for list items in HomeSlider */
+#HomeSlider li {
+	height: auto !important; /* Override any other height settings */
+	background-image: none !important; /* Ensure no background image is applied */
+}
+
+/* Ensure images within links in HomeSlider are displayed as block elements and take full width */
+#HomeSlider li a img {
+	display: block !important; /* Prevent inline display issues */
+	width: 100% !important; /* Make the image responsive to the container's width */
+}
+
+/* Set the background color for promotion titles with the type-prom class */
+.promotion-title.type-prom {
+	background: #58c392 !important; /* Use a specific green color for the background */
+}
+
+/* Style for the porcent span, positioning it absolutely within its parent */
+span.porcent {
+	position: absolute; /* Position relative to the nearest positioned ancestor */
+	width: 57%; /* Set width to 57% of the parent element */
+	text-align: center; /* Center the text within the span */
+	top: 6px; /* Position 6 pixels from the top of the parent */
+	font-size: 9px; /* Set a small font size */
+	color: white; /* Set text color to white */
+}
+
+/* Specific styles for porcent span within mi-cuenta class */
+.mi-cuenta span.porcent {
+	width: 190px !important; /* Override width to a fixed value */
+	position: relative; /* Position relative to its normal position */
+	float: left; /* Float to the left */
+	display: block; /* Ensure it behaves as a block element */
+	top: auto; /* Reset top positioning */
+	z-index: 999; /* Set a high stacking order */
+	margin-top: -14px; /* Adjust margin to position it correctly */
+}
+.mi-cuenta #myProgress {
+	/* Sets border radius to 0 for the progress element within the 'mi-cuenta' class */
+	border-radius: 0;
+}
+
+.mi-cuenta [aria-describedby='list_progress'] {
+	/* Applies padding and vertical alignment to elements with aria-describedby attribute within 'mi-cuenta' class */
+	padding: 1px 3px !important; /* !important overrides other styles */
+	vertical-align: middle; /* Aligns the element vertically in the middle */
+}
+
+@keyframes floatText {
+	/* Defines a keyframe animation named 'floatText' that translates the element to the left */
+	to {
+		transform: translateX(
+			-100%
+		); /* Moves the element completely out of view to the left */
+	}
+}
+
+.showModal {
+	/* Styles for elements with 'showModal' class to display them as a modal */
+	display: block; /* Makes the modal visible */
+	opacity: 1 !important; /* Ensures the modal is fully opaque */
+}
+
+@-webkit-keyframes pulset {
+	/* Defines a keyframe animation named 'pulset' for a pulsing effect */
+	0% {
+		-webkit-transform: scale(0.95); /* Initial scale of the element */
+		opacity: 0.3; /* Initial opacity */
+	}
+	50% {
+		-webkit-transform: scale(1); /* Scale to normal size */
+		opacity: 1; /* Full opacity */
+	}
+	100% {
+		-webkit-transform: scale(0.95); /* Scale back down */
+		opacity: 0.3; /* Fade out */
+	}
+}
+/* Styles for the last child menu-login label when the user is not logged in */
+body.nologueado .menu-list.version1 li.menu-login:last-child label {
+	cursor: pointer; /* Changes cursor to pointer to indicate clickable item */
+	font-weight: bold; /* Makes the font bold for emphasis */
+}
+
+/* Styles for the active page title */
+.ActivePageTitle {
+	max-width: 1280px; /* Sets maximum width of the title */
+	display: block; /* Displays the title as a block element */
+	margin: auto auto 10px; /* Centers the title horizontally and adds bottom margin */
+	min-height: 40px; /* Ensures a minimum height for the title */
+}
+
+/* Styles for the second active page title */
+.ActivePageTitle2 {
+	max-width: 1280px; /* Sets maximum width of the second title */
+}
+
+/* Styles for side menu links */
+.SideMenuList .SideLink {
+	color: #fff; /* Sets text color to white */
+	font-weight: 400; /* Sets font weight to normal */
+	text-transform: uppercase; /* Transforms text to uppercase */
+	letter-spacing: 1px; /* Adds spacing between letters */
+}
+
+/* Styles for the side menu close icon */
+.SideMenuCloseIcon {
+	width: 1.357em; /* Sets width of the icon */
+	margin: 0.92em 1em; /* Adds margin around the icon */
+	height: 1.357em; /* Sets height of the icon */
+	fill: #d0af27; /* Sets fill color for the icon */
+}
+/* Change text color to white on hover for collection item spans */
+.collection .collection-item span:hover {
+	color: white; /* Text color on hover */
+}
+
+/* Set display property to inline-block for elements with this class */
+.div-inline-block {
+	display: inline-block; /* Allows elements to sit next to each other */
+}
+
+/* Style for links in the TermsList MenuList */
+.TermsList .MenuList li a {
+	width: 100%; /* Full width for the link */
+	display: block; /* Makes the link a block element */
+	padding: 0.75em 1.5em; /* Padding for the link */
+}
+
+/* Wrapper for promotion and InfoPage with specific font and padding */
+#promocion-wrapper,
+.Framework.InfoPage {
+	font-family: Roboto !important; /* Use Roboto font, overriding other styles */
+	padding: 20px 10px; /* Padding for top/bottom and left/right */
+}
+
+/* Framework class with positioning and overflow settings */
+.Framework {
+	position: relative; /* Positioning context for child elements */
+	z-index: 1; /* Stacking order */
+	padding-top: 10px; /* Padding at the top */
+	overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+/* AmountBox class with positioning and z-index */
+.AmountBox {
+	position: relative; /* Positioning context for child elements */
+	z-index: 1; /* Stacking order */
+}
+.AmountBox,
+.CurrencyNotice {
+	/* Display elements as block and align text to the left */
+	display: block;
+	text-align: left;
+}
+
+.form-col-title {
+	/* Set text color, alignment, margin, and minimum width for form column titles */
+	color: #000;
+	text-align: left;
+	margin-bottom: 5px;
+	min-width: 160px;
+}
+
+label.page-moneda {
+	/* Style for labels with class 'page-moneda': set text color and font weight */
+	color: black;
+	font-weight: bold;
+}
+
+select.FormInput[disabled],
+select[disabled] {
+	/* Style for disabled select elements: remove background image and set background color */
+	background: #fff;
+	background-image: none;
+}
+
+label.valid .fa {
+	/* Style for valid labels containing Font Awesome icons: add border radius and padding */
+	border-radius: 20px;
+	padding: 4px;
+}
+
+.mi-cuenta .ui-jqgrid tr. {
+	/* Set width and border color for table rows within the 'mi-cuenta' class and 'ui-jqgrid' class */
+	width: 20% !important;
+	border-color: #eee;
+}
+@media (max-width: 810px) {
+	/* Media query for devices with a maximum width of 810px */
+	.Container.Box.width-middle.register {
+		/* Targeting specific container class */
+		display: none; /* Hides the element on smaller screens */
+	}
+	.TermsList.HelpList {
+		/* Targeting TermsList with HelpList class */
+		margin-right: 0 !important; /* Removes right margin */
+		border-right: none !important; /* Removes right border */
+	}
+	.MenuList {
+		/* Targeting MenuList class */
+		display: contents; /* Makes the element's children render as if they were direct children of the parent */
+		z-index: 11; /* Sets the stacking order of the element */
+		height: 50px; /* Sets the height of the MenuList */
+		width: 45px; /* Sets the width of the MenuList */
+	}
+	ol.MenuList.L {
+		/* Targeting ordered list with MenuList and L class */
+		height: auto; /* Sets the height to auto */
+	}
+	.TermsList .MenuList {
+		/* Targeting MenuList within TermsList */
+		max-width: 100%; /* Sets maximum width to 100% of the parent */
+	}
+	.msform fieldset {
+		/* Targeting fieldset within msform class */
+		width: 100%; /* Sets the width of the fieldset to 100% */
+	}
+}
+footer .redes-sociales ul li {
+	/* Targeting list items within redes-sociales in footer */
+	display: inline-block; /* Displays list items inline */
+	margin: 5px 10px; /* Sets margin around list items */
+	vertical-align: middle; /* Aligns items vertically in the middle */
+}
+/* Change color to red on hover for YouTube icon */
+i.fa.fa-youtube-square:hover {
+	color: red;
+}
+
+/* Change color to a specific blue on hover for Instagram icon */
+i.fa.fa-instagram:hover {
+	color: #007bb7;
+}
+
+/* Change color to a light blue on hover for Twitter icon */
+i.fa.fa-twitter-square:hover {
+	color: #3cf;
+}
+
+/* Change color to Facebook's blue on hover for Facebook icon */
+i.fa.fa-facebook-square:hover {
+	color: #3b5998;
+}
+
+/* Style for the active page title in the registration section */
+.ActivePageTitle .h1.registro {
+	width: 120px; /* Set fixed width */
+	display: inline-block; /* Allow inline display */
+	float: left; /* Float to the left */
+}
+
+/* Modal box styling for the login component */
+app-login .modal-box {
+	max-width: 26rem; /* Set maximum width */
+	overflow: visible; /* Allow overflow to be visible */
+}
+
+/* Styling for the sign-up link button */
+a.Button.AccountButton.SignUpLink {
+	color: #fff; /* Set text color to white */
+	background-color: rgba(
+		152,
+		0,
+		16,
+		0
+	) !important; /* Transparent background with important flag */
+	border-style: solid; /* Solid border style */
+	font-family: Roboto, sans-serif; /* Font family */
+	font-size: 1em; /* Font size */
+	float: right; /* Float to the right */
+	margin-right: 6px; /* Right margin */
+}
+/* Styles for collection items within a collection */
+.collection .collection-item {
+	background-color: rgba(
+		0,
+		0,
+		0,
+		0.30196078431372547
+	); /* Semi-transparent black background */
+	border-bottom: 1px solid rgba(0, 0, 0, 0.23137254901960785); /* Bottom border with semi-transparent black */
+	line-height: 1; /* Single line height */
+	padding: 0; /* No padding */
+}
+
+/* Styles for the collection container */
+.collection {
+	border: none; /* No border */
+	border-radius: 0 0 10px 10px; /* Rounded corners at the bottom */
+}
+
+/* Styles for spans within collection items that are children of elements with class 'saldo' */
+.saldo .collection .collection-item span {
+	padding: 4px 5px !important; /* Padding for span elements, with !important to override other styles */
+	text-transform: capitalize; /* Capitalizes the first letter of each word */
+	font-weight: 300; /* Light font weight */
+}
+
+/* Styles for collection items with class 'avata' */
+.collection .collection-item.avata {
+	min-height: 35px; /* Minimum height of 35px */
+	height: 48px; /* Fixed height of 48px */
+	padding-left: 10px; /* Left padding of 10px */
+}
+
+/* Styles for the receipt div */
+div#div-recibo {
+	position: absolute; /* Positioned absolutely within the nearest positioned ancestor */
+	top: 0; /* Aligns to the top */
+	width: 100%; /* Full width */
+	left: 0; /* Aligns to the left */
+	background: #000000c7; /* Semi-transparent black background */
+	z-index: 1; /* Stacking order */
+	height: 100%; /* Full height */
+	display: none; /* Hidden by default */
+}
+/* Class for available items with lighter font weight */
+.disponible {
+	font-weight: 300; /* Sets the font weight to 300 for available items */
+}
+
+/* Hidden user detail section */
+div#detalle-usuario {
+	display: none; /* Hides the user detail section by default */
+}
+
+/* Form styling for the multi-step form */
+.msform {
+	margin: 0 auto; /* Centers the form horizontally */
+	text-align: center; /* Centers text within the form */
+	position: relative; /* Positions the form relative to its normal position */
+}
+
+/* Styling for promotion items within the promotion list */
+div#pnPromotionList .promotion-item-body {
+	vertical-align: top; /* Aligns items to the top */
+	border-radius: 7px; /* Rounds the corners of the promotion item */
+	border-collapse: initial; /* Ensures borders do not collapse */
+	background: #fff; /* Sets background color to white */
+	overflow: hidden; /* Hides overflow content */
+	transition: transform 0.2s; /* Adds a transition effect for transform changes */
+	padding: 0; /* Removes padding */
+}
+
+/* Title styling for promotion items */
+#pnPromotionList h2.promotion-title {
+	display: inline-block; /* Displays the title as an inline-block element */
+	float: left; /* Floats the title to the left */
+	padding: 3px 10px; /* Adds padding around the title */
+	border-radius: 17px !important; /* Rounds the corners of the title with high priority */
+	font-size: 12px; /* Sets font size for the title */
+	margin: 3px 6px; /* Adds margin around the title */
+	max-width: 262px; /* Sets a maximum width for the title */
+	height: 21px; /* Sets a fixed height for the title */
+	overflow: hidden; /* Hides overflow content */
+	white-space: nowrap; /* Prevents text from wrapping */
+	text-overflow: ellipsis; /* Displays ellipsis for overflow text */
+	line-height: 2; /* Sets line height for the title */
+	font-weight: bold; /* Sets font weight to bold */
+}
+/* Button styling for detail-bono class */
+button.detail-bono {
+	font-family: sans-serif; /* Sets the font family to sans-serif */
+	border: 1px solid #269c2a; /* Defines a solid border with a specific color */
+	padding: 6px 9px; /* Adds padding inside the button */
+	margin: 3px 5px; /* Sets margin around the button */
+	border-radius: 16px; /* Rounds the corners of the button */
+	float: right; /* Aligns the button to the right */
+	color: #269c2a; /* Sets the text color */
+	font-weight: 700; /* Makes the font bold */
+	line-height: 13px; /* Sets the line height for the text */
+}
+
+/* Styling for the TermsList containing MenuList */
+.TermsList .MenuList {
+	display: -ms-flexbox; /* Fallback for older IE browsers using flexbox */
+	display: block; /* Sets the display to block */
+	padding: 0 0 1em; /* Adds padding to the top and bottom */
+	-webkit-box-pack: start; /* Aligns items to the start in older webkit browsers */
+	width: auto; /* Sets the width to auto */
+}
+
+/* Styling for elements with the expand class */
+.expand {
+	position: relative; /* Positions the element relative to its normal position */
+	float: right; /* Aligns the element to the right */
+	right: 22px; /* Moves the element 22px to the left from its normal position */
+}
+
+/* Dropdown content visibility on hover or when open */
+app-menu-mobile .dropdown.dropdown-hover:hover .dropdown-content,
+app-menu-mobile .dropdown.dropdown-open .dropdown-content {
+	/* Styles for dropdown content when hovered or opened */
+}
+/* Styles for mobile dropdown menu when focused */
+app-menu-mobile .dropdown:not(.dropdown-hover):focus-within .dropdown-content,
+app-menu-mobile .dropdown:not(.dropdown-hover):focus .dropdown-content {
+	position: relative; /* Sets the position of the dropdown content relative to its parent */
+}
+
+/* Displays dropdown content on hover */
+.dropdown:hover > .dropdown-content {
+	display: block !important; /* Forces the dropdown content to be displayed when the dropdown is hovered */
+}
+
+/* Styles for links within the saldo menu */
+#saldo .menu a {
+	padding: 10px 5px; /* Adds padding around the links for better spacing */
+}
+
+/* Clip-path for shadow effect */
+.shadow-clip {
+	-webkit-clip-path: polygon(
+		0 0,
+		80% 0,
+		100% 100%,
+		20% 100%
+	); /* Webkit-specific clip-path for shadow effect */
+	clip-path: polygon(
+		0 0,
+		80% 0,
+		100% 100%,
+		20% 100%
+	); /* Standard clip-path for shadow effect */
+}
+
+/* Keyframes for pulse animation */
+@keyframes pulse {
+	0% {
+		transform: scale(0.95); /* Initial scale for the pulse effect */
+		box-shadow: 0 0 0 0 rgba(51, 217, 178, 0.7); /* Initial box shadow */
+	}
+	70% {
+		transform: scale(1); /* Scale to normal size */
+		box-shadow: 0 0 0 10px rgba(51, 217, 178, 0); /* Box shadow expands */
+	}
+	100% {
+		transform: scale(0.95); /* Return to initial scale */
+		box-shadow: 0 0 0 0 rgba(51, 217, 178, 0); /* Remove box shadow */
+	}
+}
+/* 
+ * Class for a circular blob element with a black background.
+ * It has a pulsing animation applied to it.
+ */
+.blob {
+	background: black; /* Sets the background color to black */
+	border-radius: 50%; /* Makes the element circular */
+	height: 100%; /* Sets the height to 100% of the parent element */
+	width: 100%; /* Sets the width to 100% of the parent element */
+	transform: scale(1); /* Initial scale transformation */
+	animation: pulsea 2s infinite; /* Applies the pulsea animation indefinitely */
+}
+
+/* 
+ * Class for a circular blob element that is transparent.
+ * It has a different pulsing animation applied to it.
+ */
+.blob-cat {
+	background: transparent; /* Sets the background to transparent */
+	border-radius: 50%; /* Makes the element circular */
+	transform: scale(1); /* Initial scale transformation */
+	animation: pulseaa 2s infinite; /* Applies the pulseaa animation indefinitely */
+}
+
+/* 
+ * Class for a white blob element that is transparent with a box shadow.
+ * It has a pulsing animation applied to it.
+ */
+.blob.white {
+	background: transparent; /* Sets the background to transparent */
+	box-shadow: 0 0 0 0 rgba(255, 255, 255, 1); /* Initial box shadow settings */
+	animation: pulsea 2s infinite; /* Applies the pulsea animation indefinitely */
+}
+
+/* 
+ * Keyframes for the pulsea animation.
+ * Defines the scaling and box shadow effects over time.
+ */
+@keyframes pulsea {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 hsl(var(--n) / 0.9);
+	}
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px hsl(var(--n) / 0);
+	}
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 hsl(var(--n) / 0);
+	}
+}
+/**
+ * @keyframes pulseaa - Defines a pulsing animation effect.
+ * The animation scales the element and changes its box-shadow.
+ */
+@keyframes pulseaa {
+	0% {
+		/* Initial scale and box-shadow */
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(223, 223, 223, 0.9);
+	}
+	70% {
+		/* Scale to normal size and fade out box-shadow */
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(223, 223, 223, 0);
+	}
+	100% {
+		/* Return to initial scale and box-shadow */
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(223, 223, 223, 0);
+	}
+}
+
+/**
+ * .grow - Class to apply a transition effect on hover.
+ * The transition affects all properties over 0.2 seconds with an ease-in-out timing function.
+ */
+.grow {
+	transition: all 0.2s ease-in-out;
+}
+
+/**
+ * .grow:hover - Scales the element to 1.1 times its size on hover.
+ */
+.grow:hover {
+	transform: scale(1.1);
+}
+
+/**
+ * .recibo-content table - Styles for tables within the recibo-content class.
+ * Sets background color, centers the table, applies border-radius, and adds top margin.
+ */
+.recibo-content table {
+	background: white; /* Background color of the table */
+	margin: 0 auto; /* Centers the table horizontally */
+	border-radius: 15px; /* Rounds the corners of the table */
+	margin-top: 50px; /* Adds space above the table */
+	color: black;
+}
+/* Hide the scrollbar for elements with the class 'drag-scroll-content' */
+.drag-scroll-content::-webkit-scrollbar {
+	display: none;
+}
+
+/* Reset margin, padding, and list style for navigation and slide elements */
+.flex-control-nav,
+.flex-direction-nav,
+.slides,
+.slides > li {
+	margin: 0; /* No margin */
+	padding: 0; /* No padding */
+	list-style: none; /* No list style */
+}
+
+/* Remove list style for ordered lists within collapsible lists */
+.list-collapsible > ol {
+	list-style: none; /* No list style */
+}
+
+/* Set list style for bullet points with specific indentation */
+.list-collapsible > ol > li[data-list='bullet'][class='ql-indent-1'] {
+	list-style: inside; /* Bullet points inside the list */
+	margin-left: 15px;
+}
+
+/* Set list style for ordered lists with specific indentation */
+.list-collapsible > ol > li[data-list='ordered'][class='ql-indent-1'] {
+	list-style: lower-alpha; /* Lowercase alphabet for ordered lists */
+}
+
+/* Set list style for ordered lists */
+.list-collapsible > ol > li[data-list='ordered'] {
+	list-style: decimal; /* Decimal numbering for ordered lists */
+	margin-left: 15px;
+}
+
+.list-collapsible > ol > li[data-list='ordered']:nth-child(n+10) {
+	list-style: decimal; /* Decimal numbering for ordered lists */
+	margin-left: 20px;
+}
+
+/* Set positioning and z-index for viewport and slider elements */
+.flex-viewport,
+.flexslider {
+	position: relative; /* Relative positioning */
+	z-index: 1; /* Stacking context */
+}
+/* 
+.flexslider 
+  - Styles for the flexslider component.
+  - Resets margin and padding, and applies zoom for layout purposes.
+*/
+.flexslider {
+	margin: 0; /* No margin */
+	padding: 0; /* No padding */
+	zoom: 1; /* Triggers hasLayout in IE */
+}
+
+/* 
+.right-5 
+  - Positions an element 3.75rem from the right.
+  - Uses !important to override other styles if necessary.
+*/
+.right-5 {
+	right: 3.75rem !important; /* Right positioning */
+}
+
+/* 
+.header .menu-bg > .menu 
+  - Aligns the menu items to the right within the header.
+*/
+.header .menu-bg > .menu {
+	text-align: right; /* Right alignment for menu items */
+}
+
+/* 
+.header .menu-bg > .menu.chevron::before 
+  - Creates a chevron-like shape before the menu.
+  - Uses clip-path for custom polygon shape.
+*/
+.header .menu-bg > .menu.chevron::before {
+	content: ''; /* Empty content for pseudo-element */
+	height: 41px; /* Height of the chevron */
+	width: 20px; /* Width of the chevron */
+	display: block; /* Block display for layout */
+	position: absolute; /* Absolute positioning */
+	clip-path: polygon(
+		53% 0,
+		100% 0%,
+		100% 100%,
+		53% 100%,
+		0% 50%
+	); /* Custom shape */
+	transform: translateX(-11px); /* Adjusts position to the left */
+	bottom: -1px; /* Positions it slightly below the menu */
+}
+
+/* 
+.header .menu-bg > .menu.chevron::after 
+  - Creates a chevron-like shape after the menu.
+  - Uses clip-path for custom polygon shape.
+*/
+.header .menu-bg > .menu.chevron::after {
+	content: ''; /* Empty content for pseudo-element */
+	height: 41px; /* Height of the chevron */
+	width: 20px; /* Width of the chevron */
+	display: inline-block; /* Inline-block display for layout */
+	position: absolute; /* Absolute positioning */
+	clip-path: polygon(
+		0% 0%,
+		53% 0%,
+		100% 50%,
+		53% 100%,
+		0% 100%
+	); /* Custom shape */
+	bottom: -1px; /* Positions it slightly below the menu */
+	transform: translateX(-10px); /* Adjusts position to the left */
+}
+/* Styles for the menu background in the header */
+.header .menu-bg > .menu::before,
+.header .menu-bg > .menu::after {
+	background: #32994d; /* Set background color for menu pseudo-elements */
+}
+
+/* Styles for the polygon shape before the menu */
+.header .menu-bg > .menu.polygon::before {
+	content: ''; /* Required for pseudo-elements to display */
+	height: 41px; /* Height of the polygon shape */
+	width: 20px; /* Width of the polygon shape */
+	display: block; /* Display as a block element */
+	position: absolute; /* Positioning relative to the nearest positioned ancestor */
+	clip-path: polygon(
+		100% 0,
+		0 100%,
+		100% 100%
+	); /* Define the polygon shape */
+	transform: translateX(-19px); /* Shift the shape to the left */
+	bottom: -1px; /* Position it slightly below the menu */
+}
+
+/* Styles for the polygon shape after the menu */
+.header .menu-bg > .menu.polygon::after {
+	content: ''; /* Required for pseudo-elements to display */
+	height: 41px; /* Height of the polygon shape */
+	width: 20px; /* Width of the polygon shape */
+	display: inline-block; /* Display as an inline-block element */
+	position: absolute; /* Positioning relative to the nearest positioned ancestor */
+	clip-path: polygon(0 0, 0 100%, 100% 100%); /* Define the polygon shape */
+	bottom: -1px; /* Position it slightly below the menu */
+	transform: translateX(-1px); /* Shift the shape to the left */
+}
+
+/* Styles for the bevel shape before the menu */
+.header .menu-bg > .menu.bevel::before {
+	content: ''; /* Required for pseudo-elements to display */
+	height: 41px; /* Height of the bevel shape */
+	width: 20px; /* Width of the bevel shape */
+	display: block; /* Display as a block element */
+	position: absolute; /* Positioning relative to the nearest positioned ancestor */
+	clip-path: polygon(
+		100% 0,
+		100% 100%,
+		0% 70%,
+		0% 30%
+	); /* Define the bevel shape */
+	transform: translateX(-20px); /* Shift the shape to the left */
+	bottom: -1px; /* Position it slightly below the menu */
+}
+.header .menu-bg > .menu.bevel::after {
+	/** 
+	 * Pseudo-element for the menu background.
+	 * Creates a decorative element with specific dimensions and shape.
+	 */
+	content: '';
+	height: 41px; /** Height of the pseudo-element */
+	width: 20px; /** Width of the pseudo-element */
+	display: inline-block; /** Displays the element as an inline block */
+	position: absolute; /** Positions the element absolutely within its parent */
+	clip-path: polygon(
+		0 0,
+		0 100%,
+		100% 70%,
+		100% 30%
+	); /** Defines the shape of the element using a polygon */
+	bottom: -1px; /** Positions the element 1px below the bottom of its parent */
+	transform: translateX(0px); /** No horizontal translation applied */
+}
+
+.scroll-on-top {
+	/** 
+	 * Class for elements that should stick to the top of the viewport when scrolling.
+	 */
+	position: sticky; /** Enables sticky positioning */
+	top: -51px; /** Offset from the top of the viewport */
+	z-index: 9; /** Stacking order of the element */
+}
+
+.Framework.InfoPage {
+	/** 
+	 * Class for the information page framework.
+	 * Sets the z-index for layering purposes.
+	 */
+	z-index: 1; /** Stacking order of the element */
+}
+
+.btn-sm {
+	/** 
+	 * Class for small buttons.
+	 * Adjusts the line height for better vertical alignment.
+	 */
+	line-height: 2rem; /** Sets the line height for the button */
+}
+
+.icon-delete.refresh,
+.icon-delete.favorite,
+.icon-delete.home {
+	/** 
+	 * Classes for delete icons with specific functionalities.
+	 * Ensures consistent line height across different icon states.
+	 */
+	line-height: 40px !important; /** Sets the line height for the icons, overriding other styles */
+}
+.button-ret a {
+	/* Background color for the button link */
+	background: #f9d000;
+	/* Padding around the button link */
+	padding: 4px 8px;
+	/* Rounded corners for the button link */
+	border-radius: 5px;
+	/* Text color for the button link */
+	color: #000;
+	/* Bold font weight for the button link */
+	font-weight: 700;
+}
+.button-ret {
+	/* Top margin for the button container */
+	margin-top: 8px;
+	/* Right margin for the button container */
+	margin-right: 5px;
+}
+.header_wallet {
+	/* Background color for the wallet header */
+	background: #fff;
+	/* Positioning at the top of the page */
+	top: 0;
+	/* Fixed height for the wallet header */
+	height: 42px;
+	/* Bottom margin for spacing */
+	margin-bottom: 10px;
+	/* Reset padding to avoid default styles */
+	padding: 0 !important;
+}
+header_wallet img#header-logo {
+	/* Automatic width for the logo */
+	width: auto;
+	/* Fixed height for the logo */
+	height: 46px;
+	/* Float the logo to the left */
+	float: left;
+}
+form#wallet_select {
+	/* Background color for the wallet selection form */
+	background: #fff;
+	/* Rounded corners for the form */
+	border-radius: 10px;
+	/* Padding for the form */
+	padding: 10px 25px 35px;
+}
+/* Button styling for wallet buttons */
+button.wallet-b {
+	/* Border color and style */
+	border: 1px solid #00b151;
+	/* Text color */
+	color: #636363;
+	/* Width calculation to account for padding */
+	width: calc(100% - 30px);
+	/* Padding for button content */
+	padding: 15px 30px;
+	/* Margin for spacing around the button */
+	margin: 0 15px;
+	/* Minimum width to ensure usability */
+	min-width: 141px;
+	/* Center text alignment */
+	text-align: center;
+	/* Rounded corners */
+	border-radius: 10px;
+}
+
+/* Image styling within wallet buttons */
+button.wallet-b img {
+	/* Image width relative to button */
+	width: 90%;
+	/* Bottom padding for spacing */
+	padding-bottom: 10px;
+}
+
+/* Styling for active page title */
+.ActivePageTitle {
+	/* Bottom border for emphasis */
+	border-bottom: 1px solid hsl(var(--af));
+}
+
+/* Specific styling for active page title within wallet options */
+.wallet_options .ActivePageTitle {
+	/* Bottom border for emphasis */
+	border-bottom: 1px solid #fff;
+}
+
+/* Styling for mobile drawer component */
+.drawer.drawer-mobile {
+	/* Full viewport height */
+	height: 100vh;
+}
+
+/* Focus and hover effects for wallet buttons */
+button.wallet-b:focus,
+button.wallet-b:hover {
+	/* Border style change on focus/hover */
+	border: 2px solid #00b151;
+	/* Remove default outline */
+	outline: none;
+	/* Shadow effect for depth */
+	box-shadow: 0 0 15px 1px rgb(0 0 0 / 40%);
+}
+/* Styles for the wallet configuration section */
+#wallet_config .form-1 .f1 {
+	/* Sets the width of the form field to 30% and displays it inline */
+	width: 30%;
+	display: inline-block;
+	/* Adds padding inside the form field */
+	padding: 15px;
+}
+
+/* Styles for the first form in the wallet configuration */
+#wallet_config .form-1 {
+	/* Centers the text within the form */
+	text-align: center;
+	/* Adds padding around the form */
+	padding: 20px 15px;
+	/* Sets the background color of the form */
+	background: #fff;
+	/* Rounds the corners of the form */
+	border-radius: 5px;
+}
+
+/* Styles for the configuration title within the wallet configuration */
+#wallet_config .config_title {
+	/* Sets the background color of the title */
+	background: #006b31;
+	/* Expands the width of the title beyond the parent container */
+	width: calc(100% + 30px);
+	/* Displays the title as a block element */
+	display: block;
+	/* Adds vertical padding to the title */
+	padding: 8px 0;
+	/* Positions the title relative to its normal position */
+	position: relative;
+	/* Adjusts the vertical position of the title */
+	top: -20px;
+	/* Adjusts the horizontal position of the title */
+	left: -15px;
+	/* Rounds the top corners of the title */
+	border-radius: 5px 5px 0 0;
+	/* Sets the font weight to bold */
+	font-weight: 700;
+}
+
+/* Styles for the image within the configuration title */
+#wallet_config .config_title img {
+	/* Sets the width of the image */
+	width: 14px;
+	/* Adds left margin to the image */
+	margin-left: 15px;
+}
+/* Style for anchor tags within the #saldo menu on hover */
+#saldo .menu a:hover {
+	background: transparent; /* Sets background to transparent on hover */
+}
+
+/* Style for list items within the #saldo menu on hover */
+#saldo .menu li:hover {
+	background: #f0f0f1; /* Changes background color on hover */
+	border-radius: 7px; /* Rounds the corners of the background */
+}
+
+/* Wrapper for deportes section with no top padding */
+div#deportes-wrapper {
+	padding-top: 0px !important; /* Overrides any other padding settings */
+}
+
+/* Ensures specific list items in the header menu have a higher stacking order */
+.header .menu .menu-list div div > li:first-child:nth-last-child(10),
+.header .menu .menu-list div div > li:first-child:nth-last-child(10) ~ li {
+	z-index: 2 !important; /* Sets z-index to 2 to ensure visibility over other elements */
+}
+
+/* Style for valid labels in the app-verify-account component */
+app-verify-account label.valid {
+	color: #4caf50; /* Sets text color to green for valid labels */
+	position: relative; /* Positions the label relative to its normal position */
+	bottom: 30px; /* Moves the label down by 30 pixels */
+}
+
+/* Style for the close button in the roulette section */
+label#close-roulette span {
+	color: #ffd800; /* Sets text color to a gold shade */
+	font-size: 20px; /* Sets font size to 20 pixels */
+}
+
+/* Style for alert messages in the disabled casino wrapper */
+#casino-wrapper-disabled .message-alert {
+	width: 90%; /* Sets width to 90% of the parent container */
+	margin: 0 auto; /* Centers the alert message */
+	color: #fff; /* Sets text color to white */
+	text-align: center; /* Centers the text within the alert */
+	border: 1px solid #b08200; /* Adds a border with a specific color */
+	border-radius: 15px; /* Rounds the corners of the alert box */
+	padding: 20px; /* Adds padding inside the alert box */
+}
+/* Styles for the disabled casino wrapper */
+#casino-wrapper-disabled .money-img {
+	/* Set the width of the money image to 70% and center it with top margin */
+	width: 70%;
+	margin: 100px auto 0;
+}
+
+/* Styles for the second money image within the disabled casino wrapper */
+#casino-wrapper-disabled .money-img-two {
+	/* Set the width of the second money image to 70% and center it */
+	width: 70%;
+	margin: 0 auto;
+}
+
+/* Media query for screens wider than 736px */
+@media only screen and (min-width: 736px) {
+	#casino-wrapper-disabled .money-img,
+	#casino-wrapper-disabled .money-img-two {
+		/* Change the width of both money images to 25% on larger screens */
+		width: 25%;
+	}
+
+	#casino-wrapper-disabled .message-alert {
+		/* Style for alert messages within the disabled casino wrapper */
+		width: 35%; /* Set width to 35% */
+		margin: 0 auto; /* Center the alert */
+		color: #fff; /* Set text color to white */
+		text-align: center; /* Center align the text */
+		border: 1px solid #b08200; /* Set border color */
+		border-radius: 15px; /* Round the corners of the border */
+	}
+}
+
+/* Duplicate rule for the money image, possibly for specificity */
+#casino-wrapper-disabled .money-img {
+	/* Set the width of the money image to 70% and center it with top margin */
+	margin: 100px auto 0;
+}
+/* Styles for the disabled casino wrapper */
+#casino-wrapper-disabled .money-img-two img,
+#casino-wrapper-disabled .money-img img {
+	/* Set images to take full width and display as block elements */
+	width: 100%;
+	display: block;
+}
+
+/* Styles for the third paragraph in the message alert */
+#casino-wrapper-disabled .message-alert p:nth-child(3) {
+	/* Make the text bold and increase font size */
+	font-weight: 900;
+	font-size: 22px;
+}
+
+/* Styles for the fourth paragraph in the message alert */
+#casino-wrapper-disabled .message-alert p:nth-child(4) {
+	/* Set font weight to lighter */
+	font-weight: lighter;
+}
+
+/* Styles for money image containers */
+#casino-wrapper-disabled .money-img,
+#casino-wrapper-disabled .money-img-two {
+	/* Set width of money image containers to 25% */
+	width: 25%;
+}
+
+/* Center the second money image container */
+#casino-wrapper-disabled .money-img-two {
+	/* Apply auto margin for horizontal centering */
+	margin: 0 auto;
+}
+
+/* Styles for the close icon in the message alert */
+#casino-wrapper-disabled i.fa.fa-times {
+	/* Float the close icon to the right and set its color to white */
+	float: right;
+	color: #fff;
+}
+
+/* Styles for the close button in the message alert */
+#casino-wrapper-disabled .message-alert .close {
+	/* Set width and height for the close button and display as block */
+	width: 100%;
+	height: 23px;
+	display: block;
+}
+/* Styles for the disabled casino wrapper mobile icon */
+#casino-wrapper-disabled i.fa.fa-mobile {
+	font-size: 80px; /* Sets the font size for mobile icon */
+}
+
+/* Styles for alert container within the disabled casino wrapper */
+#casino-wrapper-disabled .container-alert {
+	width: 100%; /* Ensures the alert container takes full width */
+}
+
+/* Main styles for the disabled casino wrapper */
+#casino-wrapper-disabled {
+	background: #000; /* Sets background color to black */
+	width: 100%; /* Ensures the wrapper takes full width */
+	min-height: 700px; /* Sets a minimum height for the wrapper */
+	padding-top: 1px; /* Adds top padding */
+}
+
+/* Styles for images within the egaming class */
+.egaming img {
+	margin: 0 auto; /* Centers the image horizontally */
+}
+
+/* Styles for download section */
+.dwl {
+	text-align: center; /* Centers text within the download section */
+	font-size: 16px; /* Sets font size for download text */
+	font-weight: 700; /* Makes the download text bold */
+	text-transform: uppercase; /* Transforms text to uppercase */
+	background: #000; /* Sets background color to black */
+}
+
+/* Styles for links and spans within the download section */
+.dwl a,
+.dwl a span {
+	vertical-align: middle; /* Vertically aligns links and spans */
+}
+/* Styles for anchor tags within elements with class 'dwl' */
+.dwl a {
+	width: 100%; /* Sets the width to 100% of the parent element */
+	display: inline-table; /* Displays the anchor as an inline table */
+	height: 44px; /* Sets a fixed height for the anchor */
+}
+
+/* Styles for elements with class 'cls-dwl' */
+.cls-dwl {
+	width: 50px; /* Sets a fixed width for the element */
+	display: inline-block; /* Displays the element as an inline block */
+	position: absolute; /* Positions the element absolutely */
+	right: 0; /* Aligns the element to the right */
+}
+
+/* Styles for span elements within anchor tags in 'dwl' class */
+.dwl a span {
+	display: table-cell; /* Displays the span as a table cell */
+}
+
+/* Media query for screens wider than 500px */
+@media (min-width: 500px) {
+	.cls-dwl {
+		right: 12px; /* Adjusts the right position for larger screens */
+	}
+}
+
+/* Styles for elements with class 'ng-image-slider' */
+.ng-image-slider {
+	height: 100% !important; /* Forces the height to 100% */
+}
+
+/* Styles for countdown elements */
+.countdown > :before {
+	content: ''; /* Inserts an empty content before countdown elements */
+}
+/* Hides the divider elements and their pseudo-elements */
+.divider:after,
+.divider:before,
+.divider {
+	display: none; /* Prevents the divider from being displayed */
+}
+
+/* Displays child divs of the countdown element as contents */
+.countdown > div {
+	display: contents; /* Allows child elements to be displayed without creating a new block */
+}
+
+/* Styles for paragraph elements within countdown divs */
+.countdown > div p {
+	margin: 0; /* Removes default margin */
+	display: inline-block; /* Allows for inline block layout */
+	padding: 0px 3px; /* Adds horizontal padding */
+	height: 28px; /* Sets a fixed height for the paragraph */
+}
+
+/* Styles for buttons with a success background */
+.success-bg-button {
+	background: linear-gradient(
+		/* Creates a linear gradient background */ 0deg,
+		/* Gradient direction */ rgba(0, 82, 6, 1) 0%,
+		/* Start color */ rgba(0, 173, 31, 1) 100% /* End color */
+	);
+}
+
+/* Styles for modal elements */
+.modal {
+	visibility: visible !important; /* Ensures the modal is visible */
+	opacity: 1 !important; /* Sets full opacity for the modal */
+	pointer-events: all !important; /* Allows all pointer events on the modal */
+}
+/* 
+ * Define custom font faces for the application using @font-face rule.
+ */
+
+/* 
+ * Font face for Helvetica family with multiple font weights.
+ * Sources include medium, light, and bold condensed styles in OTF format.
+ */
+@font-face {
+	font-family: Helvetica; /* Name of the font family */
+	src:
+		url('assets/fonts/helvetica/HelveticaMediumCondensed.otf') format('otf'),
+		/* Medium Condensed font */
+			url('assets/fonts/helvetica/HelveticaLightCondensed.otf')
+			format('otf'),
+		/* Light Condensed font */
+			url('assets/fonts/helvetica/HelveticaBoldCondensed.otf')
+			format('otf'); /* Bold Condensed font */
+}
+
+/* 
+ * Font face for Spaceland family with regular and oblique styles.
+ * Sources include standard and oblique styles in OTF format.
+ */
+@font-face {
+	font-family: Spaceland; /* Name of the font family */
+	src:
+		url('assets/fonts/spaceland/PepperType-Spaceland-Ten.otf') format('otf'),
+		/* Regular font */
+			url('assets/fonts/spaceland/PepperType-Spaceland-TenOblique.otf')
+			/* Oblique font */ format('otf'); /* Format of the font */
+}
+
+/* 
+ * Font face for Poppins-Regular with standard weight.
+ * Source includes regular style in TTF format.
+ */
+@font-face {
+	font-family: Poppins-Regular; /* Name of the font family */
+	src: url('assets/fonts/poppins/Poppins-Regular.ttf'); /* Regular font */
+}
+
+/* 
+ * Font face for Poppins-Medium with medium weight.
+ * Source includes medium style in TTF format.
+ */
+@font-face {
+	font-family: Poppins-Medium; /* Name of the font family */
+	src: url('assets/fonts/poppins/Poppins-Medium.ttf'); /* Medium font */
+}
+
+/* 
+ * Font face for Poppins-Bold with bold weight.
+ * Source includes bold style in TTF format.
+ */
+@font-face {
+	font-family: Poppins-Bold; /* Name of the font family */
+	src: url('assets/fonts/poppins/Poppins-Bold.ttf'); /* Bold font */
+}
+/* Define custom font face for Poppins SemiBold */
+@font-face {
+	font-family: Poppins-SemiBold; /* Name of the font family */
+	src: url('assets/fonts/poppins/Poppins-SemiBold.ttf'); /* Path to the font file */
+}
+
+/* Define custom font face for Poppins Light */
+@font-face {
+	font-family: Poppins-Light; /* Name of the font family */
+	src: url('assets/fonts/poppins/Poppins-Light.ttf'); /* Path to the font file */
+}
+
+/* Utility class for a grid column that spans 1 column */
+.col-span-1 {
+	grid-column: span 1 / span 1; /* Specifies the column span */
+}
+
+/* Utility class for a grid column that spans 2 columns */
+.col-span-2 {
+	grid-column: span 2 / span 2; /* Specifies the column span */
+}
+
+/* Utility class for a grid column that spans 3 columns */
+.col-span-3 {
+	grid-column: span 3 / span 3; /* Specifies the column span */
+}
+
+/* Utility class for a grid row that spans 3 rows */
+.row-span-3 {
+	grid-row: span 3 / span 3; /* Specifies the row span */
+}
+
+/* Define a layer for utility classes */
+@layer utilities {
+	/* Utility class for a grid layout with 32 columns */
+	.grid-32-css {
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax(7rem, 7rem)
+		) !important; /* Defines responsive column sizes */
+		grid-template-rows: minmax(
+			7rem,
+			auto
+		) !important; /* Defines responsive row sizes */
+		grid-auto-rows: minmax(
+			7rem,
+			auto
+		) !important; /* Sets automatic row sizes */
+		grid-auto-flow: dense; /* Fills the grid with items as tightly as possible */
+	}
+
+	/* Utility class for a grid layout with 40 columns */
+	.grid-40-css {
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax(10rem, 10rem)
+		) !important; /* Defines responsive column sizes */
+		grid-template-rows: minmax(
+			10rem,
+			auto
+		) !important; /* Defines responsive row sizes */
+		grid-auto-rows: minmax(10rem, auto); /* Sets automatic row sizes */
+		grid-auto-flow: dense; /* Fills the grid with items as tightly as possible */
+	}
+
+	/* Utility class for a grid layout with 48 columns */
+	.grid-48-css {
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax(12rem, 12rem)
+		) !important; /* Defines responsive column sizes */
+		grid-template-rows: minmax(
+			12rem,
+			auto
+		) !important; /* Defines responsive row sizes */
+		grid-auto-rows: minmax(12rem, auto); /* Sets automatic row sizes */
+		grid-auto-flow: dense; /* Fills the grid with items as tightly as possible */
+	}
+}
+/* Container for the sharing link with flex display and high z-index for visibility */
+div#sharingLink {
+	display: flex; /* Enables flexbox layout */
+	z-index: 1000; /* Ensures the element is above others */
+	height: 100%; /* Full height of the parent element */
+}
+
+/* Parent container for the sharing link, positioned at the bottom */
+div#sharingLinkParent {
+	position: absolute; /* Positioned relative to the nearest positioned ancestor */
+	bottom: 2px; /* 2 pixels from the bottom of the parent */
+	width: 100%; /* Full width of the parent element */
+	height: 60px; /* Fixed height for the container */
+	display: flex; /* Enables flexbox layout */
+	z-index: 1000; /* Ensures the element is above others */
+	flex-direction: column; /* Stacks child elements vertically */
+	text-align: center; /* Centers text within the container */
+	backdrop-filter: blur(20px); /* Applies a blur effect to the background */
+}
+
+/* Anchor links within the sharing link container */
+div#sharingLink a {
+	width: 100% !important; /* Forces the anchor to take full width */
+	position: relative; /* Allows for absolute positioning of child elements */
+	display: flex; /* Enables flexbox layout for the anchor */
+	justify-content: center; /* Centers content horizontally */
+	align-items: center; /* Centers content vertically */
+	height: 100%; /* Full height of the parent element */
+	color: white; /* Sets text color to white */
+}
+/* Styles for the swiper navigation buttons in the 'dorado3' theme */
+[data-theme='dorado3'] .swiper-button-prev,
+[data-theme='dorado3'] .swiper-button-next,
+[data-theme='dorado3'] .swiper-button-prev::after,
+[data-theme='dorado3'] .swiper-button-next::after {
+	color: #d59c00; /* Set button color to a specific shade of gold */
+}
+
+/* Styles for the swiper navigation buttons in the 'hondubet' theme */
+/*[data-theme='hondubet'] .swiper-button-prev::after,*/
+/*.swiper-button-next::after {*/
+/*	color: white; !* Set button color to white *!*/
+/*}*/
+
+/* Styles for the swiper navigation buttons in the 'dorado4' theme */
+[data-theme='dorado4'] .swiper-button-prev,
+[data-theme='dorado4'] .swiper-button-next,
+[data-theme='dorado4'] .swiper-button-prev::after,
+[data-theme='dorado4'] .swiper-button-next::after {
+	color: #abc90b; /* Set button color to a specific shade of green */
+}
+
+/* Styles for the active pagination bullet in the 'tribetmx' theme */
+[data-theme='tribetmx'] .swiper-pagination-bullet-active {
+	background-color: white; /* Set active bullet background color to white */
+	width: 50px; /* Set width of active bullet */
+	border-radius: 20px; /* Set border radius for rounded corners */
+}
+
+/* Styles for the pagination bullets in the 'tribetmx' theme */
+[data-theme='tribetmx'] .swiper-pagination-bullet {
+	background-color: rgb(
+		255,
+		255,
+		255
+	); /* Set bullet background color to white */
+}
+
+/* Styles for the TermsList and HelpList components within the app-my-loyalty-guide in the 'ecuabet' theme */
+[data-theme='ecuabet'] app-my-loyalty-guide .TermsList.HelpList {
+	/* Additional styles would be defined here */
+}
+/* Hides the header and active page title for the 'ecuabet' theme */
+[data-theme='ecuabet'] app-my-loyalty-guide .int-header,
+[data-theme='ecuabet'] app-my-loyalty-guide .ActivePageTitle {
+	display: none !important; /* Ensures these elements are not displayed */
+}
+
+/* Sets the background of the app-passport component to transparent */
+app-passport {
+	background: transparent; /* Makes the background see-through */
+}
+
+/* Styles the close button within the receipt div */
+#div-recibo button#close-recibo {
+	float: right; /* Aligns the button to the right */
+	margin: 10px; /* Adds margin around the button */
+}
+
+/* Hides all fieldsets except the first one in the msform for the 'ibet' theme */
+[data-theme='ibet'] .msform fieldset:not(:first-of-type) {
+	display: none; /* Prevents display of subsequent fieldsets */
+}
+
+/* Hides all fieldsets except the first one in the msform for the 'acropolis' theme */
+[data-theme='acropolis'] .msform fieldset:not(:first-of-type) {
+	display: none; /* Prevents display of subsequent fieldsets */
+}
+
+/* Adds padding and background color to the app-sports component for the 'loto' theme */
+[data-theme='loto'] app-sports {
+	padding-top: 10px; /* Adds top padding */
+	background: #e8e8e8; /* Sets a light gray background color */
+}
+
+[data-theme='loto'] .header .menu-bg > .menu::before,
+[data-theme='loto'] .header .menu-bg > .menu::after {
+	/* Sets the background color for the pseudo-elements before and after the menu in the 'loto' theme */
+	background: #0a101f;
+}
+[data-theme='loto'] .header .menu-bg > .menu {
+	/* Applies background color and text color to the menu in the 'loto' theme */
+	background-color: #0a101f !important; /* !important ensures this style takes precedence */
+	color: white; /* Sets the text color to white */
+}
+[data-theme='netabet'] .bg-custom-footer .footer-menu:before {
+	/* Styles the footer menu's pseudo-element before in the 'netabet' theme */
+	background-color: #1eb854; /* Sets the background color */
+	height: 3px; /* Sets the height of the element */
+	width: 50px; /* Sets the width of the element */
+	margin: 15px auto; /* Centers the element horizontally with auto margins */
+	display: block; /* Makes the element a block-level element */
+	content: ''; /* Required for pseudo-elements to display */
+	border-radius: 1px; /* Rounds the corners of the element */
+}
+[data-theme='gangabet'] .header .menu-bg > .menu::before,
+[data-theme='gangabet'] .header .menu-bg > .menu::after {
+	/* Sets the background color for the pseudo-elements before and after the menu in the 'gangabet' theme */
+	background: #94bf55 !important; /* !important ensures this style takes precedence */
+}
+[data-theme='gangabet'] .modal-action button.btn.btn-primary.text-base-100 {
+	/* Styles the primary button in the modal action for the 'gangabet' theme */
+	background: #94bf55 !important; /* Sets the background color and ensures it takes precedence */
+}
+[data-theme='gangabet']
+/* Styles for modal action buttons */
+.modal-action
+	button.btn.btn-primary.text-base-100:hover {
+	/* Changes background color on hover for primary buttons */
+	background: #94bf55 !important;
+}
+
+/* Footer styles for the 'gangabet' theme */
+[data-theme='gangabet'] .footer {
+	/* Sets background color and text color for the footer */
+	background-color: #242d43 !important;
+	color: white !important;
+}
+
+/* Footer section styles for the 'gangabet' theme */
+[data-theme='gangabet'] .footer-section {
+	/* Adds a bottom border to footer sections */
+	border-bottom: 2px solid #94bf55 !important;
+}
+
+/* Deposit button styles for the 'latinbet' theme */
+[data-theme='latinbet'] .deposit-button {
+	/* Sets text color for deposit buttons */
+	color: #000000;
+}
+
+/* Menu list styles for the header in 'latinbet' theme */
+[data-theme='latinbet'] .header .menu .menu-list {
+	/* Sets width and margin for menu list */
+	width: 70% !important;
+	margin: auto !important;
+}
+
+/* Footer menu styles for the 'latinbet' theme */
+[data-theme='latinbet'] .footer-menu ul {
+	/* Sets text color for footer menu items */
+	color: #636363 !important;
+}
+
+/* Main container styles for the 'latinbet' theme */
+[data-theme='latinbet'] .main-container {
+	/* Adds a top border to the main container */
+	border-top: 1px solid #1a2643 !important;
+}
+[data-theme='latinbet'] .bg-custom-footer {
+	/* Applies a white shadow effect to the custom footer background */
+	box-shadow: 0px -20px 20px 20px white;
+}
+[data-theme='latinbet'] #HomeSlider li a img {
+	/* Adds a solid border to the bottom of images within the HomeSlider links */
+	border-bottom: 1px solid #263573 !important;
+}
+[data-theme='latinbet'] .bg-header {
+	/* Sets a semi-transparent white background for the header */
+	background: #ffffffc2 !important;
+}
+
+[data-theme='latinbet']
+	.container-tournaments
+	.details-tournament
+	.ranking-container
+	.tittle,
+[data-theme='latinbet'] .container-tournaments .more-details .right .join,
+[data-theme='latinbet'] .ui-datepicker .ui-datepicker-header {
+	/* Sets a dark blue background color for tournament details and datepicker header */
+	background-color: #263573 !important;
+}
+[data-theme='latinbet'] li.register.main-item {
+	/* Sets a minimum width for the registration menu item */
+	min-width: 176px !important;
+}
+/* Styles for the Latinbet theme active button */
+[data-theme='latinbet'] button.active-dot {
+	background-color: #63ce53 !important; /* Sets the background color of the active dot */
+	box-shadow: 0 0 5px 0 #18ff00; /* Applies a green glow effect */
+	width: 33px !important; /* Forces the width of the button */
+}
+
+/* Styles for the footer in the Ecuabet theme */
+[data-theme='ecuabet'] .page-footer {
+	background: black; /* Sets the background color of the footer to black */
+}
+
+/* Styles for the footer in the Winbet theme */
+[data-theme='winbet'] .page-footer {
+	background: black; /* Sets the background color of the footer to black */
+}
+
+/* Styles for the Ecuabet theme active button */
+[data-theme='ecuabet'] button.active-dot {
+	background-color: #d59c01 !important; /* Sets the background color of the active dot */
+	box-shadow: 0 0 7px 1px #d59c01; /* Applies a gold glow effect */
+	width: 35px !important; /* Forces the width of the button */
+}
+
+/* Media query for responsive design on screens smaller than 600px */
+@media (max-width: 600px) {
+	[data-theme='netabet'] #home-slider-home #HomeSlider li a img {
+		height: 146px !important; /* Sets the height of images in the home slider */
+	}
+	[data-theme='netabet'] .header-logo {
+		height: 22px !important; /* Sets the height of the header logo */
+	}
+	[data-theme='netabet'] .nuxt-link-active {
+		padding: 0 !important; /* Removes padding for active links */
+		margin-right: 6px !important; /* Adds right margin for active links */
+	}
+}
+/* Set background color for the menu before and after pseudo-elements 
+   when the 'miravalle' theme is applied */
+[data-theme='miravalle'] .header .menu-bg > .menu::before,
+[data-theme='miravalle'] .header .menu-bg > .menu::after {
+	background: #800000; /* Dark red background */
+}
+
+/* Set background color for the menu before and after pseudo-elements 
+   when the 'dorado' theme is applied */
+[data-theme='dorado'] .header .menu-bg > .menu::before,
+[data-theme='dorado'] .header .menu-bg > .menu::after {
+	background: #b1802c; /* Gold background */
+}
+
+/* Set background color for the menu before and after pseudo-elements 
+   when the 'hondubet' theme is applied */
+[data-theme='hondubet'] .header .menu-bg > .menu::before,
+[data-theme='hondubet'] .header .menu-bg > .menu::after {
+	background: #00a7eb; /* Light blue background */
+}
+
+/* Set background color for the menu before pseudo-element 
+   when the 'winbet' theme is applied */
+[data-theme='winbet'] .header .menu-bg > .menu::before {
+	background: #d0ff11; /* Bright green background */
+}
+
+/* Set background color for the menu before and after pseudo-elements 
+   when the 'loto' theme is applied */
+[data-theme='loto'] .header .menu-bg > .menu::before,
+[data-theme='loto'] .header .menu-bg > .menu::after {
+	background: #1a2643; /* Dark blue background */
+}
+
+/* Set background color for the menu before and after pseudo-elements 
+   when the 'ibet' theme is applied */
+[data-theme='ibet'] .header .menu-bg > .menu::before,
+[data-theme='ibet'] .header .menu-bg > .menu::after {
+	background: #0033a0; /* Deep blue background */
+}
+
+/* Set border-top style for the main container when 'ibet' or 'powerbet' themes are applied */
+[data-theme='ibet'] .main-container,
+[data-theme='powerbet'] .main-container {
+	border-top: 1px solid #d0af27 !important; /* Gold border */
+}
+/* Styles for the 'loto' theme menu background and text color */
+[data-theme='loto'] .header .menu-bg > .menu {
+	background-color: #1a2643 !important; /* Sets the background color of the menu */
+	color: white; /* Sets the text color of the menu */
+}
+
+/* Styles for the login menu item in the 'loto' theme */
+[data-theme='loto'] li.main-item.menu-login {
+	background: #314d93; /* Sets the background color of the login menu item */
+	clip-path: polygon(
+		0 0,
+		80% 0,
+		100% 100%,
+		20% 100%
+	); /* Defines a custom shape for the login menu item */
+}
+
+/* Styles for the menu background in the 'casinoastoriamx' theme */
+[data-theme='casinoastoriamx'] .header .menu-bg > .menu::before,
+[data-theme='casinoastoriamx'] .header .menu-bg > .menu::after {
+	background: #be9f3a; /* Sets the background color for the before and after pseudo-elements */
+}
+
+/* Styles for the menu background in the 'camanbet' theme */
+[data-theme='camanbet'] .header .menu-bg > .menu::before,
+[data-theme='camanbet'] .header .menu-bg > .menu::after {
+	background: #00a7eb; /* Sets the background color for the before and after pseudo-elements */
+}
+
+/* Styles for the menu background in the 'casinogranpalaciomx' theme */
+[data-theme='casinogranpalaciomx'] .header .menu-bg > .menu::before,
+[data-theme='casinogranpalaciomx'] .header .menu-bg > .menu::after {
+	background: #888888; /* Sets the background color for the before and after pseudo-elements */
+}
+
+/* Styles for the menu background in the 'justbet' theme */
+[data-theme='justbet'] .header .menu-bg > .menu::before,
+[data-theme='justbet'] .header .menu-bg > .menu::after {
+	background: #32994d; /* Sets the background color for the before and after pseudo-elements */
+}
+
+/* Styles for the body background in the 'justbet' theme */
+[data-theme='justbet'] body {
+	background: #fafbfd !important; /* Sets the body background color */
+}
+/* Styles for the 'acropolis' theme menu background before and after pseudo-elements */
+[data-theme='acropolis'] .header .menu-bg > .menu::before,
+[data-theme='acropolis'] .header .menu-bg > .menu::after {
+	background: #ffc600; /* Yellow background color */
+}
+
+/* Styles for the 'casinointercontinental' theme menu background before and after pseudo-elements */
+[data-theme='casinointercontinental'] .header .menu-bg > .menu::before,
+[data-theme='casinointercontinental'] .header .menu-bg > .menu::after {
+	background: #0d147a; /* Dark blue background color */
+}
+
+/* Styles for the 'acropolis' theme main footer and menu background */
+[data-theme='acropolis'] #mainfooter,
+[data-theme='acropolis'] .menu-bg {
+	background: #3f3f3f; /* Dark gray background color */
+	color: #fff; /* White text color */
+}
+
+/* Styles for list items in the menu for multiple themes */
+[data-theme='dorado'] .header .menu .menu-list div ol > li,
+[data-theme='hondubet'] .header .menu .menu-list div ol > li,
+[data-theme='latinbet'] .header .menu .menu-list div ol > li,
+[data-theme='justbet'] .header .menu .menu-list div ol > li,
+[data-theme='powerbet'] .header .menu .menu-list div ol > li {
+	color: white; /* White text color for menu items */
+}
+
+/* Styles for the 'winbet' theme menu list items, subtitle menu, and chevron down icon */
+[data-theme='winbet'] .header .menu .menu-list div ol > li,
+[data-theme='winbet'] .subtitle-menu,
+[data-theme='winbet'] .chevron-down {
+	color: #1b293a !important; /* Dark color with !important to override other styles */
+}
+[data-theme='winbet'] .icon-new {
+	/* Sets the color of the new icon to black for the 'winbet' theme */
+	color: black;
+}
+
+[data-theme='powerbet'] .menu li > :where(a:active),
+[data-theme='powerbet'] .menu li > :where(button:active) {
+	/* Applies a green background color to active links and buttons in the 'powerbet' theme */
+	background-color: #009525 !important;
+}
+
+[data-theme='winbet'] .menu li > :where(a:active),
+[data-theme='winbet'] .menu li > :where(button:active) {
+	/* Applies a bright yellow background color to active links and buttons in the 'winbet' theme */
+	background-color: #d0ff11 !important;
+}
+
+[data-theme='justbet'] .menu-bg,
+[data-theme='justbet'] #mainfooter {
+	/* Sets the background color to dark gray and text color to white for the 'justbet' theme */
+	background: #3f3f3f;
+	color: white;
+}
+
+[data-theme='ecuabet'] img#header-logo {
+	/* Limits the maximum height of the header logo to 50 pixels for the 'ecuabet' theme */
+	max-height: 50px;
+}
+
+[data-theme='acropolis'] div#nav {
+	/* Sets the background color to light gray and text color to black for the navigation in the 'acropolis' theme */
+	background: #f8f8f8 !important;
+	color: black !important;
+}
+
+[data-theme='tribetmx'] img#header-logo,
+[data-theme='loto'] img#header-logo,
+	/* This selector is incomplete; it likely aims to style the header logo for 'tribetmx' and 'loto' themes */
+[data-theme='dorado'] img#header-logo {
+	/* Sets the maximum height for the header logo image in the 'dorado' theme */
+	max-height: 60px;
+}
+[data-theme='hondubet'] img#header-logo {
+	/* Sets the maximum width for the header logo image in the 'hondubet' theme */
+	max-width: 278px;
+}
+[data-theme='ibet'] .menu .menu-list > div > div > li > a {
+	/* Changes the text color of menu links in the 'ibet' theme to white */
+	color: white;
+}
+[data-theme='ibet'] .hide-on-med-and-down {
+	/* Sets the background and text color for elements that are hidden on medium and down screen sizes in the 'ibet' theme */
+	background: #092d62;
+	color: white;
+}
+[data-theme='ibet'] .modal-box img {
+	/* Sets the maximum width for images inside modal boxes in the 'ibet' theme */
+	max-width: 85px;
+}
+[data-theme='ibet'] body {
+	/* Sets the background color of the body in the 'ibet' theme to white */
+	background-color: white !important;
+}
+[data-theme='miravalle'] app-login .modal-box a {
+	/* Positions the link in the modal box for the 'miravalle' theme */
+	top: -43px;
+}
+[data-theme='miravalle'] figure.logotipo a {
+	/** Sets the margin to 0 and width to 170px for the logo link in the 'miravalle' theme */
+	margin: 0 !important;
+	width: 170px !important;
+}
+[data-theme='miravalle'] figure.logotipo a img {
+	/** Sets the height of the logo image to 130px in the 'miravalle' theme */
+	height: 130px !important;
+}
+[data-theme='casinogranpalaciomx'] figure.logotipo a {
+	/** Sets the margin to 0 and width to 170px for the logo link in the 'casinogranpalaciomx' theme */
+	margin: 0 !important;
+	width: 170px !important;
+}
+[data-theme='casinogranpalaciomx'] figure.logotipo a img {
+	/** Sets the height of the logo image to 130px in the 'casinogranpalaciomx' theme */
+	height: 130px !important;
+}
+[data-theme='casinointercontinental'] figure.logotipo a {
+	/** Sets the left margin to 40px and width to 170px for the logo link in the 'casinointercontinental' theme */
+	margin-left: 40px !important;
+	width: 170px !important;
+}
+[data-theme='casinointercontinental'] figure.logotipo a img {
+	/** Sets the height of the logo image to 100px in the 'casinointercontinental' theme */
+	height: 100px !important;
+}
+[data-theme='miravalle'] .menu .menu-list > div > div > li > a {
+	/** Sets the text color to white for menu links in the 'miravalle' theme */
+	color: white;
+}
+[data-theme='casinoastoriamx'] .menu .menu-list > div > div > li > a {
+	/** Sets the text color to white for menu links in the 'casinoastoriamx' theme */
+	color: white;
+}
+/* 
+  Styles for anchor elements within the menu list for different themes.
+  Sets the text color to white for better visibility against dark backgrounds.
+*/
+[data-theme='casinogranpalaciomx'] .menu .menu-list > div > div > li > a {
+	color: white;
+}
+[data-theme='casinointercontinental'] .menu .menu-list > div > div > li > a {
+	color: white;
+}
+[data-theme='netabet'] .menu .menu-list > div > div > li > a {
+	color: white;
+}
+
+/* 
+  Styles for the footer background color for different themes.
+  Ensures that footer text is legible by setting appropriate colors.
+*/
+[data-theme='miravalle'] .bg-custom-footer {
+	color: #bababa !important; /* Light gray color for footer text */
+}
+[data-theme='casinogranpalaciomx'] .bg-custom-footer {
+	color: #bababa !important; /* Light gray color for footer text */
+}
+[data-theme='casinointercontinental'] .bg-custom-footer {
+	color: #bababa !important; /* Light gray color for footer text */
+}
+[data-theme='netabet'] .bg-custom-footer {
+	color: black !important; /* Black color for footer text */
+}
+[data-theme='casinoastoriamx'] .bg-custom-footer {
+	color: #bababa !important; /* Light gray color for footer text */
+}
+
+/* 
+  Styles for the payment methods section in the footer for a specific theme.
+  Sets the background color to a dark shade for better contrast.
+*/
+[data-theme='casinoastoriamx'] .metodos-pago-footer ul {
+	background: #191919 !important; /* Dark background for payment methods list */
+}
+
+/* Flexbox layout for navbar items in the 'netabet' theme */
+[data-theme='netabet'] .navbar,
+[data-theme='netabet'] .navbar > * {
+	display: flex; /* Enables flexbox layout */
+	align-items: center; /* Aligns items vertically in the center */
+	color: #0a2d61 !important; /* Sets the text color */
+}
+
+/* Styles for the payment methods footer in the 'casinogranpalaciomx' theme */
+[data-theme='casinogranpalaciomx'] .metodos-pago-footer ul {
+	background: #191919 !important; /* Sets the background color to dark gray */
+}
+
+/* Positioning for the login link in the modal box for 'casinogranpalaciomx' theme */
+[data-theme='casinogranpalaciomx'] app-login .modal-box a {
+	top: -43px; /* Positions the link 43 pixels above its normal position */
+}
+
+/* Positioning for the login link in the modal box for 'casinoastoriamx' theme */
+[data-theme='casinoastoriamx'] app-login .modal-box a {
+	top: -43px; /* Positions the link 43 pixels above its normal position */
+}
+
+/* Styles for the main login menu item in the 'casinoastoriamx' theme */
+[data-theme='casinoastoriamx'] li.main-item.menu-login {
+	background: linear-gradient(
+		90deg,
+		#b1b1b7 0,
+		#7c7c7c
+	); /* Applies a horizontal gradient background */
+	-webkit-clip-path: polygon(
+		0 0,
+		80% 0,
+		100% 100%,
+		20% 100%
+	); /* Defines a clipping path for WebKit browsers */
+	clip-path: polygon(
+		0 0,
+		85% 0,
+		100% 100%,
+		15% 100%
+	); /* Defines a clipping path for other browsers */
+}
+[data-theme='loto'] .modal-action button.btn.btn-primary.text-base-100 {
+	/* Set background color for primary button in 'loto' theme */
+	background: #314d93;
+}
+[data-theme='loto'] .modal-action button.btn.btn-primary.text-base-100:hover {
+	/* Change background color on hover for primary button in 'loto' theme */
+	background: #1ca51c;
+}
+.country-flags {
+	/* Set dimensions for country flag icons */
+	width: 16px;
+	height: 10px;
+}
+.centribal_open iframe {
+	/* Apply border radius to iframe within centribal_open class */
+	border-radius: 20px !important;
+}
+.centribal_open {
+	/* Style for the centribal_open component */
+	display: block; /* Display as block element */
+	position: fixed; /* Fixed positioning */
+	bottom: 65px; /* Distance from the bottom of the viewport */
+	right: 20px; /* Distance from the right of the viewport */
+	width: 400px; /* Fixed width */
+	height: 720px; /* Fixed height */
+	z-index: 200; /* Layering order */
+	max-height: 85vh; /* Maximum height relative to viewport height */
+}
+@media (max-width: 550px) {
+	.centribal_open {
+		/* Responsive styles for screens smaller than 550px */
+		position: fixed; /* Fixed positioning */
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		bottom: 0; /* Align to bottom */
+		right: 0; /* Align to right */
+		max-height: 100vh; /* Maximum height relative to viewport height */
+	}
+}
+/* 
+ * Class to hide elements from view. 
+ * Elements with this class will not be displayed.
+ */
+.centribal_hidden {
+	display: none;
+}
+
+/* 
+ * Styles for the form element. 
+ * Sets the display to block and establishes a relative positioning context.
+ */
+form {
+	display: block;
+	position: relative;
+	z-index: 1; /* Sets the stacking order of the form */
+}
+
+/* 
+ * Styles for iframes within elements that have the class 'centribal_iframe_open'. 
+ * Applies a border radius to create rounded corners.
+ */
+.centribal_iframe_open iframe {
+	border-radius: 20px !important; /* Ensures the border radius is applied */
+}
+
+/* 
+ * Styles for elements with the class 'centribal_iframe_open'. 
+ * Positions the element absolutely, with specific dimensions and z-index.
+ */
+.centribal_iframe_open {
+	position: fixed; /* Positions the element relative to its nearest positioned ancestor */
+	bottom: 75px; /* Positions the element 75px from the bottom */
+	display: block;
+	width: 400px; /* Sets a fixed width */
+	height: 720px; /* Sets a fixed height */
+	z-index: 200; /* Sets the stacking order above other elements */
+	max-height: 85vh; /* Limits the maximum height to 85% of the viewport height */
+}
+
+/* 
+ * Class to hide iframes from view. 
+ * Elements with this class will not be displayed.
+ */
+.centribal_iframe_hidden {
+	display: none;
+}
+
+/* 
+ * Media query for responsive design. 
+ * Applies styles when the viewport width is 550px or less.
+ */
+@media (max-width: 550px) {
+	/* 
+	 * Styles for elements with the class 'centribal_iframe_open' 
+	 * when the viewport is narrow.
+	 */
+	.centribal_iframe_open {
+		position: fixed; /* Fixes the position relative to the viewport */
+		width: 100%; /* Sets the width to fill the viewport */
+		height: 100%; /* Sets the height to fill the viewport */
+		bottom: 0; /* Positions the element at the bottom of the viewport */
+		right: 0; /* Positions the element at the right of the viewport */
+		max-height: 100vh; /* Limits the maximum height to 100% of the viewport height */
+	}
+}
+/* 
+  .gridList class styles the container as a grid layout.
+  - Uses auto-fill to create as many columns as will fit in the container.
+  - Each column has a minimum width of 15rem and a maximum width of 1fr.
+  - Centers the content within the grid.
+  - Sets a gap of 10px between grid items.
+*/
+.gridList {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+	place-content: center;
+	gap: 10px;
+}
+
+/* 
+  .information-description > strong styles the strong elements 
+  within the information-description class.
+  - Sets the text color to a light gray (#c9c9c9).
+  - Applies bold font weight.
+*/
+.information-description > strong {
+	color: #c9c9c9;
+	font-weight: bold;
+}
+
+/* 
+  .detail-message > strong styles the strong elements 
+  within the detail-message class.
+  - Sets the text color to white (#fff).
+  - Applies bold font weight.
+*/
+.detail-message > strong {
+	color: #fff;
+	font-weight: bold;
+}
+
+/* 
+  Styles for checked checkboxes.
+  - Applies background color based on a custom property (--bc) with full opacity.
+  - Prevents background from repeating.
+  - Adds an animation for the checkmark effect.
+  - Defines multiple linear gradients for the checkmark appearance.
+*/
+.checkbox:checked,
+.checkbox[checked='true'],
+.checkbox[aria-checked='true'] {
+	--tw-bg-opacity: 1;
+	background-color: hsl(var(--bc) / var(--tw-bg-opacity));
+	background-repeat: no-repeat;
+	animation: checkmark var(--animation-input, 0.2s) ease-in-out;
+	background-image: linear-gradient(-45deg, transparent 65%, #808080 65.99%),
+		linear-gradient(45deg, transparent 75%, #808080 75.99%),
+		linear-gradient(-45deg, #808080 40%, transparent 40.99%),
+		linear-gradient(
+			45deg,
+			#808080 30%,
+			#fff 30.99%,
+			#fff 40%,
+			transparent 40.99%
+		),
+		linear-gradient(-45deg, #fff 50%, #808080 50.99%) !important;
+}
+
+.radio:checked, .radio[aria-checked=true] {
+ --tw-bg-opacity: 1;
+ background-color: hsl(var(--p) / var(--tw-bg-opacity));
+ animation: radiomark var(--animation-input, 0.2s) ease-in-out;
+ box-shadow: 0 0 0 4px hsl(var(--p)) inset, 0 0 0 4px hsl(var(--p)) inset;
+}
+
+
+
+/* FILE DOCUMENTED */

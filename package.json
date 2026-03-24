@@ -1,0 +1,47 @@
+{
+  "name": "my-single-spa-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{ts,js,css,vue}\" \"SitioVersion5/src/**/*.{ts,js,css,vue}\" \"landing/src/**/*.{ts,js,css,vue}\""
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/vue-fontawesome": "^3.1.2",
+    "@my-micro-apps/landing": "file:landing",
+    "@my-micro-apps/SitioVersion5": "file:SitioVersion5",
+    "@tecnologia-general/virtualsoft-analytics-sdk": "^0.0.0",
+    "@tecnologia-general/virtualsoft-widgets": "^0.0.23",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "daisyui": "^2.51.5",
+    "firebase": "^12.4.0",
+    "flowbite": "1.6.5",
+    "flowbite-vue": "0.0.10",
+    "path-to-regexp": "^6.2.2",
+    "single-spa": "^6.0.1",
+    "single-spa-vue": "^3.0.0",
+    "socket.io-client": "^4.8.1",
+    "tesseract.js": "^6.0.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vue3-google-login": "^2.0.12",
+    "xlsx": "^0.18.5",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/runtime-dom": "^3.5.13",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "prettier": "3.4.2",
+    "tailwindcss": "3.1.8",
+    "ts-node": "^10.9.2",
+    "vite": "^5.2.0",
+    "vite-plugin-pwa": "^0.20.0"
+  }
+}

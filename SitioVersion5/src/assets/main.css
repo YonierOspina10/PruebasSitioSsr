@@ -1,0 +1,41 @@
+@import './base.css'; /* Import base styles from base.css */
+@import 'flags.css'; /* Import styles for flags from flags.css */
+
+#app {
+	max-width: 1280px; /* Set maximum width of the app container */
+	margin: 0 auto; /* Center the app container horizontally */
+	padding: 2rem; /* Add padding around the app container */
+	font-weight: normal; /* Set normal font weight for text */
+}
+
+a,
+.green {
+	text-decoration: none; /* Remove underline from links and .green class elements */
+	color: hsla(160, 100%, 37%, 1); /* Set text color using HSLA */
+	transition: 0.4s; /* Smooth transition for color changes */
+}
+
+@media (hover: hover) {
+	a:hover {
+		background-color: hsla(
+			160,
+			100%,
+			37%,
+			0.2
+		); /* Change background color on hover */
+	}
+}
+
+@media (min-width: 1024px) {
+	body {
+		display: flex; /* Use flexbox layout for the body */
+		place-items: center; /* Center items vertically and horizontally */
+	}
+	#app {
+		display: grid; /* Use grid layout for the app container */
+		grid-template-columns: 1fr 1fr; /* Create two equal columns */
+		padding: 0 2rem; /* Add horizontal padding to the app container */
+	}
+}
+
+/* FILE DOCUMENTED */

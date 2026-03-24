@@ -1,0 +1,38 @@
+{
+  "name": "corewebvitals",
+  "main": "src/main.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chenfengyuan/vue-countdown": "^2.1.2",
+    "tiny-emitter": "^2.1.0",
+    "@types/node": "^20.12.7",
+    "@vueuse/core": "^10.9.0",
+    "axios": "^1.6.8",
+    "pinia": "2.0.21",
+    "single-spa-vue": "^3.0.0",
+    "vee-validate": "^4.12.6",
+    "vue": "^3.4.27",
+    "vue-axios": "^3.5.2",
+    "vue-i18n": "^9.13.0",
+    "vue-router": "^4.3.2",
+    "vue3-cookies": "^1.0.6",
+    "vue3-lazyload": "^0.3.8",
+    "swiper": "^10.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.19",
+    "daisyui": "^2.51.5",
+    "tailwindcss": "3.1.8",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vue-tsc": "^2.0.6"
+  }
+}

@@ -1,0 +1,178 @@
+@tailwind base; /* Import base styles from Tailwind CSS */
+@tailwind components; /* Import component styles from Tailwind CSS */
+@tailwind utilities; /* Import utility classes from Tailwind CSS */
+
+* {
+    padding: 0; /* Reset padding for all elements */
+    margin: 0; /* Reset margin for all elements */
+    -webkit-box-sizing: border-box; /* Use border-box model for WebKit browsers */
+    -moz-box-sizing: border-box; /* Use border-box model for Firefox */
+    box-sizing: border-box; /* Use border-box model for all elements */
+}
+
+html,
+body {
+    color: white; /* Set text color to white */
+    font-size: 14px; /* Set base font size */
+    line-height: 1.5em; /* Set line height for readability */
+    -ms-text-size-adjust: 100%; /* Prevent text size adjustment in IE */
+    -webkit-text-size-adjust: 100%; /* Prevent text size adjustment in WebKit browsers */
+    margin: 0; /* Reset margin for html and body */
+    padding: 0; /* Reset padding for html and body */
+    box-sizing: border-box; /* Use border-box model for html and body */
+    background-size: cover !important; /* Ensure background covers the entire area */
+    background-position: center !important; /* Center the background image */
+}
+
+:root {
+    background: black; /* Set root background color to black */
+}
+.btn-pyramid {
+    /* Defines a pyramid-shaped button using clip-path */
+    clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+    /* Removes default border */
+    border: none;
+    /* Rounds the top-left corners */
+    border-top-left-radius: 15px;
+    /* Rounds the top-right corners */
+    border-top-right-radius: 15px;
+    /* Rounds the bottom-right corners */
+    border-bottom-right-radius: 20px;
+    /* Rounds the bottom-left corners */
+    border-bottom-left-radius: 20px;
+}
+
+.conten-loading {
+    /* Creates a loading effect with a linear gradient */
+    background: linear-gradient(
+            100deg,
+            rgba(255, 255, 255, 0) 45%,
+            rgba(255, 255, 255, 0.1) 70%,
+            rgba(255, 255, 255, 0) 80%
+        )
+        hsl(var(--b3));
+    /* Sets the size of the background gradient */
+    background-size: 200% 100%;
+    /* Positions the background gradient */
+    background-position-x: 180%;
+    /* Applies loading animation */
+    animation: 1s loading ease-in-out infinite;
+}
+
+.container-loading {
+    /* Similar loading effect as .conten-loading */
+    background: linear-gradient(
+            100deg,
+            rgba(255, 255, 255, 0) 45%,
+            rgba(255, 255, 255, 0.1) 70%,
+            rgba(255, 255, 255, 0) 80%
+        )
+        hsl(var(--b3));
+    /* Sets the size of the background gradient */
+    background-size: 200% 100%;
+    /* Positions the background gradient */
+    background-position-x: 180%;
+    /* Applies multiple animations including loading and pulse */
+    animation:
+        1s loading ease-in-out infinite,
+        2s pulse1 ease-in-out infinite;
+    /* Rounds the corners of the container */
+    border-radius: 20px;
+    /* Adds a shadow effect */
+    box-shadow: 0px 5px 30px hsl(var(--bc) / 70%);
+    /* Defines a solid border */
+    border: solid 1px hsl(var(--bc) / 50%);
+}
+@keyframes loading {
+    to {
+        background-position-x: -20%; /* Animation for loading effect */
+    }
+}
+
+@font-face {
+    font-family: Poppins-Medium; /* Medium weight font */
+    src: url('/landing/src/assets/fonts/poppins/Poppins-Medium.ttf'); /* Font source */
+}
+
+@font-face {
+    font-family: Poppins-Bold; /* Bold weight font */
+    src: url('/landing/src/assets/fonts/poppins/Poppins-Bold.ttf'); /* Font source */
+}
+
+@font-face {
+    font-family: Poppins-SemiBold; /* SemiBold weight font */
+    src: url('/landing/src/assets/fonts/poppins/Poppins-SemiBold.ttf'); /* Font source */
+}
+
+@font-face {
+    font-family: Poppins-Light; /* Light weight font */
+    src: url('/landing/src/assets/fonts/poppins/Poppins-Light.ttf'); /* Font source */
+}
+
+.centribal_open iframe {
+    border-radius: 20px !important; /* Rounded corners for iframe */
+}
+
+.centribal_open {
+    display: block; /* Display as block element */
+    position: fixed; /* Fixed positioning */
+    bottom: 65px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    width: 400px; /* Fixed width */
+    height: 720px; /* Fixed height */
+    z-index: 200; /* Stacking order */
+    max-height: 85vh; /* Maximum height relative to viewport */
+}
+/* Media query for screens with a maximum width of 550px */
+@media (max-width: 550px) {
+    /* Styles for the open state of the centribal element */
+    .centribal_open {
+        position: fixed; /* Fixed positioning */
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        bottom: 0; /* Align to bottom */
+        right: 0; /* Align to right */
+        max-height: 100vh; /* Maximum height of viewport */
+    }
+}
+
+/* Hidden state for centribal elements */
+.centribal_hidden {
+    display: none; /* Element is not displayed */
+}
+
+/* Styles for iframe when centribal is open */
+.centribal_iframe_open iframe {
+    border-radius: 20px !important; /* Rounded corners for iframe */
+}
+
+/* Styles for the open state of the centribal iframe */
+.centribal_iframe_open {
+    position: absolute; /* Absolute positioning */
+    bottom: 75px; /* 75px from the bottom */
+    display: block; /* Element is displayed */
+    width: 400px; /* Fixed width */
+    height: 720px; /* Fixed height */
+    z-index: 200; /* Stacking order */
+    max-height: 85vh; /* Maximum height of 85% of viewport */
+}
+
+/* Hidden state for centribal iframe elements */
+.centribal_iframe_hidden {
+    display: none; /* Element is not displayed */
+}
+
+/* Media query for screens with a maximum width of 550px */
+@media (max-width: 550px) {
+    /* Styles for the open state of the centribal iframe */
+    .centribal_iframe_open {
+        position: fixed; /* Fixed positioning */
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        bottom: 0; /* Align to bottom */
+        right: 0; /* Align to right */
+        max-height: 100vh; /* Maximum height of viewport */
+    }
+}
+
+/* FILE DOCUMENTED */

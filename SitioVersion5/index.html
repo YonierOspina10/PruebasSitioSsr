@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang='es' data-theme='dorado3'>
+<head>
+	<!-- Google Tag Manager -->
+
+    <script>
+
+        function loadGTM(){
+
+           var my_GTM_id = 'GTM-W3K6C9P'; // BE SURE TO UPDATE THIS TO MATCH UR ID
+           //you can add checks here to see if GDPR got accepted if you want...
+           (function (w, d, s, l, i) {
+                   w[l] = w[l] || [];
+                   w[l].push({
+                     'gtm.start':
+                         new Date().getTime(), event: 'gtm.js'
+                   });
+                   var f = d.getElementsByTagName(s)[0],
+                       j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+                   j.async = true;
+                   j.src =
+                       'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                   f.parentNode.insertBefore(j, f);
+                 })(window, document, 'script', 'dataLayer', my_GTM_id);
+           }
+           document.addEventListener("DOMContentLoaded", () => {
+                   loadGTM();
+
+           });
+    </script>
+	<!-- End Google Tag Manager -->
+	<!-- Recaptcha -->
+	<script>
+		var script = document.createElement('script');
+		script.async = false;
+		script.rel = 'prefetch';
+		script.src = 'https://www.google.com/recaptcha/api.js?hl=es';
+		document.head.appendChild(script);
+	</script>
+	<!-- End Recaptcha -->
+
+	<script async
+					src='https://sdk.optimove.net/websdk/?tenant_id=1058&tenant_token=f65fb4ccdde14ff685fd26aabeb4f25f'></script>
+	<meta
+		name='google-site-verification'
+		content='OhfkYY0DaoH6d13z1fESbBbp0HC4yMoXgbZiomr8L1U'
+	/>
+	<meta charset='UTF-8' />
+	<link
+		media='all'
+		rel='icon'
+		href='https://images.virtualsoft.tech/m/msjT1618338208.png'
+	/>
+	<meta
+		name='viewport'
+		content='width=device-width, initial-scale=1, maximum-scale=2.0'
+	/>
+	<link
+		async
+		rel='preload'
+		as='image'
+		href='https://images.virtualsoft.tech/m/msjT1654955079.png'
+		imagesizes='50vw'
+	/>
+	<script rel='preload' src='/config_doradobet.js'></script>
+	<script>
+		window.optionsAltenarV2 = {
+			integration: 'tribet',
+			culture: 'es-ES',
+		};
+	</script>
+
+	<script async>
+		const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+		if (isMobile) {
+			window.cconfig.mobileL = '1';
+		}
+		// window.cconfig.versionAltenar = '';
+
+		// window.cconfig.countryL = "cl";
+	</script>
+	<title></title>
+</head>
+<body>
+<div id='app'></div>
+<script type='module' src='/src/main.ts' async></script>
+<script
+	src='https://kit.fontawesome.com/db8f6d5d6c.js'
+	crossorigin='anonymous'
+></script>
+</body>
+</html>

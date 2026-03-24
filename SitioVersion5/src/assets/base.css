@@ -1,0 +1,97 @@
+:root {
+	/* Define color variables for light theme */
+	--vt-c-white: #ffffff; /* Pure white */
+	--vt-c-white-soft: #f8f8f8; /* Soft white for backgrounds */
+	--vt-c-white-mute: #f2f2f2; /* Muted white for subtle elements */
+	--vt-c-black: #181818; /* Pure black */
+	--vt-c-black-soft: #222222; /* Soft black for backgrounds */
+	--vt-c-black-mute: #282828; /* Muted black for subtle elements */
+	--vt-c-indigo: #2c3e50; /* Indigo color for text */
+	--vt-c-divider-light-1: rgba(60, 60, 60, 0.29); /* Light divider color */
+	--vt-c-divider-light-2: rgba(60, 60, 60, 0.12); /* Lighter divider color */
+	--vt-c-divider-dark-1: rgba(84, 84, 84, 0.65); /* Dark divider color */
+	--vt-c-divider-dark-2: rgba(84, 84, 84, 0.48); /* Darker divider color */
+	--vt-c-text-light-1: var(--vt-c-indigo); /* Light text color */
+	--vt-c-text-light-2: rgba(60, 60, 60, 0.66); /* Muted light text color */
+	--vt-c-text-dark-1: var(--vt-c-white); /* Dark text color */
+	--vt-c-text-dark-2: rgba(235, 235, 235, 0.64); /* Muted dark text color */
+}
+:root {
+	/* Define additional color variables for layout */
+	--color-background: var(--vt-c-white); /* Main background color */
+	--color-background-soft: var(--vt-c-white-soft); /* Soft background color */
+	--color-background-mute: var(
+		--vt-c-white-mute
+	); /* Muted background color */
+	--color-border: var(--vt-c-divider-light-2); /* Default border color */
+	--color-border-hover: var(
+		--vt-c-divider-light-1
+	); /* Border color on hover */
+	--color-heading: var(--vt-c-text-light-1); /* Heading text color */
+	--color-text: var(--vt-c-text-light-1); /* Default text color */
+	--section-gap: 160px; /* Gap between sections */
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		/* Define color variables for dark theme */
+		--color-background: var(
+			--vt-c-black
+		); /* Main background color for dark theme */
+		--color-background-soft: var(
+			--vt-c-black-soft
+		); /* Soft background color for dark theme */
+		--color-background-mute: var(
+			--vt-c-black-mute
+		); /* Muted background color for dark theme */
+		--color-border: var(
+			--vt-c-divider-dark-2
+		); /* Default border color for dark theme */
+		--color-border-hover: var(
+			--vt-c-divider-dark-1
+		); /* Border color on hover for dark theme */
+		--color-heading: var(
+			--vt-c-text-dark-1
+		); /* Heading text color for dark theme */
+		--color-text: var(
+			--vt-c-text-dark-2
+		); /* Default text color for dark theme */
+	}
+}
+*,
+*::before,
+*::after {
+	/* Universal box model settings */
+	box-sizing: border-box; /* Include padding and border in element's total width and height */
+	margin: 0; /* Remove default margin */
+	position: relative; /* Set position to relative for all elements */
+	font-weight: normal; /* Set normal font weight */
+}
+body {
+	/* Body styling */
+	min-height: 100vh; /* Ensure body takes at least full viewport height */
+	color: var(--color-text); /* Set text color */
+	background: var(--color-background); /* Set background color */
+	transition:
+		color 0.5s,
+		/* Smooth transition for text color */ background-color 0.5s; /* Smooth transition for background color */
+	line-height: 1.6; /* Set line height for readability */
+	font-family:
+		Inter,
+		/* Primary font */ -apple-system,
+		/* System font for Apple devices */ BlinkMacSystemFont,
+		/* System font for macOS */ 'Segoe UI',
+		/* System font for Windows */ Roboto,
+		/* Popular sans-serif font */ Oxygen,
+		/* Font for Linux */ Ubuntu,
+		/* Ubuntu font */ Cantarell,
+		/* Default font for GNOME */ 'Fira Sans',
+		/* Font designed for Mozilla */ 'Droid Sans',
+		/* Font for Android */ 'Helvetica Neue',
+		/* Modern version of Helvetica */ sans-serif; /* Fallback font */
+	font-size: 15px; /* Set base font size */
+	text-rendering: optimizeLegibility; /* Improve text rendering */
+	-webkit-font-smoothing: antialiased; /* Smoothing for WebKit browsers */
+	-moz-osx-font-smoothing: grayscale; /* Smoothing for Firefox on macOS */
+}
+
+/* FILE DOCUMENTED */

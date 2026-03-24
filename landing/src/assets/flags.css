@@ -1,0 +1,17 @@
+/* Styles for country flags using a background image */
+.country-flags.br {
+    /* Brazilian flag */
+    background: url('./images/flags.webp') no-repeat -162px -32px;
+}
+
+.country-flags.es {
+    /* Spanish flag */
+    background: url('./images/flags.webp') no-repeat -142px -92px;
+}
+
+.country-flags.us {
+    /* United States flag */
+    background: url('./images/flags.webp') no-repeat -182px -332px;
+}
+
+/* FILE DOCUMENTED */
