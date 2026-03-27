@@ -1,0 +1,45 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# wrangler.toml — Configuración de Cloudflare Worker para landing-ssr
+# ──────────────────────────────────────────────────────────────────────────────
+
+name = "landing-ssr"
+main = "worker.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ── Rutas del dominio principal (sin subdominio SSR) ─────────────────────────
+# Worker SSR como default para todo el dominio (/, /home, /*).
+routes = [
+	{ pattern = "sitiousuarioonline.com/*", zone_name = "sitiousuarioonline.com" },
+]
+
+# ── Static Assets: sirve los archivos del build del cliente ───────────────────
+# binding = "ASSETS" es CRÍTICO: sin esto, Wrangler sirve index.html
+# automáticamente para "/" antes de invocar el fetch handler del Worker,
+# rompiendo el SSR. Con binding, el Worker siempre toma control y llama
+# env.ASSETS.fetch() explícitamente solo para assets estáticos.
+[assets]
+directory = "dist/client"
+binding = "ASSETS"
+# Forzar que el Worker maneje TODAS las requests antes que el ASSETS binding.
+# Sin esto, Wrangler/Cloudflare sirve index.html directamente para "/" sin
+# invocar el fetch handler del Worker, rompiendo el SSR.
+run_worker_first = true
+
+# ── Reglas de bundling: tratar .html como módulos de texto ──────────────────
+# Wrangler/esbuild no entiende la sintaxis ?raw de Vite.
+# Con esta regla, `import HTML from './dist/client/index.html'` retorna el string del archivo.
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = false
+
+# ── Variables de entorno (sobreescribir en dashboard o con wrangler secret) ────
+[vars]
+SPA_ROOT_URL = "https://sitiousuarioonline.com"
+CONFIG_LANDING_URL = "https://sitiousuarioonline.com/configLanding.js"
+# Origen del deployment de Pages (root shell) para discovery de SitioVersion5
+# y fallback de assets estáticos no presentes en landing-ssr.
+PAGES_ORIGIN = "https://sitiousuarioonline.pages.dev"
+# Opcional: si se deja vacía, el Worker intenta descubrir el bundle desde PAGES_ORIGIN.
+SITIO_VERSION5_BUNDLE_URL = ""

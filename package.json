@@ -14,6 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@my-micro-apps/landing": "file:landing",
+    "@my-micro-apps/landing-ssr": "file:landing-ssr",
     "@my-micro-apps/SitioVersion5": "file:SitioVersion5",
     "@tecnologia-general/virtualsoft-analytics-sdk": "^0.0.0",
     "@tecnologia-general/virtualsoft-widgets": "^0.0.23",

@@ -1864,7 +1864,7 @@
                         >
                             {{$t('Agregar tarjeta de crédito')}}
                         </h2>
-                        <p class="text-neutral text-center font-poppinssl text-xl text-center w-full">
+                        <p class="text-neutral text-center font-poppinssl text-xl w-full">
                             {{$t('Estamos procesando tus datos')}}
                         </p>
                         <!-- Animated progress bar -->
@@ -3212,6 +3212,30 @@ export default defineComponent({
             const n = Number(v);
             return Number.isFinite(n) ? n : 0;
         },
+        cardBrandIsAmex(): boolean {
+            const b = String(this.currentBrand || '').toLowerCase();
+            return b.includes('american') || b.includes('amex');
+        },
+        displayCardNumber(): string {
+            const digits = String(this.cardData?.numberFormatted || '').replace(/\D/g, '');
+            const targetLen = this.cardBrandIsAmex ? 15 : 16;
+            const padded = (digits + '•'.repeat(targetLen)).slice(0, targetLen);
+            return this.cardBrandIsAmex
+                ? `${padded.slice(0, 4)} ${padded.slice(4, 10)} ${padded.slice(10, 15)}`
+                : `${padded.slice(0, 4)} ${padded.slice(4, 8)} ${padded.slice(8, 12)} ${padded.slice(12, 16)}`;
+        },
+        displayExpiry(): string {
+            return this.cardData?.expiration || 'MM/AA';
+        },
+        displayHolder(): string {
+            const name = this.appComponent?.session?.nombre || '';
+            return name || (this.$t ? this.$t('TU NOMBRE') : 'TU NOMBRE');
+        },
+        displayCvv(): string {
+            const len = this.cvvExpectedLengthFor();
+            const digits = String(this.cardData?.cvv || '');
+            return digits ? '•'.repeat(Math.min(digits.length, len)) : '•'.repeat(len);
+        },
     },
     data() {
         // Defining the data function to initialize reactive variables
@@ -3465,121 +3489,6 @@ export default defineComponent({
             return true;
         },
 
-        // 1. longitud esperada
-        cvvExpectedLengthFor(card?: any): number {
-            let brand = '';
-            if (card) {
-                brand = String(card.brand || card.card_brand || '').toLowerCase();
-            } else {
-                // para el form de "agregar tarjeta" usamos la marca detectada
-                brand = String(this.currentBrand || '').toLowerCase();
-            }
-            // American Express
-            return (brand.includes('american') || brand.includes('amex')) ? 4 : 3;
-        },
-
-// 2. bloquear teclas que no sean numéricas
-        onNumericKeydown(e: KeyboardEvent) {
-            const allowed = [
-                'Backspace', 'Delete', 'Tab',
-                'ArrowLeft', 'ArrowRight', 'Home', 'End',
-                'Escape', 'Enter'
-            ];
-            if (allowed.includes(e.key)) return;
-            if (e.ctrlKey || e.metaKey) return; // copiar/pegar/seleccionar todo
-            if (!/^[0-9]$/.test(e.key)) {
-                e.preventDefault();
-            }
-        },
-
-// 3. input de CVV en "agregar tarjeta"
-        onCvvInputAddCard(e: Event) {
-            const el = e.target as HTMLInputElement;
-            const max = this.cvvExpectedLengthFor();
-            const digits = (el.value || '').replace(/\D/g, '').slice(0, max);
-
-            this.cardData.cvv = digits;
-
-            // validar en vivo
-            if (digits.length > 0 && digits.length < max) {
-                this.cvvErrorAddCard = this.$t
-                    ? this.$t('El CVV debe tener {n} dígitos', { n: max })
-                    : `El CVV debe tener ${max} dígitos`;
-            } else {
-                this.cvvErrorAddCard = '';
-            }
-
-            // mantener cursor al final
-            this.$nextTick(() => {
-                try { el.setSelectionRange(digits.length, digits.length); } catch {}
-            });
-        },
-
-// 4. input de CVV en tarjeta guardada
-        onCvvInputSavedCard(card: any, e: Event) {
-            const el = e.target as HTMLInputElement;
-            const max = this.cvvExpectedLengthFor(card);
-            const digits = (el.value || '').replace(/\D/g, '').slice(0, max);
-
-            // asignar al modelo real
-            if (Object.prototype.hasOwnProperty.call(card, 'Cvc')) {
-                card.Cvc = digits;
-            } else {
-                card.cvv = digits;
-            }
-
-            const key = (card.id ?? card.card_id) || card.cuenta;
-
-            // validar en vivo
-            if (digits.length > 0 && digits.length < max) {
-                const msg = this.$t
-                    ? this.$t('El CVV debe tener {n} dígitos', { n: max })
-                    : `El CVV debe tener ${max} dígitos`;
-                // soportar Vue 2 con $set
-                if (this.$set) {
-                    this.$set(this.cvvErrorsSavedCards, key, msg);
-                } else {
-                    this.cvvErrorsSavedCards[key] = msg;
-                }
-            } else {
-                // limpiar error
-                if (this.$delete) {
-                    this.$delete(this.cvvErrorsSavedCards, key);
-                } else {
-                    delete this.cvvErrorsSavedCards[key];
-                }
-            }
-
-            this.$nextTick(() => {
-                try { el.setSelectionRange(digits.length, digits.length); } catch {}
-            });
-        },
-
-// 5. validar antes de depositar (usa el seleccionado)
-        validateSelectedCardCvv(): boolean {
-            const selected = this.credit_cards?.find(
-                c => (c.id ?? c.card_id) === this.selectedCardId
-            );
-            if (!selected) return true;             // no hay tarjeta, que lo valide otro flujo
-            if (selected.activateCvc !== 'S') return true; // no pide CVV
-
-            const max = this.cvvExpectedLengthFor(selected);
-            const current = (selected.Cvc || selected.cvv || '').toString();
-            if (current.length !== max) {
-                const key = (selected.id ?? selected.card_id) || selected.cuenta;
-                const msg = this.$t
-                    ? this.$t('El CVV debe tener {n} dígitos', { n: max })
-                    : `El CVV debe tener ${max} dígitos`;
-
-                if (this.$set) {
-                    this.$set(this.cvvErrorsSavedCards, key, msg);
-                } else {
-                    this.cvvErrorsSavedCards[key] = msg;
-                }
-                return false;
-            }
-            return true;
-        },
         /**
          * format Amount.
          */
@@ -5782,32 +5691,6 @@ async getPaymentsConfigured(changeStep = true) {
             }
         }, 1000);
         this.getPaymentsConfigured(false);
-    },
-    computed: {
-        cardBrandIsAmex(): boolean {
-            const b = String(this.currentBrand || '').toLowerCase();
-            return b.includes('american') || b.includes('amex');
-        },
-        displayCardNumber(): string {
-            const digits = String(this.cardData?.numberFormatted || '').replace(/\D/g, '');
-            const targetLen = this.cardBrandIsAmex ? 15 : 16;
-            const padded = (digits + '•'.repeat(targetLen)).slice(0, targetLen);
-            return this.cardBrandIsAmex
-                ? `${padded.slice(0, 4)} ${padded.slice(4, 10)} ${padded.slice(10, 15)}`
-                : `${padded.slice(0, 4)} ${padded.slice(4, 8)} ${padded.slice(8, 12)} ${padded.slice(12, 16)}`;
-        },
-        displayExpiry(): string {
-            return this.cardData?.expiration || 'MM/AA';
-        },
-        displayHolder(): string {
-            const name = this.appComponent?.session?.nombre || '';
-            return name || (this.$t ? this.$t('TU NOMBRE') : 'TU NOMBRE');
-        },
-        displayCvv(): string {
-            const len = this.cvvExpectedLengthFor();
-            const digits = String(this.cardData?.cvv || '');
-            return digits ? '•'.repeat(Math.min(digits.length, len)) : '•'.repeat(len);
-        },
     },
 });
 </script>

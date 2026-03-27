@@ -1,18 +1,21 @@
 {
   "name": "landing-ssr",
-  "main": "src/entry-spa.ts",
+  "main": "dist/spa/landing-ssr.es.js",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
+    "dev:worker": "wrangler dev",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:ssr": "vite build --ssr src/entry-server.ts --outDir dist/server",
+    "build:spa": "vite build --config vite.config.spa.ts",
     "build:node": "tsc -p tsconfig.server.json",
     "build": "vue-tsc -b && npm run build:client && npm run build:ssr && npm run build:node",
+    "build:worker": "vue-tsc -b && npm run build:client && npm run build:ssr",
+    "deploy": "npm run build:worker && wrangler deploy",
     "start": "node dist/server.js",
-    "preview": "node dist/server.js",
-    "build:spa": "vite build --config vite.config.spa.ts"
+    "preview": "node dist/server.js"
   },
   "dependencies": {
     "compression": "^1.8.1",
@@ -37,6 +40,8 @@
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "vite": "^8.0.1",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "^3.2.5",
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "wrangler": "^4.0.0"
   }
 }

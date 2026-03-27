@@ -4,6 +4,27 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import {VitePWA} from "vite-plugin-pwa";
 import path from 'path';
 
+function landingSsrHtmlFallback() {
+    return {
+        name: 'landing-ssr-html-fallback',
+        apply: 'serve',
+        configureServer(server) {
+            server.middlewares.use((req, _res, next) => {
+                const requestUrl = req.url?.split('?')[0] ?? '';
+                const accept = req.headers.accept ?? '';
+                const isHtmlRequest = accept.includes('text/html');
+                const isLandingSsrRoute = requestUrl === '/landing-ssr' || requestUrl.startsWith('/landing-ssr/');
+
+                if (isHtmlRequest && isLandingSsrRoute) {
+                    req.url = '/index.html';
+                }
+
+                next();
+            });
+        },
+    };
+}
+
 // Función para generar un hash único basado en la fecha y hora actual
 function generateUniqueHash() {
   return new Date().getTime().toString(36); // Convertir a base 36 para acortar el hash
@@ -22,12 +43,13 @@ const assetsPath2 = env.VITE_ASSETS_PATH2  || '/';
 export default defineConfig({
   base: '/',
   build: {
+    manifest: true,
     rollupOptions: {
       output:{
-        entryFileNames: assetsPath + `[name].[hash]N${generateUniqueHash()}.js`,
-        chunkFileNames: assetsPath + `[name].[hash]N${generateUniqueHash()}.js`,
-        assetFileNames: assetsPath + `[name].[hash]N${generateUniqueHash()}.[ext]`,
-
+        // Preservar nombres de exports (bootstrap, mount, unmount) en chunks
+        // para que SitioVersion5 funcione correctamente vía dynamic import
+        // cuando el root shell corre en contexto SSR.
+        minifyInternalExports: false,
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
                         return id.toString().split('node_modules/')[1].split('/')[0].toString();
@@ -62,6 +84,7 @@ export default defineConfig({
     },
 
     plugins: [
+        landingSsrHtmlFallback(),
         vue({
             template: {
                 compilerOptions: {
@@ -118,6 +141,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './SitioVersion5/src'),
+            '@my-micro-apps/landing-ssr': path.resolve(__dirname, './src/landing-ssr-shim.js'),
         }
     }
 });

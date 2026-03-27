@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { navigateToUrl } from 'single-spa'
 import type { INavLink } from '@/interfaces/navigation.interface'
 
 interface Props {
@@ -14,13 +15,71 @@ withDefaults(defineProps<Props>(), {
  * Navegación cross-microfrontend: usa history.pushState para que single-spa
  * detecte el cambio de ruta y monte el microfrontend correspondiente
  * (ej: SitioVersion5 para /deportes) sin recarga de página.
- * single-spa v6 parchea pushState, por lo que el cambio de ruta se detecta automáticamente.
+ * navigateToUrl usa la API oficial de single-spa y evita depender de eventos
+ * manuales adicionales para forzar el reroute.
  */
-function navigateToSpa(event: Event, href: string) {
+function toCanonicalShellPath(rawHref: string) {
+  const trimmed = rawHref.trim()
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    const parsed = new URL(trimmed)
+    const path = parsed.pathname
+
+    if (path.startsWith('/landing-ssr/')) {
+      const normalizedPath = `${path.slice('/landing-ssr'.length) || '/'}${parsed.search}${parsed.hash}`
+      return toShellTarget(normalizedPath)
+    }
+
+    return toShellTarget(`${parsed.pathname}${parsed.search}${parsed.hash}`)
+  }
+
+  if (trimmed.startsWith('/landing-ssr/')) {
+    return trimmed.slice('/landing-ssr'.length) || '/'
+  }
+
+  if (trimmed.startsWith('/')) {
+    return toShellTarget(trimmed)
+  }
+
+  return toShellTarget(`/${trimmed}`)
+}
+
+function toShellTarget(path: string) {
+  if (path === '/landing-ssr' || path.startsWith('/landing-ssr/')) {
+    return path
+  }
+
+  const spaRootUrl = (window as Window & { __SPA_ROOT_URL__?: string }).__SPA_ROOT_URL__
+  if (!spaRootUrl) {
+    return path
+  }
+
+  try {
+    const shellOrigin = new URL(spaRootUrl).origin
+    if (window.location.origin !== shellOrigin) {
+      return `${shellOrigin}${path}`
+    }
+  } catch {
+    return path
+  }
+
+  return path
+}
+
+function onNavClick(event: MouseEvent, link: INavLink) {
+  if (link.href.startsWith('#')) {
+    return
+  }
+
   event.preventDefault()
-  window.history.pushState(null, '', href)
-  // Dispara popstate como fallback por si single-spa no intercepta pushState
-  window.dispatchEvent(new PopStateEvent('popstate'))
+
+  const currentTarget = event.currentTarget
+  if (currentTarget instanceof HTMLAnchorElement) {
+    navigateToUrl(toCanonicalShellPath(currentTarget.href))
+    return
+  }
+
+  navigateToUrl(toCanonicalShellPath(link.href))
 }
 </script>
 
@@ -34,7 +93,7 @@ function navigateToSpa(event: Event, href: string) {
       :class="isActive
         ? 'text-casino-gold'
         : 'text-gray-300 hover:text-casino-gold'"
-      @click="link.isExternal ? navigateToSpa($event, link.href) : undefined"
+      @click="onNavClick($event, link)"
     >
       {{ link.label }}
       <!-- Subrayado animado -->

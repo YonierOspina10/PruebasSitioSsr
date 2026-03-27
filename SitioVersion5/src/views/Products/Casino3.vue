@@ -131,9 +131,6 @@ export default defineComponent({
 		SliderNormalComponent: defineAsyncComponent(
 			() => import('../../components/Carousel.vue')
 		),
-		BannerSlider8Component: defineAsyncComponent(
-			() => import('../../components/BannerV8.vue')
-		),
 		InfoIconsComponent5: defineAsyncComponent(
 			() => import('../../components/InfoIcons5.vue')
 		),
@@ -170,12 +167,6 @@ export default defineComponent({
 		SliderCasino7Component: defineAsyncComponent(
 			() => import('../../components/CasinoSlider7.vue')
 		),
-		SliderCasino8Component: defineAsyncComponent(
-			() => import('../../components/CasinoSlider8.vue')
-		),
-		Menu8Component: defineAsyncComponent(
-			() => import('../../components/menus/Menu8.vue')
-		),
 		WidgetCarousel2Component: defineAsyncComponent(
 			() =>
 				import(
@@ -186,9 +177,6 @@ export default defineComponent({
 			() => import('../../components/Reels.vue')
 		),
 		SeoP: defineAsyncComponent(() => import('../../components/SeoP.vue')),
-		Jackpots3Component: defineAsyncComponent(
-			() => import('../../components/Jackpots3.vue')
-		),
 		PromotionalCards2: defineAsyncComponent(
 			() => import('../../components/PromotionalCards2.vue')
 		),

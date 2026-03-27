@@ -1,4 +1,4 @@
-import { registerApplication, start, getAppNames } from 'single-spa'; // Importing functions to register and start micro frontends
+import { registerApplication, start, getAppNames, navigateToUrl } from 'single-spa'; // Importing functions to register and start micro frontends
 import { pathToRegexp } from 'path-to-regexp'; // Importing path-to-regexp for route matching
 import { initFirestore } from '../SitioVersion5/firebaseConfig'
 import { setTheme, init } from '@tecnologia-general/virtualsoft-widgets';
@@ -22,6 +22,93 @@ try {
 } catch (e) {
     console.error("Error initializing analytics SDK:", e);
 }
+
+function normalizeLandingSsrPath() {
+    const canonicalUrl = getCanonicalShellUrl(window.location.href);
+    if (!canonicalUrl) {
+        return;
+    }
+
+    if (canonicalUrl === `${window.location.pathname}${window.location.search}${window.location.hash}`) {
+        return;
+    }
+
+    history.replaceState(history.state, '', canonicalUrl);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+}
+
+function getCanonicalShellUrl(urlLike) {
+    const parsed = new URL(urlLike, window.location.origin);
+
+    if (parsed.origin !== window.location.origin) {
+        return null;
+    }
+
+    if (parsed.pathname === '/landing-ssr/') {
+        return `/landing-ssr${parsed.search}${parsed.hash}`;
+    }
+
+    if (parsed.pathname.startsWith('/landing-ssr/')) {
+        const normalizedPath = parsed.pathname.slice('/landing-ssr'.length) || '/';
+        return `${normalizedPath}${parsed.search}${parsed.hash}`;
+    }
+
+    return null;
+}
+
+const originalPushState = history.pushState.bind(history);
+history.pushState = function pushStatePatched(state, title, url) {
+    const target = url == null ? null : getCanonicalShellUrl(String(url));
+    return originalPushState(state, title, target ?? url);
+};
+
+const originalReplaceState = history.replaceState.bind(history);
+history.replaceState = function replaceStatePatched(state, title, url) {
+    const target = url == null ? null : getCanonicalShellUrl(String(url));
+    return originalReplaceState(state, title, target ?? url);
+};
+
+function handleCanonicalShellNavigation(event) {
+    if (!(event.target instanceof Element)) {
+        return;
+    }
+
+    const anchor = event.target.closest('a');
+    if (!anchor) {
+        return;
+    }
+
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+    }
+
+    const hrefAttr = anchor.getAttribute('href');
+    if (!hrefAttr || hrefAttr.startsWith('#') || hrefAttr.startsWith('javascript:')) {
+        return;
+    }
+
+    if (anchor.target && anchor.target !== '_self') {
+        return;
+    }
+
+    const resolvedUrl = new URL(anchor.href, window.location.origin);
+    if (resolvedUrl.origin !== window.location.origin) {
+        return;
+    }
+
+    const canonicalUrl = getCanonicalShellUrl(resolvedUrl.href);
+    if (!canonicalUrl) {
+        return;
+    }
+
+    event.preventDefault();
+    navigateToUrl(canonicalUrl);
+}
+
+normalizeLandingSsrPath();
+window.addEventListener('single-spa:before-routing-event', normalizeLandingSsrPath);
+window.addEventListener('single-spa:routing-event', normalizeLandingSsrPath);
+document.addEventListener('click', handleCanonicalShellNavigation, true);
 
 (function initRunOnceOnFirstInteraction() {
     if (window.runOnceOnFirstInteraction) return;
@@ -296,6 +383,7 @@ window.addEventListener('themeChanged', (e) => {
 // Check if landingHome is defined in the global configuration
 const isLandingHomeDefined =
     window.cconfig.landingHome !== undefined && window.cconfig.landingHome !== undefined && window.cconfig.landingHome;
+const isLandingSsrHomeEnabled = true;
     /**
      * Loads a script dynamically and returns a promise.
      * @param {string} url - The URL of the script to load.
@@ -322,6 +410,8 @@ const isLandingHomeDefined =
 
     /**
      * Handles route changes and loads the appropriate configuration script.
+     * Si configLanding.js ya cargó window.cconfig con datos reales,
+     * NO cargar config.js porque lo sobreescribiría con un objeto vacío.
      */
     function handleRouteChange() {
         const path = window.location.pathname; // Get the current path
@@ -329,44 +419,30 @@ const isLandingHomeDefined =
         if (path !== '/') {
             configScript = window.versionConfig; // Get the version config if not on the root path
         }
-        if (configScript !== undefined) {
+        // Si cconfig ya tiene datos reales (cargado por configLanding.js),
+        // no cargar config.js que lo sobreescribiría con {}
+        if (configScript !== undefined && !(window.cconfig && Object.keys(window.cconfig).length > 1)) {
             loadScript(configScript) // Load the configuration script
                 .then(() => {
-                    if (!getAppNames().includes('sitios')) {
-                        safeRegisterApplication({
-                            name: 'sitios', // Name of the application
-                            app: () => import('@my-micro-apps/SitioVersion5'), // Import the application
-                            activeWhen: (location) => {
-                                const isRouteDefined = routesSite.some((route) =>
-                                    pathToRegexp(route).test(location.pathname), // Check if the route is defined
-                                );
-                                if (!isRouteDefined && location.pathname !== '/') {
-                                    routesSite.push('/:pathMatch(.*)*'); // Add a catch-all route if not defined
-                                }
-                                // Return true only if any single route pattern matches the current pathname
-                                // If landing is defined and the current pathname matches landing routes,
-                                // ensure sitios is not active so it unmounts when returning to landing.
-                                if (isLandingHomeDefined && pathToRegexp(routesLanding).test(location.pathname)) {
-                                    return false;
-                                }
-                                return routesSite.some(route => pathToRegexp(route).test(location.pathname));
-                             },
-                         });
-                     }
+                    // Config cargado: sitios ya está registrado desde el bloque principal.
+                    // No re-registrar aquí.
+                    console.log('[shell] versionConfig loaded for path:', path);
                   })
                  .catch((error) => {
                      console.error(error); // Log any errors
                  });
+        } else if (configScript !== undefined) {
+            console.log('[shell] Skipping config.js load — cconfig already populated for path:', path);
         }
     }
 
-    if (isLandingHomeDefined) {
+    if (isLandingHomeDefined || isLandingSsrHomeEnabled) {
         handleRouteChange(); // Handle route change if landing home is defined
     }
 
     // Add event listener for popstate to handle back/forward navigation
     window.addEventListener('popstate', () => {
-        if (isLandingHomeDefined) {
+        if (isLandingHomeDefined || isLandingSsrHomeEnabled) {
             handleRouteChange(); // Handle route change on popstate
         }
     });
@@ -507,7 +583,7 @@ try {
 }
 
 // Define landing routes
-let routesLanding = ['/'];
+let routesLanding = ['/', '/home'];
 
 // Define site routes
 let routesSite = [
@@ -664,16 +740,21 @@ let routesSite = [
 ];
 
 // Register the application based on whether landing home is defined
-if (!isLandingHomeDefined) {
+// Agregar catch-all a routesSite una sola vez, de forma determinística.
+// Esto evita mutaciones dentro de activeWhen que causaban inconsistencias.
+if (!routesSite.includes('/:pathMatch(.*)*')) {
+    routesSite.push('/:pathMatch(.*)*');
+}
+
+if (!isLandingHomeDefined || isLandingSsrHomeEnabled) {
     routesSite.unshift('/'); // Add root route if landing home is not defined
     if (!getAppNames().includes('sitios')) {
     safeRegisterApplication({
-         name: 'sitios', // Name of the application
+         name: 'sitios',
          app: async () => {
              try {
-                 const mod = await import('@my-micro-apps/SitioVersion5'); // Import the application
+                 const mod = await import('@my-micro-apps/SitioVersion5');
                  console.log('[single-spa debug] SitioVersion5 module imported:', mod);
-                 // If the module is a default export with lifecycle functions, show them
                  try {
                      const exported = mod.default || mod;
                      console.log('[single-spa debug] SitioVersion5 exported keys:', Object.keys(exported));
@@ -687,17 +768,13 @@ if (!isLandingHomeDefined) {
              }
          },
          activeWhen: (location) => {
-             const isRouteDefined = routesSite.some((route) => pathToRegexp(route).test(location.pathname)); // Check if the route is defined
-             if (!isRouteDefined && location.pathname !== '/') {
-                 routesSite.push('/:pathMatch(.*)*'); // Add a catch-all route if not defined
-             }
-             // Return true only if any single route pattern matches the current pathname
-             // If landing is defined and the current pathname matches landing routes,
-             // ensure sitios is not active so it unmounts when returning to landing.
-             if (isLandingHomeDefined && pathToRegexp(routesLanding).test(location.pathname)) {
+             // Excluir rutas de landing-ssr: ese micro tiene su propio registro
+             if (location.pathname.startsWith('/landing-ssr')) return false;
+             // Excluir rutas de landing (/, /home): landing-ssr las maneja
+             if ((isLandingHomeDefined || isLandingSsrHomeEnabled) && routesLanding.some(route => pathToRegexp(route).test(location.pathname))) {
                 return false;
              }
-             return routesSite.some(route => pathToRegexp(route).test(location.pathname)); // Return if the current path matches any route
+             return routesSite.some(route => pathToRegexp(route).test(location.pathname));
          },
      });
      }
@@ -705,22 +782,76 @@ if (!isLandingHomeDefined) {
 } else {
     if (!getAppNames().includes('landing')) {
     safeRegisterApplication({
-         name: 'landing', // Name of the landing application
+         name: 'landing',
          app: async () => {
              try {
-                 return await import('@my-micro-apps/landing'); // Import the landing application
+                 return await import('@my-micro-apps/landing');
              } catch (err) {
                  console.error('[single-spa] Failed to import landing:', err);
                  throw err;
              }
          },
-         activeWhen: (location) => routesLanding.some(route => pathToRegexp(route).test(location.pathname)), // Check if the landing route matches
+         activeWhen: (location) => routesLanding.some(route => pathToRegexp(route).test(location.pathname)),
      });
      }
 
 }
 
-// Start single-spa once after registering applications (or leaving asynchronous registrations to register later)
+// ── Registro de landing-ssr (microfrontend SSR/SPA dual – HOME del shell) ─────
+// Cuando isLandingSsrHomeEnabled = true, landing-ssr es la app principal para
+// las rutas '/' y '/home'. El root shell la monta con entry-spa.ts que detecta
+// automáticamente si debe usar base '/' o '/landing-ssr'.
+// Para '/deportes' y demás rutas, single-spa monta 'sitios' (SitioVersion5).
+//
+// Cuando __LANDING_SSR_HYDRATED__ está activo (SSR standalone), entry-client.ts
+// ya hidrato Vue en #app. En ese caso usamos un ghost app que solo muestra/oculta
+// el contenedor #app, evitando conflictos de doble montaje.
+if (!getAppNames().includes('landing-ssr')) {
+    safeRegisterApplication({
+        name: 'landing-ssr',
+        app: async () => {
+            // Si la hidratación SSR ya ocurrió, usar ghost app (show/hide #app)
+            if (window.__LANDING_SSR_HYDRATED__) {
+                return {
+                    bootstrap: async () => {
+                        console.log('[root-shell] landing-ssr ghost app (SSR hydrated) bootstrapped');
+                    },
+                    mount: async () => {
+                        const el = document.getElementById('app');
+                        if (el) el.style.display = '';
+                        console.log('[root-shell] landing-ssr mounted (shown - SSR hydrated)');
+                    },
+                    unmount: async () => {
+                        const el = document.getElementById('app');
+                        if (el) el.style.display = 'none';
+                        console.log('[root-shell] landing-ssr unmounted (hidden)');
+                    },
+                };
+            }
+            try {
+                return await import('@my-micro-apps/landing-ssr');
+            } catch (err) {
+                console.error('[single-spa] Failed to import landing-ssr:', err);
+                throw err;
+            }
+        },
+        activeWhen: (location) => {
+            // Ruta legacy /landing-ssr
+            if (location.pathname === '/landing-ssr' || location.pathname === '/landing-ssr/') {
+                return true;
+            }
+
+            if (!isLandingSsrHomeEnabled) {
+                return false;
+            }
+
+            // Rutas home: /, /home
+            return routesLanding.some(route => pathToRegexp(route).test(location.pathname));
+        },
+    });
+}
+
+// Start single-spa once after registering applications
 try {
     if (!getAppNames().includes('__single_spa_started')) {
         // We don't have a direct API to check if start() was already called, but start() is idempotent in practice.

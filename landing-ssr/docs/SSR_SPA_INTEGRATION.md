@@ -1,185 +1,255 @@
-# Integración SSR + SPA Cross-Micro — landing-ssr ↔ SitioVersion5
+# Integración SSR + SPA — landing-ssr ↔ SitioVersion5
+
+> **Última actualización:** Marzo 2026
+> **Estado:** Producción — `sitiousuarioonline.com`
+
+---
 
 ## Objetivo
 
-Permitir que `landing-ssr`, desplegado como servicio SSR standalone en Render, funcione como punto de entrada con rendering del servidor (SEO + fast FCP), y al hacer clic en una ruta de SitioVersion5 (ej: `/deportes`), transicione a modo SPA **sin recarga de página**.
+Permitir que `landing-ssr`, desplegado como Worker SSR en Cloudflare, funcione como punto de entrada con rendering del servidor (SEO + fast FCP), y que al navegar a rutas de SitioVersion5 (ej: `/deportes`), la transición ocurra de manera óptima.
 
 ---
 
-## Flujo completo
+## Flujo completo — Primer acceso a `/`
 
 ```
-[1] Browser → GET /landing-ssr (o /)
-         → Express SSR server
-         → response: HTML landing completo (SSR)
-              + script de hidratación Vue (entry-client.ts)
-              + importmap dinámico con URL de SitioVersion5
-              + mini-shell single-spa inline
+[1] Browser → GET /
+         → Cloudflare Edge → Cache MISS → Worker SSR
+         → response: HTML completo (SSR)
+              + <script src="configLanding-ganaplay..."> (CDN)
+              + <script>window.versionConfig="config-ganaplay..."</script>
+              + <script>window.__SPA_ROOT_URL__="https://sitiousuarioonline.com"</script>
+              + <script>window.__PINIA_STATE__={...}</script>
+              + <div id="app">...HTML renderizado...</div>
+              + <script type="module" src="/assets/index-D1Zi...js"> (root shell)
 
 [2] Browser parsea HTML → usuario ve contenido INMEDIATO (SSR)
 
-[3] entry-client.ts hidrata #app   ← Vue detecta DOM existente, no re-renderiza
-    mini-shell.ts arranca          ← single-spa registra landing-ssr + sitios
+[3] configLanding-ganaplay.js ejecuta → window.cconfig = { partner: 27, ... }
 
-[4] Usuario clic "Deportes"
-         → NavItem.vue → history.pushState('/deportes')
-         → single-spa intercepta
-         → unmount landing-ssr (oculta #app)
-         → mount SitioVersion5 (en #sitio-root)
-         → SPA, sin recarga
+[4] entry-client.ts hidrata #app
+    ├─ createApp() + Pinia restore + Vue mount
+    └─ window.__LANDING_SSR_HYDRATED__ = true
 
-[5] Usuario clic "Atrás" (popstate)
-         → single-spa intercepta
-         → unmount SitioVersion5
-         → mount landing-ssr (muestra #app)
-         → sin recarga
+[5] Root shell entry (index-D1Zi...js) arranca
+    ├─ normalizeLandingSsrPath()
+    ├─ handleRouteChange()
+    │   └─ window.cconfig ya tiene datos → SKIP config.js load
+    ├─ applyGlobalThemeColors() (tema ganaplay)
+    ├─ registerApplication('landing-ssr') → GHOST APP (porque __LANDING_SSR_HYDRATED__)
+    │   └─ mount: #app.style.display = ''
+    │   └─ unmount: #app.style.display = 'none'
+    ├─ registerApplication('sitios') → SitioVersion5 (lazy import)
+    └─ start() → single-spa activo
 ```
 
 ---
 
-## Arquitectura de componentes
+## Flujo — Navegación SPA de `/` a `/deportes`
 
 ```
-landing-ssr/
-├── index.html              ← Template SSR con placeholders
-│   ├── <!--importmap-->    ← Inyectado por server.ts (URL hasheada de SitioVersion5)
-│   ├── <!--shell-config--> ← Inyectado por server.ts (window.cconfig + versionConfig)
-│   ├── <!--app-html-->     ← Contenido SSR de Vue
-│   ├── <!--pinia-state-->  ← Estado serializado de Pinia
-│   ├── #app                ← Contenedor de landing-ssr (hidratado por Vue)
-│   └── #sitio-root         ← Contenedor de SitioVersion5 (montado por single-spa)
+[6] Usuario clic "Deportes" (enlace de landing-ssr)
+    ├─ NavItem.vue → history.pushState('/deportes')
+    └─ single-spa intercepta el cambio de ruta
+
+[7] single-spa:
+    ├─ unmount 'landing-ssr' → #app.style.display = 'none'
+    └─ mount 'sitios' → import('@my-micro-apps/SitioVersion5')
+           ├─ Chunk main-DoxS2F-7.js carga (lazy, desde Pages)
+           ├─ bootstrap() → mount()
+           └─ SitioVersion5 renderiza en su contenedor
+               → Usa window.cconfig (ganaplay, partner=27) ✅
+               → Navbar, configuración, contenido completo ✅
+
+[8] Navegación SPA completada — sin recarga de página
+```
+
+---
+
+## Flujo — Hard refresh en `/deportes`
+
+```
+[9] Browser → GET /deportes
+    → Worker SSR detecta ruta NO landing
+    → Section 2b: Proxy HTML de Pages (root shell)
+    → response: HTML del root shell (SPA)
+         + configLanding-ganaplay.gt_... (CDN)
+         + versionConfig = config-ganaplay.gt_... (CDN)
+
+[10] Root shell monta normalmente (sin SSR, sin ghost app)
+     ├─ handleRouteChange() → SKIP (cconfig ya poblado)
+     ├─ registerApplication('sitios')
+     └─ SitioVersion5 monta directamente en /deportes ✅
+```
+
+---
+
+## Patrón Ghost App
+
+Cuando el Worker sirve HTML con SSR (rutas `/`, `/home`), `entry-client.ts` hidrata el `#app` y establece `window.__LANDING_SSR_HYDRATED__ = true`.
+
+El root shell detecta este flag y registra `landing-ssr` como **ghost app**:
+
+```javascript
+// src/main.js — root shell
+if (window.__LANDING_SSR_HYDRATED__) {
+    return {
+        bootstrap: async () => { /* noop */ },
+        mount: async () => {
+            document.getElementById('app').style.display = '';
+        },
+        unmount: async () => {
+            document.getElementById('app').style.display = 'none';
+        },
+    };
+}
+```
+
+**¿Por qué ghost app?**
+- Vue ya está montada e hidratada por `entry-client.ts`
+- Destruir y re-montar Vue causaría un flash visible y pérdida de estado
+- Show/hide es instantáneo y preserva la instancia hidratada
+- Al navegar de vuelta desde `/deportes`, el contenido aparece inmediatamente
+
+---
+
+## Resolución de configuración
+
+### Problema original
+
+El Worker inyectaba URLs de configuración desde variables de entorno en `wrangler.toml`:
+- `CONFIG_LANDING_URL = "https://sitiousuarioonline.com/configLanding.js"` → config ecuabet (partner=8, incorrecto)
+- `versionConfig` apuntaba a `config.js` → `window.cconfig = {}` (vacío)
+
+### Solución implementada
+
+El Worker descubre las URLs correctas parseando el HTML del root shell desplegado en Pages:
+
+```typescript
+// worker.ts — discoverPagesAssets()
+const htmlResponse = await fetch(`${pagesOrigin}/`)
+const html = await htmlResponse.text()
+
+// Extraer configLanding: <script src="...configLanding-ganaplay...">
+const configLandingMatch = html.match(/src=["']([^"']*configLanding[^"']*)["']/)
+
+// Extraer versionConfig: window.versionConfig = '...config-ganaplay...'
+const versionConfigMatch = html.match(/versionConfig\s*=\s*["']([^"']+)["']/)
+```
+
+### Guard de carga en el root shell
+
+El root shell tiene un guard en `handleRouteChange()` que evita sobreescribir `window.cconfig` si ya está poblado:
+
+```javascript
+// src/main.js
+if (configScript !== undefined && !(window.cconfig && Object.keys(window.cconfig).length > 1)) {
+    loadScript(configScript) // Solo carga si cconfig está vacío o tiene 1 key
+} else {
+    console.log('[shell] Skipping config.js load — cconfig already populated');
+}
+```
+
+Esto previene que `config.js` (que contiene `window.cconfig = {}`) sobreescriba la configuración real cargada por `configLanding-ganaplay.js`.
+
+---
+
+## Variables de entorno del Worker
+
+| Variable | Valor actual | Propósito |
+|----------|-------------|-----------|
+| `SPA_ROOT_URL` | `https://sitiousuarioonline.com` | URL base del dominio |
+| `CONFIG_LANDING_URL` | `https://sitiousuarioonline.com/configLanding.js` | **Fallback** — URLs reales se descubren de Pages |
+| `PAGES_ORIGIN` | `https://sitiousuarioonline.pages.dev` | Root shell en Cloudflare Pages |
+| `SITIO_VERSION5_BUNDLE_URL` | `""` (vacío) | Se descubre dinámicamente del manifest |
+
+---
+
+## Diagrama de componentes
+
+```
+sitiousuarioonline.com (Worker SSR)
+├── GET / (landing paths)
+│   ├── worker.ts → handleSSR()
+│   │   ├── entry-server.ts → render()
+│   │   ├── discoverPagesAssets() → config URLs del CDN
+│   │   └── HTML completo con:
+│   │       ├── <!--app-html--> = contenido Vue renderizado
+│   │       ├── <!--pinia-state--> = estado serializado
+│   │       ├── <!--shell-config--> = configLanding + versionConfig (CDN)
+│   │       └── <!--root-shell-entry--> = /assets/index-*.js (root shell)
+│   │
+│   └── Browser
+│       ├── entry-client.ts → hidratación Vue + __LANDING_SSR_HYDRATED__
+│       ├── root shell entry → single-spa + ghost app + theme
+│       └── mini-shell.ts → (standalone fallback, redirige a Pages si navega a /deportes)
 │
-├── src/
-│   ├── entry-client.ts     ← Hidratación SSR standalone (createSSRApp → mount #app)
-│   ├── entry-server.ts     ← Render del servidor (renderToString → HTML + state)
-│   ├── entry-spa.ts        ← Entry para single-spa en monorepo root (createSSRApp)
-│   ├── mini-shell.ts       ← Orquestador single-spa para contexto SSR standalone
-│   ├── app.ts              ← Factory de la app Vue (createSSRApp)
-│   └── types/
-│       └── micro-apps.d.ts ← Declaraciones TypeScript para módulos externos
-│
-└── server.ts               ← Express SSR + inyección de importmap + shelConfig
+└── GET /deportes (non-landing paths)
+    ├── worker.ts → Proxy HTML de Pages
+    └── Root shell monta SitioVersion5 directamente
 ```
 
 ---
 
-## Componentes clave
+## Archivos clave para la integración
 
-### mini-shell.ts
-
-Orquestador single-spa mínimo que **solo vive en el contexto SSR standalone**. No se ejecuta dentro del monorepo root (allí `src/main.js` es el shell).
-
-Responsabilidades:
-1. **Ghost app landing-ssr**: No re-monta Vue. Solo muestra/oculta `#app` (el DOM ya fue hidratado por `entry-client.ts`).
-2. **SitioVersion5 lazy-loaded**: Registra SitioVersion5 como app single-spa que se carga via importmap dinámico cuando la ruta cambia a una ruta de Sitio (ej: `/deportes`).
-3. **Arranque de single-spa**: Llama a `start({ urlRerouteOnly: true })` después de verificar que `window.cconfig` está disponible.
-
-### entry-spa.ts (createSSRApp)
-
-Usa `createSSRApp` en lugar de `createApp` para que Vue, al montarse sobre DOM pre-renderizado por SSR, haga **hidratación** en vez de destruir y re-renderizar. Cuando se monta sobre un `div` vacío (contexto monorepo root), simplemente renderiza normalmente.
-
-### server.ts — Inyección dinámica
-
-El servidor Express inyecta tres bloques adicionales:
-
-| Placeholder | Contenido | Propósito |
-|---|---|---|
-| `<!--importmap-->` | `<script type="importmap">{"imports":{"@my-micro-apps/SitioVersion5":"URL"}}` | Permite a mini-shell hacer `import('@my-micro-apps/SitioVersion5')` en runtime |
-| `<!--shell-config-->` | `<script src="configLanding.js">` + `window.versionConfig` | Provee `window.cconfig` y la URL del config.js para SitioVersion5 |
-| `<!--pinia-state-->` | `<script>window.__PINIA_STATE__=...` | Estado serializado de Pinia para hidratación |
-
-### Discovery de SitioVersion5 Bundle
-
-En producción, el servidor SSR obtiene la URL hasheada del bundle de SitioVersion5 desde el manifest del SPA root:
-
-```
-GET {SPA_ROOT_URL}/.vite/manifest.json
-→ Busca entry SitioVersion5
-→ Construye URL completa: {SPA_ROOT_URL}/{file}
-→ Inyecta en importmap
-```
-
-Esto sucede una vez al iniciar el servidor (startup), no por cada request.
+| Archivo | Rol en la integración |
+|---------|----------------------|
+| `landing-ssr/worker.ts` | SSR handler, discovery de config, proxy a Pages |
+| `landing-ssr/src/entry-client.ts` | Hidratación + flag `__LANDING_SSR_HYDRATED__` |
+| `landing-ssr/src/mini-shell.ts` | Orquestador standalone (redirige a Pages para SitioVersion5) |
+| `src/main.js` | Root shell: ghost app, handleRouteChange guard, single-spa |
+| `src/landing-ssr-shim.js` | Shim que re-exporta el build SPA de landing-ssr |
+| `vite.config.js` | Alias `@my-micro-apps/landing-ssr` → shim |
 
 ---
 
-## Variables de entorno (Servicio SSR)
-
-| Variable | Requerida | Ejemplo | Descripción |
-|---|---|---|---|
-| `NODE_ENV` | Sí | `production` | Modo de ejecución |
-| `PORT` | No | `3000` | Puerto del servidor Express |
-| `SPA_ROOT_URL` | Sí* | `https://sitiousuarioonline-spa.onrender.com` | URL del servicio SPA root (para importmap y config) |
-| `CONFIG_LANDING_URL` | No | `https://cdn.example.com/configLanding.js` | URL del configLanding.js (default: `{SPA_ROOT_URL}/configLanding.js`) |
-
-*Sin `SPA_ROOT_URL`, la navegación cross-micro a SitioVersion5 queda deshabilitada. SSR puro sigue funcionando.
-
----
-
-## Flujo de navegación: NavItem.vue → single-spa
+## Navegación — NavItem.vue → single-spa
 
 ```
 NavItem.vue
-  └── @click="navigateToSpa($event, '/deportes')"
+  └── @click → navigateToSpa($event, '/deportes')
         ├── event.preventDefault()
-        ├── window.history.pushState(null, '', '/deportes')
+        ├── history.pushState(null, '', '/deportes')
         └── window.dispatchEvent(new PopStateEvent('popstate'))
               │
-              └── single-spa intercepta (v6 parchea pushState)
+              └── single-spa intercepta
                     ├── unmount 'landing-ssr' → #app.style.display = 'none'
                     └── mount 'sitios' → import('@my-micro-apps/SitioVersion5')
-                           → monta en #sitio-root
+                           → monta en su contenedor
                            → SPA sin recarga
 ```
 
 ---
 
-## Build Pipeline
+## Cache del Worker
 
-```bash
-# Build completo SSR (para servicio standalone en Render)
-npm run build
-# → vue-tsc -b                              (type-check)
-# → vite build --ssrManifest                 (client: entry-client + mini-shell → dist/client)
-# → vite build --ssr entry-server.ts         (server: entry-server → dist/server)
-# → tsc -p tsconfig.server.json             (node: server.ts → dist/server.js)
+| Tipo de request | Cache-Control | Cache Key |
+|----------------|---------------|-----------|
+| SSR HTML (`/`, `/home`) | `public, s-maxage=3600, stale-while-revalidate=60` | `{pathname}?_cv=v7` |
+| Proxy Pages HTML (`/deportes`) | `public, s-maxage=600, stale-while-revalidate=60` | `{pathname}?_cv=v7` |
+| Assets `/assets/*` | `public, max-age=31536000, immutable` | Request URL (por defecto) |
+| Assets otros | Headers originales | Request URL (por defecto) |
 
-# Build SPA para monorepo root
-npm run build:spa
-# → vite build --config vite.config.spa.ts   (lib: landing-ssr.js + mini-shell.js → dist/spa)
+El `CACHE_VERSION` (actualmente `v7`) se incrementa al desplegar cambios que afecten el HTML para invalidar el cache sin purge manual.
+
+---
+
+## Service Worker Cleanup
+
+El Worker intercepta `/sw.js` y `/registerSW.js` para servir un service worker de auto-limpieza:
+
+```javascript
+// sw.js — limpia caches de deployments anteriores de Pages
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys()
+      .then(k => Promise.all(k.map(n => caches.delete(n))))
+      .then(() => self.clients.claim())
+  );
+});
 ```
 
-### Outputs
-
-| Build | Archivo | Uso |
-|---|---|---|
-| `build:client` | `dist/client/assets/index-*.js` | Bundle unificado (entry-client + mini-shell + single-spa) |
-| `build:client` | `dist/client/index.html` | Template con placeholders para server.ts |
-| `build:ssr` | `dist/server/entry-server.js` | Función `render(url)` para SSR en Express |
-| `build:node` | `dist/server.js` | Servidor Express compilado |
-| `build:spa` | `dist/spa/landing-ssr.js` | Módulo SPA para single-spa en monorepo root |
-| `build:spa` | `dist/spa/mini-shell.js` | Módulo mini-shell (solo para referencia, no usado directamente) |
-
----
-
-## Validación de la prueba
-
-Con los cambios implementados, el comportamiento verificable en Render es:
-
-1. **SSR funciona**: `GET https://sitiousuarioonline-landing-ssr.onrender.com` → devuelve HTML con contenido real (verificar en "View Source" o Network → response body)
-2. **Hidratación sin flash**: JavaScript carga, Vue hidrata sin destello. El contenido ya está visible antes de que JS termine.
-3. **Transición SPA**: Clic en "Deportes" → URL cambia a `/deportes` → SitioVersion5 monta → sin recarga (verificar en Network: no hay request de documento nuevo).
-4. **Navegación atrás**: Botón atrás → URL vuelve a `/` → landing vuelve a aparecer → sin recarga.
-
----
-
-## Lo que NO cambia
-
-| Archivo | Razón |
-|---|---|
-| `entry-client.ts` | Ya hidrata correctamente usando `createSSRApp` desde `app.ts` |
-| `app.ts` | Ya usa `createSSRApp`. Es la base correcta. |
-| `NavItem.vue` | `pushState` + `PopStateEvent` ya es el mecanismo correcto para single-spa |
-| `entry-server.ts` | Pipeline `render()` no cambia |
-| `src/main.js` (root) | El root del monorepo no se toca. El mini-shell es independiente |
-| `navigation.store.ts` | `/deportes` ya está marcado como `isExternal: true` |
+Esto evita que un SW cacheado del deployment anterior de Pages intercepte requests de navegación y sirva HTML viejo en vez del HTML SSR del Worker.

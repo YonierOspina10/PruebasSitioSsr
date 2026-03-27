@@ -23,17 +23,31 @@ declare global {
 }
 
 // ── Constantes de rutas ──────────────────────────────────────────────────────
-const LANDING_ROUTES = ['/', '/landing-ssr']
-const SITIO_EXCLUDED_ROUTES = ['/', '/landing-ssr']
+const LANDING_ROUTES = ['/', '/home', '/landing-ssr']
+const SITIO_INCLUDED_PREFIXES = [
+  '/deportes',
+  '/deportes2',
+  '/apuestas',
+  '/deportes-en-vivo',
+  '/deportes-en-vivo2',
+  '/apuestas-en-vivo',
+]
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function isLandingRoute(pathname: string): boolean {
-  return LANDING_ROUTES.includes(pathname) || pathname === ''
+  if (LANDING_ROUTES.includes(pathname) || pathname === '') {
+    return true
+  }
+
+  // Landing es la experiencia por defecto para cualquier ruta no-Sitio.
+  return !isSitioRoute(pathname)
 }
 
 function isSitioRoute(pathname: string): boolean {
-  return !SITIO_EXCLUDED_ROUTES.includes(pathname) && pathname !== ''
+  if (!pathname) return false
+
+  return SITIO_INCLUDED_PREFIXES.some(prefix => pathname === prefix || pathname.startsWith(`${prefix}/`))
 }
 
 // ── Ghost app: landing-ssr (show/hide #app) ──────────────────────────────────
@@ -55,25 +69,27 @@ const landingApp = {
   },
 }
 
-// ── Registro de SitioVersion5 (lazy load via importmap) ──────────────────────
+// ── Registro de SitioVersion5 (navegación completa) ─────────────────────────
+// El chunk de SitioVersion5 generado por el root shell NO es standalone:
+// cuando se carga vía importmap, arrastra el entry point del root shell
+// (index.xxx.js), creando dos instancias de single-spa con conflictos.
+// En vez de cargar vía importmap, disparamos una recarga completa de página.
+// El Worker sirve el HTML del root shell (desde Pages) para rutas no-landing,
+// que tiene toda la infraestructura correcta para montar SitioVersion5.
 function registerSitioVersion5(): void {
   if (getAppNames().includes('sitios')) return
 
   registerApplication({
     name: 'sitios',
-    app: () => import(/* @vite-ignore */ '@my-micro-apps/SitioVersion5'),
-    activeWhen: (location) => isSitioRoute(location.pathname),
-    customProps: {
-      domElementGetter: () => {
-        let container = document.getElementById('sitio-root')
-        if (!container) {
-          container = document.createElement('div')
-          container.id = 'sitio-root'
-          document.body.appendChild(container)
-        }
-        return container
-      },
+    app: () => {
+      // Navegar con recarga completa: el Worker servirá el root shell
+      // HTML desde Pages, que monta SitioVersion5 correctamente.
+      window.location.assign(window.location.href)
+      // Retornar promise que nunca resuelve; la página se recargará
+      // antes de que single-spa intente continuar su lifecycle.
+      return new Promise(() => {}) as Promise<any>
     },
+    activeWhen: (location) => isSitioRoute(location.pathname),
   })
 }
 

@@ -123,12 +123,6 @@ export default defineComponent({
         Jackpots4Component: defineAsyncComponent(
             () => import('../../components/Jackpots4.vue')
         ),
-      PromotionalCards: defineAsyncComponent(
-          () => import('../../components/PromotionalCards.vue'),
-      ),
-      Menu6: defineAsyncComponent(
-          () => import('../../components/menus/Menu6.vue'),
-      ),
       Menu8Component: defineAsyncComponent(
           () => import('../../components/menus/Menu8.vue'),
       ),

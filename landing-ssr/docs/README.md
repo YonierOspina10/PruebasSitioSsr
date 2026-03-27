@@ -1,139 +1,57 @@
-# PaniPlay Casino — Documentación del Proyecto
+# Documentación — landing-ssr
 
-> Landing page de entretenimiento de casino renderizada en el servidor (**Vue 3 SSR nativo**), con diseño atómico, Pinia, Vue Router y despliegue en Render + Cloudflare CDN.
-
----
-
-## Índice de documentación
-
-| Archivo | Contenido |
-|---------|-----------|
-| [SSR_ARCHITECTURE.md](./SSR_ARCHITECTURE.md) | Flujo SSR, hidratación, ciclo de vida |
-| [SSR_SPA_INTEGRATION.md](./SSR_SPA_INTEGRATION.md) | Integración SSR + SPA cross-micro (mini-shell, importmap, /deportes) |
-| [COMPONENTS.md](./COMPONENTS.md) | Atomic Design, árbol de componentes, props |
-| [STORES.md](./STORES.md) | Stores Pinia, interfaces TypeScript, cómo extender |
-| [DEPLOYMENT.md](./DEPLOYMENT.md) | Render, variables de entorno, Cloudflare CDN |
+> **Última actualización:** Marzo 2026
+> **Estado:** Producción — `sitiousuarioonline.com`
 
 ---
 
-## Quickstart
+## Índice de documentos
 
-### Prerrequisitos
-- Node.js ≥ 22
-- npm ≥ 10
-
-### Desarrollo local
-
-```bash
-# Instalar dependencias
-npm ci
-
-# Iniciar servidor de desarrollo (Express + Vite HMR)
-npm run dev
-# → http://localhost:3000
-```
-
-Los cambios en `.vue`, `.ts` y `.css` se reflejan en el navegador en tiempo real gracias a Vite HMR.
-
-### Build de producción
-
-```bash
-npm run build
-```
-
-Esto ejecuta en orden:
-1. `vue-tsc -b` — Verificación de tipos TypeScript
-2. `vite build --ssrManifest --outDir dist/client` — Bundle del cliente
-3. `vite build --ssr src/entry-server.ts --outDir dist/server` — Bundle del servidor
-4. `tsc -p tsconfig.server.json` — Compila `server.ts` → `dist/server.js`
-
-### Producción local
-
-```bash
-npm run start
-# NODE_ENV=production → http://localhost:3000
-```
+| Documento | Descripción |
+|-----------|-------------|
+| [SSR_ARCHITECTURE.md](./SSR_ARCHITECTURE.md) | Arquitectura SSR completa: entry points, hidratación, factory pattern, Worker vs Express, discovery de assets, build pipeline, inventario de archivos |
+| [SSR_SPA_INTEGRATION.md](./SSR_SPA_INTEGRATION.md) | Integración SSR ↔ SPA: ghost app, mini-shell, navegación cross-micro entre landing-ssr y SitioVersion5, flujo completo de routing |
+| [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) | Guía paso a paso: requisitos, desarrollo local, builds, despliegue a Cloudflare Workers/Pages, verificación post-despliegue, rollback |
+| [STORES.md](./STORES.md) | Stores Pinia: games, promotions, navigation. Interfaces TypeScript, estrategia SSR de datos, guía para conectar APIs reales |
+| [ROOT_SHELL_CHANGES.md](./ROOT_SHELL_CHANGES.md) | Modificaciones realizadas al root shell (`src/main.js`, `vite.config.js`) para integrar landing-ssr como microfrontend SSR |
+| [SITIOVERSION5_INTEGRATION.md](./SITIOVERSION5_INTEGRATION.md) | Cambios en SitioVersion5 y su integración con el nuevo ecosistema SSR/SPA |
+| [MIGRATION_PLAN.md](./MIGRATION_PLAN.md) | Plan detallado para migrar la landing legacy a landing-ssr: fases, componentización, pruebas, rollback |
 
 ---
 
-## Estructura del proyecto
+## Arquitectura resumida
 
 ```
-landing-ssr/
-├── server.ts                    # Express SSR server (punto de entrada Node)
-├── render.yaml                  # Configuración de deploy en Render
-├── index.html                   # Template HTML con placeholders SSR
-├── vite.config.ts               # Vite: Tailwind v4 + alias @/
-├── tsconfig.server.json         # TypeScript para compilar server.ts
-│
-├── src/
-│   ├── app.ts                   # Factory: createSSRApp + Pinia + Router
-│   ├── entry-client.ts          # Entry hidratación del cliente
-│   ├── entry-server.ts          # Entry renderizado en servidor
-│   │
-│   ├── router/
-│   │   └── index.ts             # Factory de Vue Router (SSR-aware)
-│   │
-│   ├── stores/                  # Pinia stores
-│   │   ├── games.store.ts
-│   │   ├── promotions.store.ts
-│   │   └── navigation.store.ts
-│   │
-│   ├── interfaces/              # TypeScript interfaces
-│   │   ├── game.interface.ts
-│   │   ├── promotion.interface.ts
-│   │   ├── navigation.interface.ts
-│   │   └── carousel.interface.ts
-│   │
-│   ├── composables/
-│   │   └── useCarousel.ts       # Lógica de carrusel SSR-safe
-│   │
-│   ├── components/
-│   │   ├── atoms/               # Componentes primitivos
-│   │   │   ├── BaseButton.vue
-│   │   │   ├── BaseBadge.vue
-│   │   │   └── BaseImage.vue
-│   │   ├── molecules/           # Composición de atoms
-│   │   │   ├── NavItem.vue
-│   │   │   ├── GameCard.vue
-│   │   │   └── PromoCard.vue
-│   │   └── organisms/           # Secciones completas
-│   │       ├── AppHeader.vue
-│   │       ├── AppFooter.vue
-│   │       ├── HeroBanner.vue
-│   │       ├── GameCarousel.vue
-│   │       └── PromoCarousel.vue
-│   │
-│   ├── templates/
-│   │   └── DefaultLayout.vue    # Layout: Header + slot + Footer
-│   │
-│   ├── views/
-│   │   └── HomeView.vue         # Vista de la landing (única)
-│   │
-│   └── styles/
-│       └── main.css             # Tailwind v4 + @theme casino
-│
-└── docs/                        # Esta documentación
+sitiousuarioonline.com (Cloudflare DNS)
+        │
+        ├── Worker SSR (landing-ssr)
+        │   ├── GET / → HTML pre-renderizado (SSR)
+        │   ├── GET /home → HTML pre-renderizado (SSR)
+        │   ├── GET /deportes → Proxy HTML de Pages (root shell)
+        │   └── GET /assets/* → Static Assets + fallback a Pages
+        │
+        ├── Pages (root shell)
+        │   ├── index.html + JS/CSS del orquestador single-spa
+        │   ├── SitioVersion5 chunks
+        │   └── configLanding/config URLs del CDN
+        │
+        └── CDN (configsfrontend-21622.kxcdn.com)
+            ├── configLanding-ganaplay.gt_gt_desktop_es-vv*.js
+            └── config-ganaplay.gt_gt_desktop_es-vv*.js
 ```
 
----
+## Comandos esenciales
 
-## Variables de entorno
+```powershell
+# Desarrollo local SSR (Express + Vite hot-reload)
+cd landing-ssr && npm run dev
 
-| Variable | Default | Descripción |
-|----------|---------|-------------|
-| `NODE_ENV` | `development` | `production` en Render |
-| `PORT` | `3000` | Puerto del servidor Express |
+# Build + deploy a producción
+cd landing-ssr && npm run deploy
 
----
+# Build del root shell
+cd .. && npm run build
 
-## Scripts npm
-
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Servidor de desarrollo con HMR |
-| `npm run build` | Build completo para producción |
-| `npm run start` | Iniciar servidor de producción |
-| `npm run build:client` | Solo bundle del cliente |
-| `npm run build:ssr` | Solo bundle del servidor |
-| `npm run build:node` | Solo compilar server.ts |
+# Verificar SSR en producción
+Invoke-WebRequest -Uri "https://sitiousuarioonline.com/" -UseBasicParsing -Headers @{Accept="text/html"}
+```

@@ -1,4 +1,8 @@
-# Stores Pinia — PaniPlay
+# Stores Pinia — landing-ssr
+
+> **Última actualización:** Marzo 2026
+
+---
 
 ## Configuración SSR de Pinia
 
@@ -12,6 +16,20 @@ app.use(pinia)
 
 **Nunca** compartir una instancia de Pinia entre requests. El factory pattern de `createApp()` garantiza esto.
 
+### Flujo de datos SSR
+
+```
+Servidor (Worker)                    Cliente (Browser)
+─────────────────                    ─────────────────
+createApp()                          createApp()
+  └─ createPinia()                     └─ createPinia()
+                                            └─ pinia.state.value = window.__PINIA_STATE__
+stores populados (mock data)
+renderToString(app) → HTML
+JSON.stringify(pinia.state.value)    Vue hidrata sobre HTML existente
+  └─ window.__PINIA_STATE__ = {...}  → stores ya tienen datos ✅
+```
+
 ---
 
 ## `useGamesStore` — `src/stores/games.store.ts`
@@ -20,7 +38,7 @@ app.use(pinia)
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `games` | `IGame[]` | Array de todos los juegos (mock) |
+| `games` | `IGame[]` | Array de todos los juegos (actualmente mock, 8 juegos) |
 | `activeCategory` | `GameCategory \| null` | Filtro activo, null = todos |
 | `isLoading` | `boolean` | Para futuras llamadas a API |
 
@@ -54,23 +72,6 @@ interface IGame {
 }
 ```
 
-### Cómo agregar un juego
-
-```typescript
-// En games.store.ts, dentro de MOCK_GAMES:
-{
-  id: 'game-009',
-  name: 'Nuevo Juego',
-  category: 'slots',
-  provider: 'Mi Proveedor',
-  thumbnail: 'https://url-de-imagen.jpg',
-  badge: 'new',
-  rtp: 96.0,
-  isLive: false,
-  playUrl: '#play',
-},
-```
-
 ---
 
 ## `usePromotionsStore` — `src/stores/promotions.store.ts`
@@ -79,7 +80,7 @@ interface IGame {
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `promotions` | `IPromotion[]` | Todas las promociones |
+| `promotions` | `IPromotion[]` | Todas las promociones (actualmente mock, 4 promos) |
 | `isLoading` | `boolean` | Para futuras llamadas a API |
 
 ### Getters
@@ -115,8 +116,8 @@ interface IPromotion {
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `mainLinks` | `INavLink[]` | Links del header |
-| `footerLinks` | `INavLink[]` | Links del footer |
+| `mainLinks` | `INavLink[]` | Links del header (6 links: Inicio, Deportes, Juegos...) |
+| `footerLinks` | `INavLink[]` | Links del footer (5 links: Términos, Privacidad...) |
 | `isMenuOpen` | `boolean` | Estado del menú móvil |
 
 ### Actions
@@ -133,18 +134,22 @@ interface INavLink {
   id: string
   label: string
   href: string
-  isExternal?: boolean  // Si true, abre en nueva pestaña con rel="noopener"
+  isExternal?: boolean  // Si true, NavItem usa navigateToUrl() de single-spa
 }
 ```
+
+**Nota**: El link de "Deportes" tiene `isExternal: true` porque navega a una ruta manejada por SitioVersion5, no por landing-ssr.
 
 ---
 
 ## Cómo conectar a una API real
 
-Cuando tengas un backend, reemplaza los arrays `MOCK_GAMES` / `MOCK_PROMOTIONS` por llamadas a API. El patrón recomendado con SSR:
+Cuando se tenga un backend, reemplazar los arrays `MOCK_GAMES` / `MOCK_PROMOTIONS` por llamadas a API:
+
+### 1. Agregar action fetch al store
 
 ```typescript
-// En el store, agregar action:
+// En games.store.ts
 async fetchGames() {
   this.isLoading = true
   try {
@@ -156,7 +161,8 @@ async fetchGames() {
 },
 ```
 
-Luego en `entry-server.ts`, llamar la action antes de renderizar:
+### 2. Llamar en entry-server.ts antes del render
+
 ```typescript
 const { app, router, pinia } = createApp()
 const gamesStore = useGamesStore(pinia)
@@ -165,3 +171,9 @@ await gamesStore.fetchGames()  // datos listos antes del render
 ```
 
 Los datos quedarán serializados en `window.__PINIA_STATE__` y el cliente los restaurará sin hacer una segunda llamada a la API.
+
+### 3. Consideraciones SSR
+
+- Las URLs de API deben funcionar tanto desde el Worker (con dominio completo) como desde el cliente (relativas o absolutas)
+- Manejar errores para que un fallo de API no rompa el SSR — usar datos fallback
+- El timeout de fetch en el Worker debe ser razonable (< 5s) para no bloquear el rendering
